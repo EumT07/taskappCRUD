@@ -25,7 +25,7 @@ userSchema.statics.encryptPassword = async (password) => {
 };
 
 //Compare
-userSchema.statics.comparePassword = async (password) => {
+userSchema.statics.comparePassword = async (password, passwordToComapare) => {
   return await bcrypt.compare(password, passwordToComapare);
 };
 

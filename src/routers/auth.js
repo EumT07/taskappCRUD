@@ -5,6 +5,10 @@ import {
     sigin,
     closeSession
 } from "../controllers/auth.js";
+import {
+    checkUser,
+    checkPassword
+} from "../middlewares/verifysignup.js";
 
 const router = Router();
 
@@ -18,7 +22,7 @@ router
             description:"Here we will find our: signup PAge"
         });
     })
-    .post("/signup", sigup)
+    .post("/signup", [checkUser, checkPassword] ,sigup)
 
 //Login In
 router
@@ -28,8 +32,10 @@ router
             description:"Here we will find our: sagnin Page"
         });
     })
-    .post("/signin",sigin)
+    .post("/signin", sigin)
 
 //Log out
-
+router
+    .get("/logout", closeSession);
+    
 export default router;
