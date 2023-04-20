@@ -6,18 +6,12 @@ const router = Router();
 //Lading Page
 router
     .get("/", (req,res)=>{
-        res.status(200).json({
-            page: "Home",
-            description:"Here we will find our LandingPAge"
-        });
+        res.render("index.ejs", {title: "Home"});
     });
 //Dashboard
 router
-    .get("/dashboard", verifyToken ,(req,res)=>{
-        res.status(200).json({
-            page: "Dashboard",
-            description:"Here we will find our: DashBoard"
-        });
+    .get("/dashboard",(req,res)=>{
+        res.render("dashboard.ejs", {title: "Dashboard"});
     })
 //Profile
 router 

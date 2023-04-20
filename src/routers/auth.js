@@ -17,20 +17,14 @@ const router = Router();
 //Login Out
 router
     .get("/signup",(req,res)=>{
-        res.status(200).json({
-            page: "signup",
-            description:"Here we will find our: signup PAge"
-        });
+        res.render("./register/signup.ejs", {title: "Sign Up"})
     })
     .post("/signup", [checkUser, checkPassword] ,sigup)
 
 //Login In
 router
     .get("/signin", (req,res)=>{
-        res.status(200).json({
-            page: "signin",
-            description:"Here we will find our: sagnin Page"
-        });
+        res.render("./register/signin.ejs", {title: "Sign in"})
     })
     .post("/signin", sigin)
 
