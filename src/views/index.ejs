@@ -1,6 +1,28 @@
 <%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
 
-<h1>Home</h1>
+<main>
+    <section class="intro">
+        <div class="intro_info">
+            <h1>Task<span>App</span></h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis placeat accusantium voluptatibus quaerat asperiores? Quisquam cumque corporis praesentium obcaecati nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. A eius odit beatae.</p>
+        </div>
+        <div class="intro_link">
+            <h2><a href="/api/auth/signup">Get start</a></h2>
+        </div>
+    </section>
+    <section class="task">
+        <div class="tasks_container">
+            <div class="task1">1</div>
+            <div class="task2">2</div>
+            <div class="task3">3</div>
+        </div>
+        <div class="tasks_info">
+            <h2>TASK</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam, hic rerum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, in consequatur nihil optio dignissimos alias architecto obcaecati culpa aut inventore.</p>
+        </div>
+    </section>
+   </main>
 
-<%- include("./partials/body.ejs") %>
 <%- include("./partials/footer.ejs") %>
+<%- include("./partials/body.ejs") %>

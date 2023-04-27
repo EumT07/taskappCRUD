@@ -6,7 +6,7 @@ const router = Router();
 //Lading Page
 router
     .get("/", (req,res)=>{
-        res.render("index.ejs", {title: "Home"});
+        res.render("index.ejs", {title: "Taskapp"});
     });
 //Dashboard
 router
