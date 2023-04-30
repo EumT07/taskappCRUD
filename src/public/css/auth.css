@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+}
+.register_main{
+    position: relative;
+    margin: auto;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.register_main .logo_section{
+    position: relative;
+    background-image: url("/img/brain.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 50vw;
+    height: 100vh;
+    text-align: center;
+}
+.register_main > .linkBack{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    z-index: 5;
+    text-decoration: none;
+}
+.register_main  .linkBack .backlink_iconUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+.register_main  .linkBack .backlink_iconUp::before{
+    content: "\f015";
+}
+.register_main  .linkBack .backlink_iconIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: #a93638;
+    border: 2px solid #a93638;
+    border-radius: 50%;
+}
+.register_main  .linkBack .backlink_iconIn::before{
+    content: "\f015";
+}
+
+
+.register_main .logo_section > h2 {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    left: 0;
+    color: #fff;
+    font-size: 2.8rem;
+}
+.register_main .logo_section > h3{
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    left: 0;
+    color: #fff;
+    font-size: 1.8rem;
+}
+.register_main .logo_section > h3 > a {
+    color: #232425;
+    text-decoration: none;
+}
+.register_main .form_section{
+    position: relative;
+    width: 50vw;
+    height: 100vh;
+}
+.register_main .form_section .container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color:#3b4650;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    padding: 10px;
+}
+.register_main .form_section .measure_SingUp{
+    width: 400px;
+    height: 480px;
+}
+.register_main .form_section .measure_SingIn{
+    width: 400px;
+    height: 350px;
+}
+.register_main .container h2{
+    color: #fff;
+    font-size: 1.8rem;
+}
+.register_main .container h2 > span{
+    color: #c04a4c;
+    text-shadow: 2px 2px 5px #000;
+}
+.form__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.form__measure_SignUp{
+    width: 320px;
+    height: 320px;
+}
+.form__measure_SignIn{
+    width: 320px;
+    height: 200px;
+}
+.form__container label{
+    position: relative;
+    width: 100%;
+    height: 45px;
+}
+.form__measure_SignUp label:nth-child(1) > .userIcon,
+.form__measure_SignUp label:nth-child(2) > .emailIcon ,
+.form__measure_SignUp label:nth-child(3) > .passIco,
+.form__measure_SignUp label:nth-child(4) > .confirm_passIco,
+.form__measure_SignIn label:nth-child(1) > .emailIcon,
+.form__measure_SignIn label:nth-child(2) > .passIco {
+    position: absolute;
+    top: 11px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    color: #a93638;
+
+}
+/*Sign up icons*/
+.form__measure_SignUp label:nth-child(1) > .userIcon::before{
+    content: "\f007";
+}
+.form__measure_SignUp label:nth-child(2) > .emailIcon::before{
+    content: "\40";
+}
+.form__measure_SignUp label:nth-child(3) > .passIco::before{
+    content: "\f023";
+}
+.form__measure_SignUp label:nth-child(4) > .confirm_passIco::before{
+    content: "\f023";
+}
+/*Sign in icons*/
+.form__measure_SignIn label:nth-child(1) > .emailIcon::before{
+    content: "\40";
+}
+.form__measure_SignIn label:nth-child(2) > .passIco::before{
+    content: "\f023";
+}
+.form__container label > input{
+    width: 100%;
+    height: 45px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding-left: 35px;
+    background-color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.form__container label > input::placeholder{
+    padding-left: 0px;
+}
+.form__container button{
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 2px #000;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #a93638;
+    color: #fff;
+}
+.form__container button:hover{
+    background-color: #d32324;
+}
+.flash_messages{
+    text-align: center;
+    color: rgba(236, 10, 10, 0.993);
+    font-size: 20px;
+}

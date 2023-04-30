@@ -17,13 +17,14 @@ router
 
 //Secret Quetions
 router
-    .get("/secretqt", verifyToken ,async (req,res)=>{
+    .get("/secretquestions", verifyToken, async (req,res)=>{
         const user = await User.findById(req.userID);
-        res.status(200).json({
-            user: user.id
+        res.render("./settings/secretqts.ejs", {
+            title: "Secret Questions",
+            user
         });
     })
-    .post("/secretqt", secretQuestions )
+    .post("/secretquestions", secretQuestions )
 
 //Change Password
 

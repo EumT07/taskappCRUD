@@ -1,5 +1,32 @@
 <%- include("../partials/head.ejs") %>
 
-<h1>Sign in</h1>
+<main  class="register_main">
+    <a class="linkBack" href="/">
+        <span class="backlink_iconIn fa"></span>
+    </a>
+    <section class="form_section">
+        <section class="container measure_SingIn">
+            <h2>Sign <span>Up</span></h2>
+            <% if(errSignin) { %>
+                <p class="flash_messages"><%= errSignin %></p>
+            <% } %>
+            <form class="form__container form__measure_SignIn" action="/api/auth/signin" method="POST">
+                <label  for="email" >
+                    <input type="email" name="email" id="email" placeholder="Email">
+                    <span class="emailIcon fa"></span>
+                </label>
+                <label  for="password">
+                    <input type="password" name="password" id="password" placeholder="Password">
+                    <span class="passIco fa"></span>
+                </label>
+                <button class="button" type="submit" value="Sign Up">Sign Up</button>
+            </form>
+        </section>
+    </section>
+    <section class="logo_section">
+        <h2>Welcome...</h2>
+        <h3>Don't you have an account ? <a href="/api/auth/signup">Sign Up</a></h3>
+    </section>
+</main>
 
 <%- include("../partials/body.ejs") %>

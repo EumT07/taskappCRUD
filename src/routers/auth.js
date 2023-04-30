@@ -1,13 +1,14 @@
 "user strict"
 import { Router } from "express";
 import {
-    sigup,
-    sigin,
+    singup,
+    singin,
     closeSession
 } from "../controllers/auth.js";
 import {
-    checkUser,
-    checkPassword
+    checkUserSignup,
+    checkPassword,
+    checkUserSignin
 } from "../middlewares/verifysignup.js";
 
 const router = Router();
@@ -19,14 +20,14 @@ router
     .get("/signup",(req,res)=>{
         res.render("./register/signup.ejs", {title: "Sign Up"})
     })
-    .post("/signup", [checkUser, checkPassword] ,sigup)
+    .post("/signup", [checkUserSignup, checkPassword] ,singup)
 
 //Login In
 router
     .get("/signin", (req,res)=>{
-        res.render("./register/signin.ejs", {title: "Sign in"})
+        res.render("./register/signin.ejs", {title: "Sign In"})
     })
-    .post("/signin", sigin)
+    .post("/signin", checkUserSignin ,singin)
 
 //Log out
 router

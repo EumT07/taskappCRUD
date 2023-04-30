@@ -2,6 +2,9 @@
     margin: 0;
     box-sizing: 0;
 }
+body{
+    overflow-x: hidden;
+}
 
 header {
     max-width: 100vw;
@@ -99,7 +102,7 @@ main .intro .intro_link h2 a{
     color: rgba(224, 58, 28, 0.932);
 }
 /* Task */
-main .task{
+.task{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -107,45 +110,45 @@ main .task{
     max-width: 100vw;
     height: 100vh;
 }
-main .task .tasks_container{
+.task .tasks_container{
     position: relative;
     width: 50%;
 }
-main .task .tasks_container > div {
+.task .tasks_container > div {
     width: 240px;
     height: 300px;
     background-color: #e98b94;
     border-radius: 20px;
 }
-main .task .tasks_container > div:nth-child(1){
+.task .tasks_container > div:nth-child(1){
     position: absolute;
     top: -350px;
     left: 250px;
     
 }
-main .task .tasks_container > div:nth-child(2){
+.task .tasks_container > div:nth-child(2){
     position: absolute;
     top: -20px;
     left: 150px;
 }
-main .task .tasks_container > div:nth-child(3){
+.task .tasks_container > div:nth-child(3){
     position: absolute;
     top: 50px;
     left: 420px;
 }
 
-main .task .tasks_info{
+.task .tasks_info{
     text-align: center;
     width: 50%;
     padding-left: 50px;
     padding-right: 50px;
 }
-main .task .tasks_info h2{
+.task .tasks_info h2{
     color: #d32324;
     font-size: 6rem;
     margin-bottom: 15px;
 }
-main .task .tasks_info p {
+.task .tasks_info p {
     width: 100%;
     text-align: center;
 }

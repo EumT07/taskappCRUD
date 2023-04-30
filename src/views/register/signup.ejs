@@ -1,5 +1,43 @@
 <%- include("../partials/head.ejs") %>
 
-<h1>Sign up</h1>
+<main class="register_main">
+    <a class="linkBack" href="/">
+        <span class="backlink_iconUp fa"></span>
+    </a>
+    <section class="logo_section">
+        <h2>Create Your Account</h2>
+        <h3>Do you have an account ? <a href="/api/auth/signin">Sign In</a></h3>
+    </section>
+    <section class="form_section">
+        <section class="container measure_SingUp">
+            <h2>Sign <span>Up</span></h2>
+            <% if(errSignup) { %>
+                <p class="flash_messages"><%= errSignup %></p>
+            <% } %>
+            <form class="form__container form__measure_SignUp" action="/api/auth/signup" method="POST">
+                <label for="username">
+                    <input type="text" name="username" id="username" placeholder="User" value="<%= username %>" required>
+                    <span class="userIcon fa"></span>
+                </label>
+                <label  for="email" >
+                    <input type="email" name="email" id="email" placeholder="Email" value="<%= email %>" required>
+                    <span class="emailIcon fa"></span>
+                </label>
+                <label  for="password">
+                    <input type="password" name="password" id="password" placeholder="Password" value="<%= password %>" required>
+                    <span class="passIco fa"></span>
+                </label>
+                <label  for="confirmPassword" >
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" value="<%= password %>" required>
+                    <span class="confirm_passIco fa"></span>
+                </label>
+                <label for="showPass">
+                    <input class="checkBox" type="checkbox" name="checkbox" id="checkbox">
+                </label>
+                <button class="button" type="submit" value="Sign Up">Sign Up</button>
+            </form>
+        </section>
+    </section>
+</main>
 
 <%- include("../partials/body.ejs") %>

@@ -10,7 +10,7 @@ router
     });
 //Dashboard
 router
-    .get("/dashboard",(req,res)=>{
+    .get("/dashboard", verifyToken, (req,res)=>{
         res.render("dashboard.ejs", {title: "Dashboard"});
     })
 //Profile

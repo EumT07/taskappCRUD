@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import engine from "ejs-mate";
 import session from "express-session";
+import flash from "connect-flash"
 
 
 
@@ -38,10 +39,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 //Helmet
 app.use(helmet());
+//Flash connect
+app.use(flash());
 // Recognizes the incoming Request Object as strings or arrays.
 app.use(express.urlencoded({extended: false}));
 //Cookies
-app.use(cookieParser(process.env.cookieSecret))
+app.use(cookieParser());
 //Session
 app.use(session({
     secret: process.env.sessionSecret,
@@ -49,9 +52,24 @@ app.use(session({
     saveUninitialized: true
 }));
 
+//Conect Flash
+app.use((req,res,next) => {
+    //User data
+    app.locals.username = req.flash("username");
+    app.locals.email = req.flash("email");
+    app.locals.password = req.flash("password");
+    app.locals.confirm_pass = req.flash("confirmPassword");
+
+    //User register
+    app.locals.errSignup = req.flash("errSignup");
+    app.locals.errSignin = req.flash("errSignin");
+    
+    next();
+})
+
 
 //export Routes
-app.use("/home",homeRoute);
+app.use(homeRoute);
 app.use("/api/settings",settingsRoute);
 app.use("/api/auth",authRoute);
 

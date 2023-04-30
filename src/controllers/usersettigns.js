@@ -10,9 +10,7 @@ export const secretQuestions = async (req,res)=>{
     const setSecretqt = new SecretQt(body);
     setSecretqt.user = userID;
     await setSecretqt.save();
-    return res.status(202).json({
-        message: "Secret questions was creating successfuly"
-    })
+    return res.status(202).redirect("/dashboard");
 }
 
 //Change password 
