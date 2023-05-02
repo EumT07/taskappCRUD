@@ -3,7 +3,8 @@ import User from "../models/user.js";
 
 //Checking if user exist or not
 export const checkUserSignup = async (req, res, next)=>{
-    const {username, email, password, confirm_password} = req.body;
+    const {username, email, password, confirmPassword} = req.body;
+    console.log(confirmPassword);
     try {
         const user = await User.findOne({username: username});
         
@@ -13,7 +14,7 @@ export const checkUserSignup = async (req, res, next)=>{
             req.flash("username", username),
             req.flash("email", email),
             req.flash("password", password),
-            req.flash("confirmPassword", confirm_password)
+            req.flash("confirmPassword", confirmPassword)
             return res.redirect("/api/auth/signup");
         }
 
@@ -24,7 +25,7 @@ export const checkUserSignup = async (req, res, next)=>{
             req.flash("username", username),
             req.flash("email", email),
             req.flash("password", password),
-            req.flash("confirmPassword", confirm_password)
+            req.flash("confirmPassword", confirmPassword)
             return res.redirect("/api/auth/signup");
         };
 

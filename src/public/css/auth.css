@@ -209,3 +209,17 @@ body {
     color: rgba(236, 10, 10, 0.993);
     font-size: 20px;
 }
+.form__container > .showPass{
+    position: relative;
+}
+.form__container .checkBox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    
+}

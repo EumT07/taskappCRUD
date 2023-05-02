@@ -57,6 +57,108 @@ header nav .nav_content > li > a{
     justify-content: center;
     align-items: center;
 }
+nav .userNav{
+    position: relative;
+    width: 200px;
+    height: 40px;
+    background-color: #3b46504d;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+    margin-right: 30px;
+    align-self: center;
+}
+nav .userNav .userimg__container{
+    position: absolute;
+    left: -60px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #8f4c4c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav .userNav .userimg__container img{
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+}
+nav .userNav img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #d32324;
+}
+.menu_container{
+    position: relative;
+    display: none;
+}
+.menu{
+    position: absolute;
+    top: 5px;
+    right: 40px;
+    width: 200px;
+    height: 180px;
+    background-color: #3b4650c5;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+}
+.menu .menu_options{
+    align-self: start;
+    list-style: none;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+.menu .menu_options li{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: start;
+}
+.menu .menu_options li:nth-child(1) > .user,
+.menu .menu_options li:nth-child(2) > .settings,
+.menu .menu_options li:nth-child(3) > .logout {
+    position: absolute;
+    left: -25px;
+    align-items:start;
+    color: #d32324;
+
+}
+
+.menu .menu_options li:nth-child(1) > .user::before{
+    content: "\f007";
+    margin-right: 10px;
+    margin-left: 0px;
+}
+.menu .menu_options li:nth-child(2) > .settings::before{
+    content: "\f013";
+    margin-right: 10px;
+}
+.menu .menu_options li:nth-child(3) > .logout::before{
+    content: "\f2f5";
+    margin-right: 10px;
+}
+.menu .menu_options li > a{
+    text-decoration:  none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+.up {
+    display: none;
+}
 
 /* Main */
 
@@ -183,37 +285,37 @@ footer{
 .footer_logoContainer h1 > span{
     color: #d32324;
 }
-footer .skills_container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 200px;
-    text-align: center;
-}
-footer .skills_container > h4{
+
+footer .email_container > h4{
     font-size: 1.4rem;
+    margin-bottom: 10px;
 }
-.skills_img_container{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 600px;
+footer .email_container .email_form label input{ 
+    height: 30px;
+    width: 240px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding-left: 20px;
+}
+footer .email_container .email_form button{
+    height: 30px;
+    width: 80px;
+    background-color: #d47172;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+footer .email_container .email_form button:hover{
+    background-color: #d32324;
+
 }
 
-.skills_img_container > img{
-    width: 70px;
-    height: 65px;
-    filter: grayscale(100%);
-    
-}
-.skills_img_container > img:nth-child(1):hover,
-.skills_img_container > img:nth-child(2):hover,
-.skills_img_container > img:nth-child(3):hover,
-.skills_img_container > img:nth-child(4):hover,
-.skills_img_container > img:nth-child(5):hover {
-    filter: grayscale(0%);
-}
+
+
 .footer__content .policy{
     height: 180px;
     display: flex;

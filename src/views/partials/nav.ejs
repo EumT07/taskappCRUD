@@ -3,9 +3,31 @@
         <div class="logo__container">
             <a href="/"><img src="img/brainLogo.jpeg" alt="Logo"></a>
         </div>
+        <% if(user) { %>
+            <div class="userNav">
+                <div class="userimg__container">
+                    <img src="/img/user.png" alt="user">
+                </div>
+                <h2><%= user.username %></h2>
+                <img id="downBtn" class="down" src="/img/down.png" alt="down">
+                <img id="upBtn" class="up" src="/img/up.png" alt="down">
+            </div>
+        <% } else { %>
         <ul class="nav_content">
             <li><a href="/api/auth/signin">Login</a></li>
             <li><a href="/api/auth/signup">SignUp</a></li>
         </ul>
+        <% } %>
     </nav>
+    <% if (user) { %>
+        <div class="menu_container">
+            <div class="menu">
+                <ul class="menu_options">
+                    <li><span class="user fa"></span><a href="#">Profile</a></li>
+                    <li><span class="settings fa"></span><a href="#">Settings</a></li>
+                    <li><span class="logout fa"></span><a href="/api/auth/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    <% } %>
 </header>

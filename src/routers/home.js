@@ -1,24 +1,38 @@
 "user strict"
+import User from "../models/user.js";
 import { Router } from "express";
 import {verifyToken}  from "../middlewares/verifytoken.js";
 
 const router = Router();
 //Lading Page
 router
-    .get("/", (req,res)=>{
-        res.render("index.ejs", {title: "Taskapp"});
+    .get("/", async (req,res)=>{
+        const user = await User.findById(req.userID);
+        res.render("index.ejs", {title: "Taskapp", user});
     });
+//Suscribe email
+router
+    .post("/", async (req, res)=>{
+        const email = req.body.email;
+        res.redirect(`/api/auth/signup/?email=${email}`)
+    })
 //Dashboard
 router
-    .get("/dashboard", verifyToken, (req,res)=>{
-        res.render("dashboard.ejs", {title: "Dashboard"});
+    .get("/dashboard", verifyToken, async (req,res)=>{
+        const user = await User.findById(req.userID);
+        res.render("dashboard.ejs", {
+            title: "Dashboard",
+            user
+        });
     })
 //Profile
 router 
-    .get("/profile", verifyToken, (req, res) =>{
-        res.status(200).json({
-            page: "Profile",
-            description:"Here we will find our: Profile"
-        });
-    })
+    .get("/profile", verifyToken, async (req, res) =>{
+        const user =  await User.findById(req.userID);
+        res.render("profile.ejs", {
+            title: "Profile",
+            user
+        })
+    });
+
 export default router;

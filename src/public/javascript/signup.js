@@ -1,4 +1,5 @@
 "use strict"
+//Show password
 
 //Gettin values from DOM
 let password = document.getElementById("password");
@@ -18,4 +19,17 @@ btn_Check.addEventListener("click", (e)=>{
     } catch (error) {
         console.log(error);
     }
-})
+});
+
+//Gettings params
+const emailparams = window.location.search;
+const emailURL = new URLSearchParams(emailparams);
+const email = emailURL.get("email");
+const emailForm = document.getElementById("email");
+
+function getParams() {
+    if(email){
+        return emailForm.value = email
+    }
+}
+getParams();

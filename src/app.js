@@ -58,7 +58,7 @@ app.use((req,res,next) => {
     app.locals.username = req.flash("username");
     app.locals.email = req.flash("email");
     app.locals.password = req.flash("password");
-    app.locals.confirm_pass = req.flash("confirmPassword");
+    app.locals.confirmPassword = req.flash("confirmPassword");
 
     //User register
     app.locals.errSignup = req.flash("errSignup");

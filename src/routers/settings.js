@@ -8,11 +8,12 @@ const router = Router();
 
 //Settings
 router
-    .get("/", (req,res)=>{
-        res.status(200).json({
-            page: "Settings",
-            description:"Here we will find our: settings"
-        });
+    .get("/", verifyToken, async (req,res)=>{
+        const user =  await User.findById(req.userID);
+        res.render("s./settings/ettings.ejs", {
+            title: "settings",
+            user
+        })
     });
 
 //Secret Quetions

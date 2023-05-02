@@ -76,7 +76,7 @@ export const closeSession = async (req,res) => {
         if(err){
             res.status(404).json({message: "error Closing session"});
         }else{
-            return res.status(200).json({message: "Successfuly"})
+            return res.status(200).redirect("/")
         }
     });
 };
