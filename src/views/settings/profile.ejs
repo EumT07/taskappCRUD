@@ -1,0 +1,151 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/nav.ejs") %>
+
+<section class="profile">
+    <section class="data__container">
+        <div class="data_options">
+            <div class="userImg">
+                <img src="/img/user.png" alt="user">
+            </div>
+            <h3><%= user.username %></h3>
+            <h3><%= user.email %></h3>
+            <hr>
+            <div class="links">
+                <a id ="profileBtn" href="#profile">Profile</a>
+                    <a id ="taskBtn" href="#taskdiv">Tasks</a>
+                    <a id ="changepassBtn" href="#changepass">Change Password</a>
+                    <a id ="changesecretqtsBtn" href="#changesecretqts">Change Secret Questions</a>
+                    <a id ="accountBtn" href="#accountdiv">Account</a>
+            </div>
+        </div>
+        <div class="show_options">
+            <div class="profile_form"> 
+                <form action="/api/settings/updateUser" method="POST" id="profile">
+                    <div class="userSection">
+                        <div class="iconcontainer">
+                            <img src="/img/user.png" alt="img">
+                        </div>
+                        <div class="upload">
+                            <button type="button" class="btn_uploaded">
+                                <i class="fas fa-upload"></i> Upload File
+                                <input type="file">
+                            </button>
+                            <div class="trash">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <% if(usernameFound){ %>
+                    <label for="username">Username
+                        <span><%= usernameErr%></span>
+                        <input class="<%=usernameFound%>" type="text" name="username" id="username" value="<%= user.username %>">
+                    </label>
+                    <% } %>
+                    <label for="name">Name
+                        <input type="text" name="name" id="name" value="<%= user.name %>" required>
+                    </label>
+                    <label for="lastname">Lastname
+                        <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" required>
+                    </label>
+                    <label for="email">Email
+                        <input type="email" name="email" id="email" value="<%= user.email %>" readonly >
+                    </label>
+                    <label for="country">Country
+                        <input type="text" name="country" id="country" value="<%= user.country %>" required>
+                    </label>
+                    <button class="btnForm" type="submit">Send</button>
+                    <input type="hidden" name="userID" value="<%= user.id %>"  id="">
+                </form>
+            </div>
+            
+            <div class="taskContainer_form" id="taskdiv">
+                <div class="task_form" >
+                    <div class="taskvalue_name">
+                        <h3>High: </h3>
+                        <h3>Middle:</h3>
+                        <h3>Down: </h3>
+                    </div>
+                    <div class="taskvalue_graphic">
+
+                    </div>
+                    <div class="taskprogres_name">
+                        <h3>Doing: </h3>
+                        <h3>Pause:</h3>
+                        <h3>Completed: </h3>
+                    </div>
+                    <div class="taskprogres_graphic">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="changepass_form gettingPIN">
+                <form  action="" method="post" id="changescretqts">
+                    <h2>Change Password</h2>
+                    <p class="attention">Write your security pin in order to send you a link to change your Password</p>
+                    <label for="pinNumber">PIN
+                        <input type="number" name="pinnumber" id="pinNumber"  max="6">
+                    </label>
+                    <button class="btnForm" type="submit" value="Send">Send</button>
+                    <p class="click">Click</p>
+                </form>
+            </div>
+
+            <div class="changesquestions_form gettingPIN">
+                <form  action="" method="post" id="changescretqts">
+                    <h2>Security Questions</h2>
+                    <p class="attention">Write your security pin in order to send you a link to change your security questions</p>
+                    <label for="pinNumber">PIN
+                        <input type="number" name="pinnumber" id="pinNumber"  max="6">
+                    </label>
+                    <button class="btnForm" type="submit" value="Send">Send</button>
+                    <p class="click">Click</p>
+                </form>
+            </div>
+
+            <div class="accountContainer_form" id="accountdiv">
+                <div class="account" >
+                    <div class="account_reset">
+                        <h1>Reset Account</h1>
+                        <p>Resetting your account will reset your progress on all tasks, reset all your information. You’ll get a chance to confirm your choice.</p>
+                        <div id="resetBtn">
+                            Reset
+                        </div>
+                    </div>
+                    <div class="account_delete">
+                        <h1>Delete Account</h1>
+                        <p>This option will delete your account entirely with all data. You’ll get a chance to confirm your choice.</p>
+                        <div id="deleteBtn">
+                            Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal">
+            <div class="modal__content resetAcc">
+                <div class="info_container">
+                    <h2>Are you sure you want to reset your account?</h2>
+                     <div class="modal__content_links">
+                        <a id="aceptResetAcc" href="/api/settings/resetAcc">Acept</a>
+                        <a class="cancelBtn">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__content deleteAcc">
+                <div class="info_container">
+                    <h2>Are you sure you want to delete your account?</h2>
+                    <div class="modal__content_links">
+                        <a id="aceptResetAcc" href="/api/settings/removeAcc/<%= user.id %>">Acept</a>
+                        <a class="cancelBtn">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   </section>
+
+<script src="/javascript/profile.js" ></script>
+<script src="/javascript/dashboard.js" ></script>
+<%- include("../partials/body.ejs") %>

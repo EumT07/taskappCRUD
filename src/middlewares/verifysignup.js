@@ -130,3 +130,36 @@ export const checkUserSignin = async (req,res,next) => {
     }
 
 }
+
+//Check username
+export const checkUsername = async (req,res,next) => {
+    //New username 
+    const newusername = req.body.username;
+    console.log(newusername);
+    //Searching user 
+    const userID = req.body.userID;
+    const user = await User.findById({_id: userID});
+    console.log(user.username);
+    //Searching username in our dta
+    const usernameFound = await User.find({username: newusername});
+    console.log(usernameFound);
+
+    if(user.username === newusername){
+        next();
+        return;
+    }
+
+    if(usernameFound.length === 0){
+        next();
+        return;
+    }
+    
+    if(usernameFound){
+        //Css style
+        req.flash("usernameFound", "inputUserName");
+        //error message
+        req.flash("usernameErr", `${newusername} is already exist `);
+        return res.status(202).redirect("/api/settings/profile");
+    }
+
+}

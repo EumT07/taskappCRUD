@@ -25,14 +25,6 @@ router
             user
         });
     })
-//Profile
-router 
-    .get("/profile", verifyToken, async (req, res) =>{
-        const user =  await User.findById(req.userID);
-        res.render("profile.ejs", {
-            title: "Profile",
-            user
-        })
-    });
+
 
 export default router;

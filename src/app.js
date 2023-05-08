@@ -63,6 +63,10 @@ app.use((req,res,next) => {
     //User register
     app.locals.errSignup = req.flash("errSignup");
     app.locals.errSignin = req.flash("errSignin");
+
+    //UsernameFound
+    app.locals.usernameFound = req.flash("usernameFound");
+    app.locals.usernameErr = req.flash("usernameErr");
     
     next();
 })

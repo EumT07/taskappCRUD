@@ -1,0 +1,95 @@
+"user strict"
+//Gettings form info
+const profileForm = document.querySelector(".profile_form");
+const taskDiv = document.querySelector(".taskContainer_form");;
+const changepassForm = document.querySelector(".changepass_form");;
+const scrtqtForm = document.querySelector(".changesquestions_form");;
+const accountDiv = document.querySelector(".accountContainer_form");;
+
+//Getings btns
+const profileBtn = document.getElementById("profileBtn");
+const taskBtn = document.getElementById("taskBtn");
+const changepassBtn = document.getElementById("changepassBtn");
+const changeresetpassBtn = document.getElementById("changesecretqtsBtn");
+const accountBtn = document.getElementById("accountBtn");
+
+profileBtn.addEventListener("click", (e)=>{
+    profileForm.style.display = "block";
+    taskDiv.style.display = "none";
+    changepassForm.style.display = "none";
+    scrtqtForm.style.display = "none";
+    accountDiv.style.display = "none";
+
+});
+taskBtn.addEventListener("click",(e)=>{
+    taskDiv.style.display = "block";
+    profileForm.style.display = "none";
+    changepassForm.style.display = "none";
+    scrtqtForm.style.display = "none";
+    accountDiv.style.display = "none";
+})
+changepassBtn.addEventListener("click",(e)=>{
+    taskDiv.style.display = "none";
+    profileForm.style.display = "none";
+    changepassForm.style.display = "block";
+    scrtqtForm.style.display = "none";
+    accountDiv.style.display = "none";
+})
+changeresetpassBtn.addEventListener("click",(e)=>{
+    taskDiv.style.display = "none";
+    profileForm.style.display = "none";
+    changepassForm.style.display = "none";
+    scrtqtForm.style.display = "block";
+    accountDiv.style.display = "none";
+})
+accountBtn.addEventListener("click",(e)=>{
+    taskDiv.style.display = "none";
+    profileForm.style.display = "none";
+    changepassForm.style.display = "none";
+    scrtqtForm.style.display = "none";
+    accountDiv.style.display = "block";
+})
+
+
+// Modal
+const modal = document.querySelector(".modal");
+const resetAcc = document.querySelector(".resetAcc");
+const deleteAcc = document.querySelector(".deleteAcc");
+
+const resetBtn = document.getElementById("resetBtn");
+const deleteBtn = document.getElementById("deleteBtn");
+const cancelBtn = document.querySelectorAll(".cancelBtn");
+const buttons = [resetBtn,deleteBtn];
+
+buttons.forEach(element => {
+    element.addEventListener("click", (e)=>{
+       if (element.textContent.trim().toLowerCase() === "reset"){
+        modal.style.display = "block";
+        resetAcc.style.display = "block";
+        return;
+       }else if(element.textContent.trim().toLowerCase() === "delete"){
+        modal.style.display = "block";
+        deleteAcc.style.display = "block";
+        return;
+       }
+    })
+})
+
+cancelBtn.forEach( element => {
+    element.addEventListener("click",(e)=>{
+        e.preventDefault();
+        modal.style.display = "none";
+        resetAcc.style.display = "none";
+        deleteAcc.style.display = "none";
+    
+    });
+})
+
+//Close esc
+document.addEventListener("keydown", (e)=>{
+    if(e.code === "Escape" || e.keyCode === 27){
+        modal.style.display = "none";
+        resetAcc.style.display = "none";
+        deleteAcc.style.display = "none";
+    }
+});

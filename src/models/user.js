@@ -8,9 +8,10 @@ const userSchema = new Mongoose.Schema(
   {
     username: { type: String, unique: true },
     name: String,
-    lastName: String,
+    lastname: String,
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    country: String
   },
   {
     timestamps: true,

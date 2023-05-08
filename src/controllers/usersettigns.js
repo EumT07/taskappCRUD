@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 //Set security questions
 export const secretQuestions = async (req,res)=>{
-    const userID = req.body.userID;
+    const userID = req.body.userid;
     const body = req.body;
     const setSecretqt = new SecretQt(body);
     setSecretqt.user = userID;
@@ -13,8 +13,22 @@ export const secretQuestions = async (req,res)=>{
     return res.status(202).redirect("/dashboard");
 }
 
-//Change password 
+//Update user
+export const updateUser = async (req,res) => {
+    const userID = req.body.userID;
+    const {username,name,lastname,country} = req.body;
+    const data = {
+        username: username,
+        name: name,
+        lastname: lastname,
+        country: country
+    }
+    await User.findByIdAndUpdate({_id: userID}, data);
+    return await res.status(202).redirect("/api/settings/profile");
+}
 
+
+//Change password 
 export const changePassword = async (req,res) => {
     const {email,password, confirmPassword} = req.body;
 
@@ -30,6 +44,7 @@ export const changePassword = async (req,res) => {
     return res.status(200).json({message:"Password have changed"});
 }
 
+//Search email
 export const searchEmail = async (req,res) => {
     const email = req.body.email;
     const user = await User.findOne({email: email});
@@ -38,4 +53,14 @@ export const searchEmail = async (req,res) => {
         return res.status(404).json({message: "User not found"})
     }
     return res.status(200).json({message: `User: ${user.email}`});
+}
+
+//Reset Account
+
+//Remove Account
+export const removeAcc = async (req,res) => {
+    const {id} = req.params;
+    await User.deleteOne({_id: id});
+    await SecretQt.deleteOne({user: id});
+    return res.status(202).redirect("/");
 }

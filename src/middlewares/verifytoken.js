@@ -12,7 +12,7 @@ export const verifyToken = async (req, res, next) => {
     
     try {
         if(!token){
-            return res.status(404).json({message: "No token Provided"});
+            return res.status(404).redirect("/api/auth/signin")
         }
         //Decode Token
         const tokenDecoded = jwt.verify(token, SECRET);
