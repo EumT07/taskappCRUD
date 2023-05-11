@@ -1,0 +1,23 @@
+<%- include("../partials/head.ejs") %>
+<section class="password">
+    <div class="pass_container">
+        <h2>Change your password</h2>
+        <form action="" >
+            <input type="hidden" name="userid" value="<%= user.id %>">
+            <label for="">Old Password
+                <input type="password" name="oldPass" id="oldPass">
+                <span class="passIco fa"></span>
+            </label>
+            <label for="">New Password
+                <input type="password" name="oldPass" id="oldPass">
+                <span class="passIco fa"></span>
+            </label>
+            <label for="">Confirm New Password
+                <input type="password" name="oldPass" id="oldPass">
+                <span class="passIco fa"></span>
+            </label>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</section>
+<%- include("../partials/body.ejs") %>

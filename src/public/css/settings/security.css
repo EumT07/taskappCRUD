@@ -1,0 +1,164 @@
+.pinCode{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+.pinCode_container{
+    width: 320px;
+    height: 380px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #3b4650;
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.pinCode_container > form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 170px;
+    width: 90%;
+}
+.pinCode_container > h2{
+    margin-top: 25px;
+    font-size: 1.5rem;
+    color: #FFD93D;
+}
+.pinCode_container > p{
+    padding-left: 55px;
+    padding-right: 55px;
+}
+.pinCode_container > hr{
+    width: 75%;
+}
+.pinCode_container > form .inputGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+}
+.pinCode_container > form .inputGroup > label > input{
+    width: 30px;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    text-align: center;
+    border-radius: 2px;
+    color: #a93132;
+}
+.pinCode_container > form .inputGroup > label > input::placeholder{
+    color: #a93132;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.pinCode_container > form button{
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: #a93132;
+    color: #fff;
+    cursor: pointer;
+}
+.pinCode_container > form button:hover{
+    background-color: #8f4c4c;
+}
+
+/*Change password*/
+
+.password{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+.pass_container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 340px;
+    background-color: #3b4650;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.pass_container > h2{
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: #FFD93D;
+}
+.pass_container form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 260px;
+    height: 260px;
+}
+.pass_container form label{
+    position: relative;
+    color: #fff;
+    width: 100%;
+}
+.pass_container form label > .passIco {
+    position: absolute;
+    top: 32px;
+    left: 7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    color: #a93638;
+}
+.pass_container form label > .passIco::before{
+    content: "\f023";
+}
+.pass_container form label> input{
+    margin-top: 8px;
+    width: 87%;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    padding-left: 30px;
+    color: #a93638;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+.pass_container > form button{
+    margin-top: 8px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: #a93132;
+    color: #fff;
+    cursor: pointer;
+}
+.pass_container > form button:hover{
+    background-color: #8f4c4c;
+}

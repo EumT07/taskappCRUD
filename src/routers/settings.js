@@ -1,14 +1,18 @@
 "user strict"
 import { Router } from "express";
 import User from "../models/user.js";
-import {verifyToken, }  from "../middlewares/verifytoken.js";
+import {
+    verifyToken,
+    verifyPinCode
+ }  from "../middlewares/verifytoken.js";
 import {
     checkUsername
 } from "../middlewares/verifysignup.js";
 import {
     secretQuestions,
     updateUser,
-    removeAcc
+    removeAcc,
+    pincode
  } from "../controllers/usersettigns.js";
 
 const router = Router();
@@ -31,15 +35,10 @@ router
 router
     .get("/removeAcc/:id", removeAcc);
 
-//Settings
-// router
-//     .get("/", verifyToken, async (req,res)=>{
-//         const user =  await User.findById(req.userID);
-//         res.render("./settings/settings.ejs", {
-//             title: "settings",
-//             user
-//         })
-//     });
+//Checking Pin > change password
+router
+    .post("/pinchangepass", verifyPinCode)
+    .post("/pinchangesecretqts", verifyPinCode)
 
 //Secret Quetions
 router
@@ -52,12 +51,36 @@ router
     })
     .post("/secretquestions", secretQuestions )
 
-//Change Password
+//Pin code
+router
+    .get("/pincode", verifyToken, async (req,res)=>{
+        const user =  await User.findById(req.userID);
+        res.render("./settings/pincode.ejs", {
+            title: "Pin Code",
+            user
+        })
+    })
+    .post("/pincode", pincode)
 
-//Change secretqt
+//Change Password
+router
+    .get("/changepassword", verifyToken, async (req, res)=>{
+        const user = await User.findById(req.userID);
+        res.render("./settings/changepass.ejs",{
+            title: "Change Password",
+            user
+        });
+    })
 
 //Reset Password
+.get("/resetpassword", verifyToken, async (req, res)=>{
+    const user = await User.findById(req.userID);
+    res.render("./settings/resetpass.ejs",{
+        title: "Reset Password",
+        user
+    });
+})
 
-//Reset Secretqt
+
 
 export default router;

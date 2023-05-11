@@ -98,6 +98,9 @@
     border: 2px solid #a93132;
 
 }
+.data__container .show_options div > form > label > input[type="email"]:focus{
+    border: 1px solid #b8afaf98;
+}
 
 /*Profile form*/
 .data__container .show_options > .profile_form > form{
@@ -155,12 +158,12 @@
     border-radius: 6px;
     border: none;
     outline: none;
-    background-color: #a93132;
     color: #fff;
     cursor: pointer;
+    background-color: #8f4c4c;
 }
 .btnForm:hover{
-    background-color: #8f4c4c;
+    background-color: #a93132;
 }
 .trash{
     width: 40px;
@@ -194,6 +197,7 @@
     height: 300px;
     padding: 15px 30px;
 }
+
 /*Change security*/
 .data__container .show_options > .changesquestions_form{
     display: none;
@@ -214,6 +218,37 @@
     background-color: #4eb14549;
     border: 2px solid #23d33a;
 }
+/*Form change Password and secret questions*/
+form > .inputGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 60%;
+}
+
+form .inputGroup > label > input{
+    width: 30px;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    text-align: center;
+    border-radius: 2px;
+    color: #a93132;
+}
+form .inputGroup > label > input:focus{
+    border: 2px solid #a93132;
+}
+form .inputGroup > label > input::placeholder{
+    color: #a93132;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 /*account*/
 .data__container .show_options > .accountContainer_form {
     display: none;

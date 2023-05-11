@@ -1,6 +1,7 @@
 "use strict"
 import User from "../models/user.js";
 import SecretQt from "../models/secretqt.js";
+import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
 
 //Set security questions
@@ -10,6 +11,15 @@ export const secretQuestions = async (req,res)=>{
     const setSecretqt = new SecretQt(body);
     setSecretqt.user = userID;
     await setSecretqt.save();
+    return res.status(202).redirect("/api/settings/pincode");
+}
+//Pin code
+export const pincode = async (req,res) => {
+    const userID = req.body.userid;
+    const pinData = req.body;
+    const pin = new PIN(pinData);
+    pin.user = userID;
+    await pin.save();
     return res.status(202).redirect("/dashboard");
 }
 
@@ -26,6 +36,7 @@ export const updateUser = async (req,res) => {
     await User.findByIdAndUpdate({_id: userID}, data);
     return await res.status(202).redirect("/api/settings/profile");
 }
+
 
 
 //Change password 
