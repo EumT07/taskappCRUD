@@ -2,18 +2,17 @@
 <section class="password">
     <div class="pass_container">
         <h2>Change your password</h2>
-        <form action="" >
+        <% if(errnewpass) { %>
+            <p class="flash_messages"><%= errnewpass %></p>
+        <% } %>
+        <form action="/api/settings/changepassword" method="post">
             <input type="hidden" name="userid" value="<%= user.id %>">
-            <label for="">Old Password
-                <input type="password" name="oldPass" id="oldPass">
-                <span class="passIco fa"></span>
-            </label>
             <label for="">New Password
-                <input type="password" name="oldPass" id="oldPass">
+                <input type="password" name="newPassword" id="oldPass">
                 <span class="passIco fa"></span>
             </label>
             <label for="">Confirm New Password
-                <input type="password" name="oldPass" id="oldPass">
+                <input type="password" name="confirmNewPassword" id="oldPass">
                 <span class="passIco fa"></span>
             </label>
             <button type="submit">Send</button>

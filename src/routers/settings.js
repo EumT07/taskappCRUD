@@ -6,18 +6,21 @@ import {
     verifyPinCode
  }  from "../middlewares/verifytoken.js";
 import {
-    checkUsername
+    checkPassword,
+    checkUsername,
+    checkNewPassword
 } from "../middlewares/verifysignup.js";
 import {
     secretQuestions,
     updateUser,
     removeAcc,
-    pincode
+    pincode,
+    changePassword
  } from "../controllers/usersettigns.js";
 
 const router = Router();
 
-//Profile
+//Profile Page
 router 
     .get("/profile", verifyToken, async (req, res) =>{
         const user =  await User.findById(req.userID);
@@ -25,33 +28,28 @@ router
             title: "Profile",
             user
         })
-    });
+    })
 
-//Updatting user
+//Profile Page: Updatting user
 router
-    .post("/updateUser", checkUsername ,updateUser);
+    .post("/updateUser", checkUsername ,updateUser)
 
-//Remove user
+//Profile Page: Remove user
 router
-    .get("/removeAcc/:id", removeAcc);
+    .get("/removeAcc/:id", removeAcc)
 
-//Checking Pin > change password
-router
-    .post("/pinchangepass", verifyPinCode)
-    .post("/pinchangesecretqts", verifyPinCode)
-
-//Secret Quetions
+//Profile Page: Secret Quetions
 router
     .get("/secretquestions", verifyToken, async (req,res)=>{
         const user = await User.findById(req.userID);
         res.render("./settings/secretqts.ejs", {
             title: "Secret Questions",
             user
-        });
+        })
     })
     .post("/secretquestions", secretQuestions )
 
-//Pin code
+//Profile Page: Pin code
 router
     .get("/pincode", verifyToken, async (req,res)=>{
         const user =  await User.findById(req.userID);
@@ -60,7 +58,37 @@ router
             user
         })
     })
-    .post("/pincode", pincode)
+    .post("/pincode", pincode) 
+
+//Profile Page : Checking Pin > change password
+router
+    .post("/pinchangepass", verifyPinCode, (req,res) => {
+        if(!req.result){
+            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
+            req.flash("errorStyle", "errorStyle");
+            return res.status(200).redirect("/api/settings/profile?data=changepass");
+        }else{
+            req.flash("id", `${req.ID}`);
+            req.flash("link", "/api/settings/changepassword");
+            req.flash("successStyle", "successStyle");
+            req.flash("successPIN"," ¡¡¡ change !!! ");
+            return res.status(200).redirect("/api/settings/profile?data=changepass");
+        }
+    })
+    .post("/pinchangesecretqts", verifyPinCode, (req, res)=>{
+        if(!req.result){
+            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
+            req.flash("errorStyle", "errorStyle");
+            return res.status(200).redirect("/api/settings/profile?data=changesecretqts");
+        }else{
+            req.flash("id", `${req.ID}`)
+            req.flash("link", "/api/settings/changesecretquestions");
+            req.flash("successStyle", "successStyle");
+            req.flash("successPIN"," ¡¡¡ change !!! ");
+            return res.status(200).redirect("/api/settings/profile?data=changesecretqts");
+        }
+    })
+
 
 //Change Password
 router
@@ -69,7 +97,18 @@ router
         res.render("./settings/changepass.ejs",{
             title: "Change Password",
             user
-        });
+        })
+    })
+    .post("/changepassword", checkNewPassword ,changePassword)
+
+//change Secret Questions
+router
+    .get("/changesecretquestions", verifyToken,  async (req, res)=>{
+        const user = await User.findById(req.userID);
+        res.render("./settings/changesecretqts.ejs",{
+            title: "Change Secret Questions",
+            user
+        })
     })
 
 //Reset Password
@@ -80,7 +119,6 @@ router
         user
     });
 })
-
 
 
 export default router;

@@ -24,7 +24,7 @@ export const verifyToken = async (req, res, next) => {
 
         //Check if user exists or not.
         if(!user){
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).redirect("/api/auth/signin")
         }
 
         //If user exists go on
@@ -38,46 +38,36 @@ export const verifyToken = async (req, res, next) => {
 
 //Verify Pincode
 export const verifyPinCode = async (req, res,next) => {
-    //getting user
-    const userID = req.body.userID;
-
-    //
-    const {pin1,pin2,pin3,pin4,pin5,pin6} = req.body;
-    const pinListA = [pin1,pin2,pin3,pin4,pin5,pin6];
+    try {
+        //getting user
+        const userID = req.body.userID;
+        req.ID = userID;
+        //Pin to compare
+        const {pin1,pin2,pin3,pin4,pin5,pin6} = req.body;
+        const pinListA = [pin1,pin2,pin3,pin4,pin5,pin6];
     
-    //
-    const pinUser = await PIN.findOne({user: userID});
-    const pinListB = [pinUser.pin1,pinUser.pin2,pinUser.pin3,pinUser.pin4,pinUser.pin5,pinUser.pin6];
+        //Pin from user-database
+        const pinUser = await PIN.findOne({user: userID});
+        const pinListB = [pinUser.pin1,pinUser.pin2,pinUser.pin3,pinUser.pin4,pinUser.pin5,pinUser.pin6];
 
-
-    let result = null;
+        req.result = null;
        
-    for (let i = 0; i < pinListB.length; i++) {
-        console.log(pinListA[i] + ":" + pinListB[i] );
-
-        if(pinListA[i] == pinListB[i]){
-            result = true;
-            console.log("Good");
-            continue;
-        }else{
-            console.log("Sorry");
-            result = false;
-            break;
+        for (let i = 0; i < pinListB.length; i++) {
+            if(pinListA[i] == pinListB[i]){
+                req.result = true;
+                continue;
+            }else{
+                req.result = false;
+                break;
+            }
         }
     
+        next();
+    } catch (error) {
+        console.log("There is an error: Verify Pin ".red.bold, error.message);
+        if(error){
+            res.status(404).redirect("/dashboard")
+            return; 
+        }
     }
-
-    if (!result){
-        console.log("Verificacion incorrecta");
-    }else{
-        console.log("Correcta");
-    }
-
-
-    console.log(`
-    userID: ${userID}
-    Pin List A: ${pinListA}
-    Pin List B: ${pinListB}
-    valor final: ${result}
-    `);
 }

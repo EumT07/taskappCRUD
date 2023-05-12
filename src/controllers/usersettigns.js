@@ -37,22 +37,13 @@ export const updateUser = async (req,res) => {
     return await res.status(202).redirect("/api/settings/profile");
 }
 
-
-
 //Change password 
 export const changePassword = async (req,res) => {
-    const {email,password, confirmPassword} = req.body;
-
-    if(password !== confirmPassword){
-        return res.status(200).json({message: "Password are different"});
-    }else if(password.length <= 8){
-        return res.status(200).json({message: "Must have more than 8 characteres"});
-    }
+    const {userid, newPassword, confirmNewPassword} = req.body;
     const salt = await bcrypt.genSalt(12);
-    const newPassword = await bcrypt.hash(password, salt);
-    await User.findOneAndUpdate({email: email},{password: newPassword});
-
-    return res.status(200).json({message:"Password have changed"});
+    const new_password = await bcrypt.hash(newPassword, salt);
+    await User.findOneAndUpdate({_id: userid},{password: new_password});
+    return res.status(202).redirect("/api/auth/signin");
 }
 
 //Search email

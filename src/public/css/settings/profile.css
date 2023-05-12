@@ -248,7 +248,17 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
-
+/*Error and Success Message*/
+.errorStyle{
+    color: #a93132;
+    font-size: 1.2rem;
+    align-self: center;
+}
+.successStyle{
+    color: #23d33a;
+    font-size: 1.2rem;
+    align-self: center;
+}
 /*account*/
 .data__container .show_options > .accountContainer_form {
     display: none;

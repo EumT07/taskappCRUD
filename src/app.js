@@ -55,6 +55,7 @@ app.use(session({
 //Conect Flash
 app.use((req,res,next) => {
     //User data
+    app.locals.id = req.flash("id");
     app.locals.username = req.flash("username");
     app.locals.email = req.flash("email");
     app.locals.password = req.flash("password");
@@ -63,12 +64,23 @@ app.use((req,res,next) => {
     //User register
     app.locals.errSignup = req.flash("errSignup");
     app.locals.errSignin = req.flash("errSignin");
+    app.locals.errnewpass = req.flash("errnewpass")
 
     //UsernameFound
     app.locals.usernameFound = req.flash("usernameFound");
     app.locals.usernameErr = req.flash("usernameErr");
     
+    //PinCode
+    app.locals.successPIN = req.flash("successPIN");
+    app.locals.errorPIN = req.flash("errorPIN");
     next();
+
+    //Links
+    app.locals.link = req.flash("link");
+
+    //Styles
+    app.locals.successStyle = req.flash("successStyle");
+    app.locals.errorStyle = req.flash("errorStyle");
 })
 
 

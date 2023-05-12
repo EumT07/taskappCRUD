@@ -163,3 +163,48 @@ export const checkUsername = async (req,res,next) => {
     }
 
 }
+
+//Checking new passwords
+export const checkNewPassword = async (req, res, next) => {
+    //Checking data users
+    const {newPassword, confirmNewPassword} = req.body;
+   console.log(newPassword);
+   console.log(confirmNewPassword);
+    //Regular Expresion
+    const characteresLng = (/(?=^.{8,}$)/).test(newPassword);
+    const anyNumber = (/(?=.*\d)/).test(newPassword);
+    const lowerLetter = (/(?=.*[a-z])/).test(newPassword);
+    const anyUppserLetter = (/(?=.*[A-Z])/).test(newPassword);
+    const notSpace = (/^\S+$/).test(newPassword);
+
+    try {
+        if(newPassword != confirmNewPassword ){
+            req.flash("errnewpass", "Password are different")
+            return res.redirect("/api/settings/changepassword");
+        }else if(!characteresLng){
+            //pass length > 8
+            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
+            return res.redirect("/api/settings/changepassword");
+        }else if(!lowerLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least a letter")
+            return res.redirect("/api/settings/changepassword");
+        }else if(!anyNumber){
+            //pass must have numbers
+            req.flash("errnewpass", "Password must have at least a number")
+            return res.redirect("/api/settings/changepassword");
+        }else if(!anyUppserLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least an Upper letter")
+            return res.redirect("/api/settings/changepassword");
+        }else if(!notSpace){
+            //pass must not have any space
+            req.flash("errnewpass", "Password must not have any blank space")
+            return res.redirect("/api/settings/changepassword");
+        }
+
+        next();
+    } catch (error) {
+        console.log("There is an error: Verify user ".red.bold, error.message);
+    }
+}

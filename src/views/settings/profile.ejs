@@ -11,11 +11,11 @@
             <h3><%= user.email %></h3>
             <hr>
             <div class="links">
-                <a id ="profileBtn" href="#profile">Profile</a>
-                    <a id ="taskBtn" href="#taskdiv">Tasks</a>
-                    <a id ="changepassBtn" href="#changepass">Change Password</a>
-                    <a id ="changesecretqtsBtn" href="#changesecretqts">Change Secret Questions</a>
-                    <a id ="accountBtn" href="#accountdiv">Account</a>
+                <a id ="profileBtn" href="?data=profile">Profile</a>
+                    <a id ="taskBtn" href="?data=taskdiv">Tasks</a>
+                    <a id ="changepassBtn" href="?data=changepass">Change Password</a>
+                    <a id ="changesecretqtsBtn" href="?data=changesecretqts">Change Secret Questions</a>
+                    <a id ="accountBtn" href="?data=accountdiv">Account</a>
             </div>
         </div>
         <div class="show_options">
@@ -105,7 +105,10 @@
                     </div>
                     <button class="btnForm" type="submit" value="Send">Send</button>
                     <input type="hidden" name="userID" value="<%= user.id %>"  id="">
-                    <p class="click">Click</p>
+                    <% if(errorPIN || successPIN) { %>
+                        <span class="<%=errorStyle%>" ><%=errorPIN%></span>
+                        <a  class="<%=successStyle%>" href="<%=link%>"><%=successPIN%></a>
+                    <% } %>
                 </form>
             </div>
 
@@ -135,7 +138,10 @@
                     </div>
                     <button class="btnForm" type="submit" value="Send">Send</button>
                     <input type="hidden" name="userID" value="<%= user.id %>"  id="">
-                    <p class="click">Click</p>
+                    <% if(errorPIN || successPIN) { %>
+                        <span class="<%=errorStyle%>" ><%=errorPIN%></span>
+                        <a  class="<%=successStyle%>" href="<%=link%>"><%=successPIN%></a>
+                    <% } %>
                 </form>
             </div>
 
