@@ -21,14 +21,16 @@ btn_Check.addEventListener("click", (e)=>{
     }
 });
 
-//Gettings params
+//Gettings params: email
 const emailparams = window.location.search;
 const emailURL = new URLSearchParams(emailparams);
 const email = emailURL.get("email");
+//email from form sections
 const emailForm = document.getElementById("email");
 
 function getParams() {
     if(email){
+        //Adding new value to email
         return emailForm.value = email
     }
 }

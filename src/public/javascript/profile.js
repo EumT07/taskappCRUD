@@ -1,12 +1,11 @@
 "user strict"
+
 //Gettings form info
 const profileForm = document.querySelector(".profile_form");
 const taskDiv = document.querySelector(".taskContainer_form");;
 const changepassForm = document.querySelector(".changepass_form");;
 const scrtqtForm = document.querySelector(".changesquestions_form");;
 const accountDiv = document.querySelector(".accountContainer_form");;
-
-
 
 
 //Get links 
@@ -46,12 +45,6 @@ if(value === "profile"){
     accountDiv.style.display = "block";
 }
 
-
-
-
-
-
-
 // Modal
 const modal = document.querySelector(".modal");
 const resetAcc = document.querySelector(".resetAcc");
@@ -65,13 +58,13 @@ const buttons = [resetBtn,deleteBtn];
 buttons.forEach(element => {
     element.addEventListener("click", (e)=>{
        if (element.textContent.trim().toLowerCase() === "reset"){
-        modal.style.display = "block";
-        resetAcc.style.display = "block";
-        return;
+            modal.style.display = "block";
+            resetAcc.style.display = "block";
+            return;
        }else if(element.textContent.trim().toLowerCase() === "delete"){
-        modal.style.display = "block";
-        deleteAcc.style.display = "block";
-        return;
+            modal.style.display = "block";
+            deleteAcc.style.display = "block";
+            return;
        }
     })
 })

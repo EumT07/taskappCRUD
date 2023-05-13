@@ -31,7 +31,6 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
 }
 .data__container .data_options .userImg{
     width: 100px;
@@ -45,8 +44,7 @@
 .data__container .data_options .userImg img{
     width: 80%;
     height: 80%;
-    object-fit: contain;
-    
+    object-fit: contain;  
 }
 .data__container .data_options  hr{
     width: 90%;
@@ -57,7 +55,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    /* align-items: center; */
 }
 .links > a{
     text-decoration: none;
@@ -71,7 +68,6 @@
     width: 55%;
     height: 450px;
     border-left: 1px solid  #a8a4a4;
-
 }
 .data__container .show_options div > form{
     display: flex;
@@ -96,7 +92,6 @@
 }
 .data__container .show_options div > form > label > input:focus{
     border: 2px solid #a93132;
-
 }
 .data__container .show_options div > form > label > input[type="email"]:focus{
     border: 1px solid #b8afaf98;
@@ -245,8 +240,8 @@ form .inputGroup > label > input::placeholder{
 }
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+    -webkit-appearance: none; 
+    margin: 0; 
 }
 /*Error and Success Message*/
 .errorStyle{
@@ -337,7 +332,6 @@ input[type=number]::-webkit-outer-spin-button {
     width: 420px;
     height: 170px;
 }
-
 .modal .modal__content  div > h2 {
     color: #a93132;
     font-weight: bold;

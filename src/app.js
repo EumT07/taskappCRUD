@@ -73,14 +73,14 @@ app.use((req,res,next) => {
     //PinCode
     app.locals.successPIN = req.flash("successPIN");
     app.locals.errorPIN = req.flash("errorPIN");
-    next();
-
+    
     //Links
     app.locals.link = req.flash("link");
-
+    
     //Styles
     app.locals.successStyle = req.flash("successStyle");
     app.locals.errorStyle = req.flash("errorStyle");
+    next();
 })
 
 

@@ -1,6 +1,8 @@
-*{
+* {
     margin: 0;
-    box-sizing: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 body{
     overflow-x: hidden;
@@ -49,7 +51,7 @@ main .intro .intro_link h2 a{
     text-decoration: none;
     color: rgba(224, 58, 28, 0.932);
 }
-/* Task */
+/* Task Section */
 .task{
     display: flex;
     flex-direction: row;
@@ -100,7 +102,7 @@ main .intro .intro_link h2 a{
     width: 100%;
     text-align: center;
 }
-/* Ideas */
+/* Ideas Sections */
 /* Footer */
 footer{
     max-width: 100vw;
@@ -159,9 +161,6 @@ footer .email_container .email_form button:hover{
     background-color: #d32324;
 
 }
-
-
-
 .footer__content .policy{
     height: 180px;
     display: flex;

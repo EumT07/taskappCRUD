@@ -103,10 +103,12 @@ body {
     border-radius: 15px;
     padding: 10px;
 }
+/*Sign up Measure*/
 .register_main .form_section .measure_SingUp{
     width: 400px;
     height: 480px;
 }
+/*Sign in Measure*/
 .register_main .form_section .measure_SingIn{
     width: 400px;
     height: 350px;
@@ -155,7 +157,6 @@ body {
     justify-content: center;
     margin: auto;
     color: #a93638;
-
 }
 /*Sign up icons*/
 .form__measure_SignUp label:nth-child(1) > .userIcon::before{
@@ -221,5 +222,4 @@ body {
     margin: auto;
     width: 20px;
     height: 20px;
-    
 }
