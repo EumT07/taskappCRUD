@@ -28,7 +28,7 @@ export const verifyToken = async (req, res, next) => {
         }
 
         //If user exists go on
-        next();
+        return next();
 
 
     } catch (error) {
@@ -48,26 +48,144 @@ export const verifyPinCode = async (req, res,next) => {
     
         //Pin from user-database
         const pinUser = await PIN.findOne({user: userID});
-        const pinListB = [pinUser.pin1,pinUser.pin2,pinUser.pin3,pinUser.pin4,pinUser.pin5,pinUser.pin6];
 
-        req.result = null;
+        const pinListB = [
+            pinUser.pin1,
+            pinUser.pin2,
+            pinUser.pin3,
+            pinUser.pin4,
+            pinUser.pin5,
+            pinUser.pin6
+        ];
+
+        //Creating a variable
+        req.verify = null;
        
+        //Check Pins
         for (let i = 0; i < pinListB.length; i++) {
-            if(pinListA[i] == pinListB[i]){
-                req.result = true;
+            const value = await PIN.comparePincode(pinListA[i], pinListB[i]);
+            if(value){
+                req.verify = true;
                 continue;
             }else{
-                req.result = false;
+                req.verify = false;
                 break;
             }
         }
-    
-        next();
+        
+        return next();
     } catch (error) {
         console.log("There is an error: Verify Pin ".red.bold, error.message);
         if(error){
             res.status(404).redirect("/dashboard")
             return; 
         }
+    }
+}
+
+//Creating token-pass
+export const creatingtokenPass = async (req, res, next) => {
+    req.verify;
+    req.ID;
+    const SECRET = process.env.SECRET_KEY_JWT;
+    const cookieName = process.env.COOKPINPASS;
+    
+    try {
+        if(!req.verify){
+            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
+            req.flash("errorStyle", "errorStyle");
+            return res.status(200).redirect("/api/settings/profile?data=changepass");
+        }
+        //Gettin user
+        const user = await User.findById(req.ID);
+
+        //Creating token
+        const token = jwt.sign({id: user._id},SECRET,{
+            expiresIn: "4m"
+        })
+
+        //Creating Cookie
+        //Create our cookies
+        res.cookie(cookieName,token,{
+            maxAge: 250 * 1000,
+            secure: true,
+            httpOnly: true,
+            sameSite: "lax"
+        });
+
+        return next();
+    } catch (error) {
+        console.log("There is an error: CookieToken pass ".red.bold, error.message);  
+    }
+
+}
+//Creating token-secretqts
+export const creatingtokenSecretqts = async (req, res, next) => {
+    req.verify = req.body;
+    const SECRET = process.env.SECRET_KEY_JWT;
+    const cookieName = process.env.COOKPINSECRETQTS;
+    try {
+        if(!req.verify){
+            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
+            req.flash("errorStyle", "errorStyle");
+            return res.status(200).redirect("/api/settings/profile?data=changesecretqts");
+        }
+        //Gettin user
+        const user = await User.findById(req.ID);
+
+        //Creating token
+        const token = jwt.sign({id: user._id},SECRET,{
+            expiresIn: "4m"
+        })
+
+        //Creating Cookie
+        //Create our cookies
+        res.cookie(cookieName,token,{
+            secure: true,
+            httpOnly: true,
+            sameSite: "lax"
+        });
+
+        return next();
+    } catch (error) {
+        console.log("There is an error: CookieToken secretqts ".red.bold, error.message);  
+    }
+}
+
+//Verify token Pass
+export const verifytokenpass = async (req,res,next) => {
+    const SECRET = process.env.SECRET_KEY_JWT;
+    const cookieName = process.env.COOKPINPASS;
+    const token = req.cookies[cookieName] || req.headers[cookieName];
+    try {
+        if(!token){
+            return res.status(404).json({message: "You need to provide token"});
+        }
+        //decode Token
+        const tokenDecoded = jwt.verify(token, SECRET);
+        req.userID =  tokenDecoded.id;
+
+        return next();
+    } catch (error) {
+        console.log("There is an error: Verify Token pass ".red.bold, error.message);
+    }
+}
+
+//verify token secre qts
+export const verifytokensecretqts = async (req,res,next) => {
+    const SECRET = process.env.SECRET_KEY_JWT;
+    const cookieName = process.env.COOKPINSECRETQTS;
+    const token = req.cookies[cookieName] || req.headers[cookieName];
+    try {
+        if(!token){
+            return res.status(404).json({message: "You need to provide token"});
+        }
+        //decode Token
+        const tokenDecoded = jwt.verify(token, SECRET);
+        req.userID =  tokenDecoded.id;
+
+        return next();
+    } catch (error) {
+        console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
     }
 }

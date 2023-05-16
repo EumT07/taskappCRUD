@@ -105,9 +105,8 @@
                     </div>
                     <button class="btnForm" type="submit" value="Send">Send</button>
                     <input type="hidden" name="userID" value="<%= user.id %>"  id="">
-                    <% if(errorPIN || successPIN) { %>
+                    <% if(errorPIN) { %>
                         <span class="<%=errorStyle%>" ><%=errorPIN%></span>
-                        <a  class="<%=successStyle%>" href="<%=link%>"><%=successPIN%></a>
                     <% } %>
                 </form>
             </div>
@@ -138,9 +137,8 @@
                     </div>
                     <button class="btnForm" type="submit" value="Send">Send</button>
                     <input type="hidden" name="userID" value="<%= user.id %>"  id="">
-                    <% if(errorPIN || successPIN) { %>
+                    <% if(errorPIN ) { %>
                         <span class="<%=errorStyle%>" ><%=errorPIN%></span>
-                        <a  class="<%=successStyle%>" href="<%=link%>"><%=successPIN%></a>
                     <% } %>
                 </form>
             </div>

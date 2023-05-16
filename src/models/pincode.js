@@ -1,41 +1,35 @@
 "use strict"
 import Mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import "colors";
 
 const pinNumberSchema = new Mongoose.Schema({
     pin1: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin2: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin3: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin3: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin4: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin5: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     pin6: {
-        type: Number,
-        maxlength: 1,
+        type: String,
         required: true
     },
     user: {
@@ -44,4 +38,15 @@ const pinNumberSchema = new Mongoose.Schema({
     }
 });
 
-export default Mongoose.model("PIN", pinNumberSchema)
+//Encrypting Pincode
+pinNumberSchema.statics.encryptPinCode = async (pinCode) => {
+    const salt = await bcrypt.genSalt(12);
+    return await bcrypt.hash(pinCode, salt);
+}
+
+//Compare Pincode
+pinNumberSchema.statics.comparePincode = async (pinCode, pinCodeToCompare) => {
+    return await bcrypt.compare(pinCode, pinCodeToCompare);
+}
+
+export default Mongoose.model("PIN", pinNumberSchema);

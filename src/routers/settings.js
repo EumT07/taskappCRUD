@@ -1,9 +1,15 @@
 "user strict"
+import * as dotenv from "dotenv";
 import { Router } from "express";
 import User from "../models/user.js";
+import jwt from "jsonwebtoken";
 import {
     verifyToken,
-    verifyPinCode
+    verifyPinCode,
+    creatingtokenPass,
+    creatingtokenSecretqts,
+    verifytokenpass,
+    verifytokensecretqts
  }  from "../middlewares/verifytoken.js";
 import {
     checkPassword,
@@ -17,6 +23,8 @@ import {
     pincode,
     changePassword
  } from "../controllers/usersettigns.js";
+
+dotenv.config();
 
 const router = Router();
 
@@ -62,37 +70,19 @@ router
 
 //Profile Page : Checking Pin > change password
 router
-    .post("/pinchangepass", verifyPinCode, (req,res) => {
-        if(!req.result){
-            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
-            req.flash("errorStyle", "errorStyle");
-            return res.status(200).redirect("/api/settings/profile?data=changepass");
-        }else{
-            req.flash("id", `${req.ID}`);
-            req.flash("link", "/api/settings/changepassword");
-            req.flash("successStyle", "successStyle");
-            req.flash("successPIN"," ¡¡¡ change !!! ");
-            return res.status(200).redirect("/api/settings/profile?data=changepass");
-        }
+    .post("/pinchangepass", [verifyPinCode, creatingtokenPass], (req,res) => {
+        req.flash("id", `${req.ID}`);
+        return res.status(200).redirect("/api/settings/changepassword");
     })
-    .post("/pinchangesecretqts", verifyPinCode, (req, res)=>{
-        if(!req.result){
-            req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
-            req.flash("errorStyle", "errorStyle");
-            return res.status(200).redirect("/api/settings/profile?data=changesecretqts");
-        }else{
-            req.flash("id", `${req.ID}`)
-            req.flash("link", "/api/settings/changesecretquestions");
-            req.flash("successStyle", "successStyle");
-            req.flash("successPIN"," ¡¡¡ change !!! ");
-            return res.status(200).redirect("/api/settings/profile?data=changesecretqts");
-        }
+    .post("/pinchangesecretqts", [verifyPinCode, creatingtokenSecretqts],(req, res)=>{
+        req.flash("id", `${req.ID}`)
+        return res.status(200).redirect("/api/settings/changesecretquestions");
     })
 
 
 //Change Password
 router
-    .get("/changepassword", verifyToken, async (req, res)=>{
+    .get("/changepassword",  verifytokenpass, async (req, res)=>{
         const user = await User.findById(req.userID);
         res.render("./settings/changepass.ejs",{
             title: "Change Password",
@@ -103,7 +93,7 @@ router
 
 //change Secret Questions
 router
-    .get("/changesecretquestions", verifyToken,  async (req, res)=>{
+    .get("/changesecretquestions",  verifytokensecretqts ,async (req, res)=>{
         const user = await User.findById(req.userID);
         res.render("./settings/changesecretqts.ejs",{
             title: "Change Secret Questions",

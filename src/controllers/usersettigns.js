@@ -4,6 +4,12 @@ import SecretQt from "../models/secretqt.js";
 import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
 
+//Cookies
+const cookieapp = process.env.COOKIENAME;
+const cookiepassword = process.env.COOKPINPASS;
+const cookiesecretqts = process.env.COOKPINSECRETQTS;
+
+
 //Set security questions
 export const secretQuestions = async (req,res)=>{
     const userID = req.body.userid;
@@ -15,10 +21,29 @@ export const secretQuestions = async (req,res)=>{
 }
 //Pin code
 export const pincode = async (req,res) => {
+    //Gettin user id
     const userID = req.body.userid;
-    const pinData = req.body;
-    const pin = new PIN(pinData);
+    //Getting all pins
+    const {pin1,pin2,pin3,pin4,pin5,pin6} = req.body;
+    //Encrypting pins
+    const pin1Encrypted = await PIN.encryptPinCode(pin1);
+    const pin2Encrypted = await PIN.encryptPinCode(pin2);
+    const pin3Encrypted = await PIN.encryptPinCode(pin3);
+    const pin4Encrypted = await PIN.encryptPinCode(pin4);
+    const pin5Encrypted = await PIN.encryptPinCode(pin5);
+    const pin6Encrypted = await PIN.encryptPinCode(pin6);
+
+    //Creating PIN
+    const pin = new PIN({
+        pin1: pin1Encrypted,
+        pin2: pin2Encrypted,
+        pin3: pin3Encrypted,
+        pin4: pin4Encrypted,
+        pin5: pin5Encrypted,
+        pin6: pin6Encrypted,
+    });
     pin.user = userID;
+    //Saving 
     await pin.save();
     return res.status(202).redirect("/dashboard");
 }
@@ -43,6 +68,9 @@ export const changePassword = async (req,res) => {
     const salt = await bcrypt.genSalt(12);
     const new_password = await bcrypt.hash(newPassword, salt);
     await User.findOneAndUpdate({_id: userid},{password: new_password});
+    res.clearCookie(cookieapp);
+    res.clearCookie(cookiepassword);
+    res.clearCookie(cookiesecretqts);
     return res.status(202).redirect("/api/auth/signin");
 }
 

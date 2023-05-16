@@ -71,7 +71,7 @@ export const singin = async (req,res) => {
     }
 };
 export const closeSession = async (req,res) => {
-    res.clearCookie("app-access-token");
+    res.clearCookie(cookieName);
     req.session.destroy((err)=>{
         if(err){
             res.status(404).json({message: "error Closing session"});
