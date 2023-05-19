@@ -21,7 +21,8 @@ import {
     updateUser,
     removeAcc,
     pincode,
-    changePassword
+    changePassword,
+    changeSecretquestions
  } from "../controllers/usersettigns.js";
 
 dotenv.config();
@@ -79,7 +80,6 @@ router
         return res.status(200).redirect("/api/settings/changesecretquestions");
     })
 
-
 //Change Password
 router
     .get("/changepassword",  verifytokenpass, async (req, res)=>{
@@ -100,15 +100,18 @@ router
             user
         })
     })
+    .post("/changesecretquestions", changeSecretquestions)
 
 //Reset Password
-.get("/resetpassword", verifyToken, async (req, res)=>{
-    const user = await User.findById(req.userID);
-    res.render("./settings/resetpass.ejs",{
-        title: "Reset Password",
-        user
-    });
-})
+router
+    .get("/resetpassword", verifyToken, async (req, res)=>{
+        const user = await User.findById(req.userID);
+        res.render("./settings/resetpass.ejs",{
+            title: "Reset Password",
+            user
+        });
+    })
+    
 
 
 export default router;

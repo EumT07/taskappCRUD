@@ -1,0 +1,43 @@
+Security:
+     Reset users passwords
+     User need to take one option: 
+        First one: reset their accounts with secretquestions
+        Second one: reset their accounts with pincode
+
+
+    modify login page: add link to change passwords
+
+    -> searchEmail
+    -> resetOptions: 
+        Pincode,
+        Secret questions,
+        *recorey email : send a link to email (not yet)
+    ->getPincode: insert Pincode --> Reset password
+    ->getsecreteqts: insert Secret Quetions --> reset password
+
+    
+
+
+*Dashboard:
+    Create a simple page, to show all tasks, and put some options to add new task.
+
+    Create a task: Tittle, description, level(high,middle,down)
+    add bottom: edit, delete, complete
+    add date: Date to finish this task
+
+    Create A group Task: 5 task per group
+
+
+*About:
+    Explain about  this project, and give a short resume about, how users can use this app, and different pages of this side.
+
+*politics
+*privacy
+*cookies
+
+
+*AI:
+    "Ask how to Do it"
+    Create API to take questions or promts, and ask chatgpt, then turn back with their answers, showing up into a page or chat.
+
+          

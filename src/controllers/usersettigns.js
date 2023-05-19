@@ -74,6 +74,15 @@ export const changePassword = async (req,res) => {
     return res.status(202).redirect("/api/auth/signin");
 }
 
+//Change secret Password
+export const changeSecretquestions = async (req,res)=> {
+    const userid = req.body.userid;
+    const data = req.body;
+    await SecretQt.findOneAndUpdate({user: userid}, data);
+    res.clearCookie(cookiesecretqts);
+    return res.status(202).redirect("/api/settings/profile");
+}
+
 //Search email
 export const searchEmail = async (req,res) => {
     const email = req.body.email;

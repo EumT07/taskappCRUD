@@ -72,7 +72,6 @@ export const verifyPinCode = async (req, res,next) => {
                 break;
             }
         }
-        
         return next();
     } catch (error) {
         console.log("There is an error: Verify Pin ".red.bold, error.message);
@@ -105,7 +104,6 @@ export const creatingtokenPass = async (req, res, next) => {
         })
 
         //Creating Cookie
-        //Create our cookies
         res.cookie(cookieName,token,{
             maxAge: 250 * 1000,
             secure: true,
@@ -121,7 +119,7 @@ export const creatingtokenPass = async (req, res, next) => {
 }
 //Creating token-secretqts
 export const creatingtokenSecretqts = async (req, res, next) => {
-    req.verify = req.body;
+    req.verify;
     const SECRET = process.env.SECRET_KEY_JWT;
     const cookieName = process.env.COOKPINSECRETQTS;
     try {
@@ -139,8 +137,8 @@ export const creatingtokenSecretqts = async (req, res, next) => {
         })
 
         //Creating Cookie
-        //Create our cookies
         res.cookie(cookieName,token,{
+            maxAge: 250 * 1000,
             secure: true,
             httpOnly: true,
             sameSite: "lax"
