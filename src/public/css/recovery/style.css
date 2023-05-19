@@ -1,0 +1,130 @@
+/*Search Email*/
+.search__container{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+.searchemail_container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 340px;
+    height: 250px;
+    background-color: #3b4650;
+    color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+.searchemail_container h3{
+    margin-top: 25px;
+    font-size: 1.5rem;
+    color: #FFD93D;
+}
+.searchemail_container p{
+    padding:  0px 22px;
+}
+.searchemail_container > form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    width: 90%;
+}
+.searchemail_container form > label{
+    width: 100%;
+}
+.searchemail_container form > label input{
+    width: 100%;
+    height: 28px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    color: #a93132;
+    font-size: 1.2rem;
+    padding-left: 5px;
+    text-align: center;
+}
+form button{
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: #8f4c4c;
+    color: #fff;
+    cursor: pointer;
+}
+form button:hover{
+    background-color: #a93132;
+}
+
+/*Options*/
+.options_container{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+.options{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 840px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+.options > div{
+    width: 240px;
+    height: 200px;
+    background-color: #3b4650;
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    outline: none;
+    border: 5px solid transparent;
+}
+.options > div:hover{
+    border: 5px solid #FFD93D;
+    outline: none;
+}
+.options > div > h4{
+    margin-top: 25px;
+    font-size: 1.5rem;
+    color: #FFD93D;
+}
+.options > div > .securityqtsIcon::before{
+    content: "\f03a";
+}
+.options > div > .pinIcon::before{
+    content: "\23";
+}
+.options > div > .emailIcon::before{
+    content: "\f0e0";
+}
+.options > div > a{
+    text-decoration: none;
+    color: #fff;
+    background-color: #8f4c4c;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.options > div > a:hover{
+    background-color: #a93132;
+}

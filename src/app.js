@@ -15,7 +15,8 @@ import flash from "connect-flash"
 dotenv.config();
 import homeRoute from "./routers/home.js";
 import settingsRoute from "./routers/settings.js";
-import authRoute from "./routers/auth.js"
+import authRoute from "./routers/auth.js";
+import search from "./routers/recovery.js";
 
 
 
@@ -88,6 +89,7 @@ app.use((req,res,next) => {
 app.use(homeRoute);
 app.use("/api/settings",settingsRoute);
 app.use("/api/auth",authRoute);
+app.use("/api/recovery",search)
 
 //Static files: css, javascript
 app.use(express.static(path.join(__dirname, "./public")));

@@ -111,7 +111,7 @@ body {
 /*Sign in Measure*/
 .register_main .form_section .measure_SingIn{
     width: 400px;
-    height: 350px;
+    height: 320px;
 }
 .register_main .container h2{
     color: #fff;
@@ -133,7 +133,7 @@ body {
 }
 .form__measure_SignIn{
     width: 320px;
-    height: 200px;
+    height: 190px;
 }
 .form__container label{
     position: relative;
@@ -204,6 +204,10 @@ body {
 }
 .form__container button:hover{
     background-color: #d32324;
+}
+.register_main .container h3{
+    position: absolute;
+    top: 330px;
 }
 .flash_messages{
     text-align: center;

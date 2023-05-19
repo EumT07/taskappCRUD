@@ -102,15 +102,7 @@ router
     })
     .post("/changesecretquestions", changeSecretquestions)
 
-//Reset Password
-router
-    .get("/resetpassword", verifyToken, async (req, res)=>{
-        const user = await User.findById(req.userID);
-        res.render("./settings/resetpass.ejs",{
-            title: "Reset Password",
-            user
-        });
-    })
+
     
 
 
