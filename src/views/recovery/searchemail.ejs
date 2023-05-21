@@ -4,14 +4,13 @@
     <div class="searchemail_container">
         <h3>Search by Email / User</h3>
         <p>Insert your associated email or user, you will receive different options to reset your account</p>
-        <form action="">
+        <form action="/api/recovery/searchuser" method="POST">
             <label for="search_email">
-                <input type="email">
+                <input type="text" name="data" required>
             </label>
             <button type="submit">Search</button>
         </form>
     </div>
 </section>
 
-<script src=""></script>
 <%- include("../partials/body.ejs")%>

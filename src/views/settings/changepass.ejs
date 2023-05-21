@@ -7,11 +7,11 @@
         <% } %>
         <form action="/api/settings/changepassword" method="post">
             <input type="hidden" name="userid" value="<%= user.id %>">
-            <label for="">New Password
+            <label for="newPassword">New Password
                 <input type="password" name="newPassword" id="oldPass">
                 <span class="passIco fa"></span>
             </label>
-            <label for="">Confirm New Password
+            <label for="confirmNewPassword">Confirm New Password
                 <input type="password" name="confirmNewPassword" id="oldPass">
                 <span class="passIco fa"></span>
             </label>

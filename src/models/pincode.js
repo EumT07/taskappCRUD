@@ -38,13 +38,13 @@ const pinNumberSchema = new Mongoose.Schema({
     }
 });
 
-//Encrypting Pincode
+//Encrypting Pins code
 pinNumberSchema.statics.encryptPinCode = async (pinCode) => {
     const salt = await bcrypt.genSalt(12);
     return await bcrypt.hash(pinCode, salt);
 }
 
-//Compare Pincode
+//Compare Pins code
 pinNumberSchema.statics.comparePincode = async (pinCode, pinCodeToCompare) => {
     return await bcrypt.compare(pinCode, pinCodeToCompare);
 }

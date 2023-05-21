@@ -22,16 +22,26 @@ btn_Check.addEventListener("click", (e)=>{
 });
 
 //Gettings params: email
-const emailparams = window.location.search;
-const emailURL = new URLSearchParams(emailparams);
-const email = emailURL.get("email");
+const dataParams = window.location.search;
+const dataURL = new URLSearchParams(dataParams);
+const dataValue = dataURL.get("data");
+
 //email from form sections
 const emailForm = document.getElementById("email");
+const usernameForm = document.getElementById("username");
 
-function getParams() {
-    if(email){
+
+function compareValues(param) {
+    //Finding out if a email or username
+    const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const isAnEmail = regex.test(param);
+
+    if(isAnEmail){
         //Adding new value to email
-        return emailForm.value = email
+        return emailForm.value = param;
     }
+    //Adding new value to username
+    return usernameForm.value = param;
+
 }
-getParams();
+compareValues(dataValue);

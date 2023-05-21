@@ -2,31 +2,35 @@
 <section class="pinCode">
     <div class="pinCode_container pin_recovery">
         <h2>Enter 6-digit code</h2>
+        <% if(errorPIN){ %>
+        <span class="<%=errorStyle%>"><%= errorPIN %></span>
         <hr>
-        <form action="" method="POST">
+        <form action="/api/recovery/pinaccess" method="POST">
             <div class="inputGroup">
-                <label for="pin-1">
-                    <input type="number" name="pin-1"  maxlength="1"  tabindex="1" placeholder="·" autocomplete="off">
+                <input type="hidden" name="userID" value="<%= user.id %>">
+                <label for="pin1">
+                    <input  type="number" name="pin1"  maxlength="1"  tabindex="1" placeholder="·" autocomplete="off">
                 </label>
-                <label for="pin-2">
-                    <input type="number" name="pin-2" maxlength="1" tabindex="2" placeholder="·" autocomplete="off">
+                <label for="pin2">
+                    <input  type="number" name="pin2" maxlength="1" tabindex="2" placeholder="·" autocomplete="off">
                 </label>
-                <label for="pin-3">
-                    <input type="number" name="pin-3" maxlength="1" tabindex="3" placeholder="·" autocomplete="off">
+                <label for="pin3">
+                    <input  type="number" name="pin3" maxlength="1" tabindex="3" placeholder="·" autocomplete="off">
                 </label>
-                <label for="pin-4">
-                    <input type="number" name="pin-4" maxlength="1" tabindex="4" placeholder="·" autocomplete="off">
+                <label for="pin4">
+                    <input  type="number" name="pin4" maxlength="1" tabindex="4" placeholder="·" autocomplete="off">
                 </label>
-                <label for="pin-5">
-                    <input type="number" name="pin-5"  maxlength="1" tabindex="5" placeholder="·" autocomplete="off">
+                <label for="pin5">
+                    <input  type="number" name="pin5"  maxlength="1" tabindex="5" placeholder="·" autocomplete="off">
                 </label>
-                <label for="pin-6">
-                    <input type="number" name="pin-6" maxlength="1" tabindex="6" placeholder="·" autocomplete="off">
+                <label for="pin6">
+                    <input  type="number" name="pin6" maxlength="1" tabindex="6" placeholder="·" autocomplete="off">
                 </label>
             </div>
             <hr>
             <button type="submit">Send</button>
         </form>
+        <% } %>  
     </div>
 </section>
 <%- include("../partials/body.ejs") %>

@@ -1,21 +1,27 @@
 "use strict"
 import * as dotenv from "dotenv";
 import User from "../models/user.js";
+import Secretqt from "../models/secretqt.js";
 import PIN from "../models/pincode.js";
 import jwt from "jsonwebtoken";
 dotenv.config();
+//Token Variables
+const SECRET = process.env.SECRET_KEY_JWT;//JWT
+const deleteCookie = process.env.COOKRECOVERY;//REcovery
+
 
 //Verify Token
 export const verifyToken = async (req, res, next) => {
-    const SECRET = process.env.SECRET_KEY_JWT;
+    
     const cookieName = process.env.COOKIENAME;
     const token = req.cookies[cookieName] || req.headers[cookieName];
     
     try {
+        //Check is token exists or not
         if(!token){
             return res.status(404).redirect("/api/auth/signin")
         }
-        //Decode Token
+        //Decoded-Token
         const tokenDecoded = jwt.verify(token, SECRET);
         req.userID = tokenDecoded.id;
 
@@ -30,9 +36,8 @@ export const verifyToken = async (req, res, next) => {
         //If user exists go on
         return next();
 
-
     } catch (error) {
-        console.log("There is an error: Verify Token ".red.bold, error.message);
+        console.log("There is an error: Middlewate-token : Verify Token ".red.bold, error.message);
     }
 }
 
@@ -61,7 +66,7 @@ export const verifyPinCode = async (req, res,next) => {
         //Creating a variable
         req.verify = null;
        
-        //Check Pins
+        //Check Pins-Encrypted
         for (let i = 0; i < pinListB.length; i++) {
             const value = await PIN.comparePincode(pinListA[i], pinListB[i]);
             if(value){
@@ -72,6 +77,7 @@ export const verifyPinCode = async (req, res,next) => {
                 break;
             }
         }
+        //return
         return next();
     } catch (error) {
         console.log("There is an error: Verify Pin ".red.bold, error.message);
@@ -83,10 +89,9 @@ export const verifyPinCode = async (req, res,next) => {
 }
 
 //Creating token-pass
-export const creatingtokenPass = async (req, res, next) => {
+export const creatingPassToken = async (req, res, next) => {
     req.verify;
     req.ID;
-    const SECRET = process.env.SECRET_KEY_JWT;
     const cookieName = process.env.COOKPINPASS;
     
     try {
@@ -113,14 +118,13 @@ export const creatingtokenPass = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: CookieToken pass ".red.bold, error.message);  
+        console.log("There is an error: Middleware-token: Creating pass-token ".red.bold, error.message);  
     }
 
 }
 //Creating token-secretqts
-export const creatingtokenSecretqts = async (req, res, next) => {
+export const creatingSecretqtsToken = async (req, res, next) => {
     req.verify;
-    const SECRET = process.env.SECRET_KEY_JWT;
     const cookieName = process.env.COOKPINSECRETQTS;
     try {
         if(!req.verify){
@@ -146,23 +150,23 @@ export const creatingtokenSecretqts = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: CookieToken secretqts ".red.bold, error.message);  
+        console.log("There is an error: Middleware-Token:  Creating SecretQts Token".red.bold, error.message);  
     }
 }
 
 //Verify token Pass
-export const verifytokenpass = async (req,res,next) => {
-    const SECRET = process.env.SECRET_KEY_JWT;
+export const verifyPassToken = async (req,res,next) => {
     const cookieName = process.env.COOKPINPASS;
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
         if(!token){
             return res.status(404).json({message: "You need to provide token"});
         }
-        //decode Token
+        //decode-Token
         const tokenDecoded = jwt.verify(token, SECRET);
+        //Getting ID
         req.userID =  tokenDecoded.id;
-
+        // Return
         return next();
     } catch (error) {
         console.log("There is an error: Verify Token pass ".red.bold, error.message);
@@ -170,8 +174,7 @@ export const verifytokenpass = async (req,res,next) => {
 }
 
 //verify token secre qts
-export const verifytokensecretqts = async (req,res,next) => {
-    const SECRET = process.env.SECRET_KEY_JWT;
+export const verifySecretqtsToken = async (req,res,next) => {
     const cookieName = process.env.COOKPINSECRETQTS;
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
@@ -180,10 +183,185 @@ export const verifytokensecretqts = async (req,res,next) => {
         }
         //decode Token
         const tokenDecoded = jwt.verify(token, SECRET);
+        //Getting user ID
         req.userID =  tokenDecoded.id;
 
         return next();
     } catch (error) {
         console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
+    }
+}
+
+//Verify token to reset password
+export const verifyRecoveryToken = async (req,res,next) => {
+    const SECRET = process.env.SECRET_KEY_JWT;
+    const cookieName = process.env.COOKRECOVERY;
+    const token = req.cookies[cookieName] || req.headers[cookieName];
+
+    //Checking token:
+    try {
+        if(!token){
+            return res.status(404).redirect("/api/recovery/search")
+        }
+        //Decode Token
+        const tokenDecoded = jwt.verify(token,SECRET);
+        req.ID = tokenDecoded.id;
+        //Return
+        return next();
+    } catch (error) {
+        console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
+        return res.status(404).redirect("/api/recovery/search")
+    }
+
+}
+
+//Verify pincode and create a new token to reset password
+export const verifyPinAccess = async (req,res,next) => {
+    const cookieName = process.env.COOKIESACCESS;
+    const SECRET = process.env.SECRET_KEY_JWT;
+    req.ID;
+    req.verify;
+    try {
+        if(!req.verify){
+            req.flash("errorPIN","Incorrect PIN, try again..!!");
+            req.flash("errorStyle", "errorStyle");
+            req.flash("inputError", "inputError")
+            return res.status(404).redirect("/api/recovery/pincode")
+        }
+        //Delete previous cookie
+        res.clearCookie(deleteCookie)
+
+        //Creating a new Access-token
+        const token = jwt.sign({id: req.ID},SECRET,{
+            expiresIn: "4m"
+        });
+
+        //Creating Cookie
+        res.cookie(cookieName,token,{
+            maxAge: 250 * 1000,
+            secure: true,
+            httpOnly: true,
+            sameSite: "lax"
+        });
+    
+        return res.status(200).redirect("/api/recovery/resetpassword")
+    } catch (error) {
+        console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
+    }
+
+}
+
+
+//Verify secret answers
+export const verifySecretAnswers = async(req,res,next) => {
+    try {
+        //Getting answers
+        const {answer1, answer2, answer3, userid} = req.body;
+
+
+        //GEtting answers from database
+        const answers = await Secretqt.findOne({user: userid});
+   
+
+        //Creating a variable to know if user is verify or not
+        req.verifyUser = null;
+        req.ID = userid;
+
+        //Comparing values
+        const resultAnswer1 = await Secretqt.comparesecretqts(answer1, answers.answer1);
+        const resultAnswer2 = await Secretqt.comparesecretqts(answer2, answers.answer2);
+        const resultAnswer3 = await Secretqt.comparesecretqts(answer3, answers.answer3);
+    
+        //Answer 1
+        if(resultAnswer1){
+            req.verifyUser = true;
+            req.flash("inputCss1", "inputSucces");
+        }else{
+            req.verifyUser = false;
+            req.flash("inputCss1", "inputErr");
+        }
+        //Answer 1
+        if(resultAnswer2){
+            req.verifyUser = true;
+            req.flash("inputCss2", "inputSucces");
+        }else{
+            req.verifyUser = false;
+            req.flash("inputCss2", "inputErr");
+    }   
+        //Answer 3
+        if(resultAnswer3){
+            req.verifyUser = true;
+            req.flash("inputCss3", "inputSucces");
+        }else{
+            req.verifyUser = false;
+            req.flash("inputCss3", "inputErr");
+        }
+        console.log(resultAnswer1);
+        console.log(resultAnswer2);
+        console.log(resultAnswer3);
+        console.log(req.verifyUser);
+        console.log(!req.verifyUser);
+
+        if(!req.verifyUser){
+            return res.status(404).redirect("/api/recovery/secretqts")
+        }
+        
+        // return next();
+    } catch (error) {
+        console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
+    }
+
+
+}
+
+//Verify Secrets answers and creating a new token access to reset password
+export const verifySecretqtsAccess = async (req,res,next) => {
+    const cookieName = process.env.COOKIESACCESS;
+    const SECRET = process.env.SECRET_KEY_JWT;
+    
+    req.verifyUser;
+    try {
+        if(!req.verifyUser){
+            return res.status(404).redirect("/api/recovery/secretqts")
+        }
+        //Delete previous cookie
+        res.clearCookie(deleteCookie)
+
+        //Creating token
+        const token = jwt.sign({id: req.ID},SECRET,{
+            expiresIn: "4m"
+        });
+
+        //Creating Cookie
+        res.cookie(cookieName,token,{
+            maxAge: 400 * 1000,
+            secure: true,
+            httpOnly: true,
+            sameSite: "lax"
+        });
+    
+        return res.status(200).redirect("/api/recovery/resetpassword")
+    } catch (error) {
+        console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
+    }
+}
+
+//verifying AccesToken to reset password
+export const verifyAccessToken = async (req,res,next) => {
+    const cookieName = process.env.COOKIESACCESS;
+    const token = req.cookies[cookieName] || req.headers[cookieName];
+
+    //Checking token:
+    try {
+        if(!token){
+            return res.status(404).redirect("/api/recovery/search")
+        }
+        //Token exists Decode Token
+        const tokenDecoded = jwt.verify(token,SECRET);
+        req.ID = tokenDecoded.id;
+        return next();
+    } catch (error) {
+        console.log("There is an error: Verify recovery Token ".red.bold, error.message);
+        return res.status(404).redirect("/api/recovery/search")
     }
 }

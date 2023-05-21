@@ -1,22 +1,8 @@
-Security:
-     Reset users passwords
-     User need to take one option: 
-        First one: reset their accounts with secretquestions
-        Second one: reset their accounts with pincode
+Profile: accounts
+        Insert Pin until to Delete Account
+        Insert Pin until to Reset Account
 
-
-    modify login page: add link to change passwords
-
-    -> searchEmail
-    -> resetOptions: 
-        Pincode,
-        Secret questions,
-        *recorey email : send a link to email (not yet)
-    ->getPincode: insert Pincode --> Reset password
-    ->getsecreteqts: insert Secret Quetions --> reset password
-
-    
-
+Footer: 
 
 *Dashboard:
     Create a simple page, to show all tasks, and put some options to add new task.
@@ -29,11 +15,12 @@ Security:
 
 
 *About:
-    Explain about  this project, and give a short resume about, how users can use this app, and different pages of this side.
+    Explain about this project, and give a short resume about, how users can use this app, and different pages of this side.
 
-*politics
-*privacy
-*cookies
+Pages:
+        *politics
+        *privacy
+        *cookies
 
 
 *AI:

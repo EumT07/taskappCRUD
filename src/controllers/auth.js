@@ -7,6 +7,7 @@ dotenv.config();
 //Creating Secret varible
 const SECRET = process.env.SECRET_KEY_JWT;
 const cookieName = process.env.COOKIENAME;
+//Creating a new user
 export const singup = async (req,res) => {
     const {
         username,
@@ -42,15 +43,16 @@ export const singup = async (req,res) => {
             httpOnly: true,
             sameSite: "lax"
         });
-        return res.redirect("/api/settings/secretquestions")
+        return res.redirect("/api/settings/secretquestions");
     } catch (error) {
-        console.log("There is an error: creating user ".red.bold, error.message);
+        console.log("There is an error: Auth: Signup ".red.bold, error.message);
     }
 };
+//Auth 
 export const singin = async (req,res) => {
     const {email} = req.body;
     try {
-        // Getting user
+        // Getting user by Email
         const user = await User.findOne({email: email})
         //Creating a token
         const token = jwt.sign({id: user._id}, SECRET,{
@@ -65,18 +67,26 @@ export const singin = async (req,res) => {
             sameSite: "lax"
         });
 
-        return res.status(202).redirect("/dashboard")
+        return res.status(202).redirect("/dashboard");
     } catch (error) {
-        console.log("There is an error: Signin user ".red.bold, error.message);
+        console.log("There is an error: Auth: Signin".red.bold, error.message);
     }
 };
+//Logout
 export const closeSession = async (req,res) => {
-    res.clearCookie(cookieName);
-    req.session.destroy((err)=>{
-        if(err){
-            res.status(404).json({message: "error Closing session"});
-        }else{
-            return res.status(200).redirect("/")
-        }
-    });
+    try {
+        res.clearCookie(cookieName);
+        req.session.destroy();
+        return res.status(200).redirect("/");
+    } catch (error) {
+        console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
+    }
+    
+    // req.session.destroy((err)=>{
+    //     if(err){
+    //         res.status(404).json({message: "error Closing session"});
+    //     }else{
+    //         return res.status(200).redirect("/")
+    //     }
+    // });
 };

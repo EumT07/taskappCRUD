@@ -81,6 +81,15 @@ app.use((req,res,next) => {
     //Styles
     app.locals.successStyle = req.flash("successStyle");
     app.locals.errorStyle = req.flash("errorStyle");
+    app.locals.inputError = req.flash("inputError");
+    //Style: Secrets QT
+    app.locals.inputCss1 = req.flash("inputCss1")
+    app.locals.inputCss2 = req.flash("inputCss2")
+    app.locals.inputCss3 = req.flash("inputCss3")
+    //Send answer to form
+    app.locals.answer1 = req.flash("answer1") 
+    app.locals.answer2 = req.flash("answer2") 
+    app.locals.answer3 = req.flash("answer3")
     next();
 })
 

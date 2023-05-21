@@ -13,23 +13,23 @@ import {
 
 const router = Router();
 
-// Register Uer
+//  Register Uer
 
-//Login Out
+//Sign Up: Creating a new user
 router
     .get("/signup",(req,res)=>{
-        res.render("./register/signup.ejs", {title: "Sign Up"})
+        res.render("./register/signup.ejs", {title: "Sign Up"});
     })
     .post("/signup", [checkUserSignup, checkPassword] ,singup)
 
 //Login In
 router
     .get("/signin", (req,res)=>{
-        res.render("./register/signin.ejs", {title: "Sign In"})
+        res.render("./register/signin.ejs", {title: "Sign In"});
     })
     .post("/signin", checkUserSignin ,singin)
 
-//Log out
+//Log out: Closing all session
 router
     .get("/logout", closeSession);
     

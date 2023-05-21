@@ -13,8 +13,8 @@ router
 //Suscribe email
 router
     .post("/", async (req, res)=>{
-        const email = req.body.email;
-        res.redirect(`/api/auth/signup/?email=${email}`)
+        const value = req.body.data;
+        res.redirect(`/api/auth/signup/?data=${value}`)
     })
 //Dashboard
 router
