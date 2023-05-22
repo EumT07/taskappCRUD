@@ -45,6 +45,10 @@
 .pinCode_container > hr{
     width: 75%;
 }
+.pinCode_container > form > p{
+    text-align: center;
+    color:#c52224;
+}
 .pinCode_container > form .inputGroup{
     display: flex;
     flex-direction: row;

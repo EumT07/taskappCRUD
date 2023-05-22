@@ -71,6 +71,8 @@ app.use((req,res,next) => {
     app.locals.usernameFound = req.flash("usernameFound");
     app.locals.usernameErr = req.flash("usernameErr");
     
+    //Empty field Secretquestions
+    app.locals.emptyField = req.flash("emptyField")
     //PinCode
     app.locals.successPIN = req.flash("successPIN");
     app.locals.errorPIN = req.flash("errorPIN");

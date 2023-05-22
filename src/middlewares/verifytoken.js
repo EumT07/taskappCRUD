@@ -257,16 +257,11 @@ export const verifySecretAnswers = async(req,res,next) => {
     try {
         //Getting answers
         const {answer1, answer2, answer3, userid} = req.body;
-
-
         //GEtting answers from database
         const answers = await Secretqt.findOne({user: userid});
-   
-
         //Creating a variable to know if user is verify or not
         req.verifyUser = null;
         req.ID = userid;
-
         //Comparing values
         const resultAnswer1 = await Secretqt.comparesecretqts(answer1, answers.answer1);
         const resultAnswer2 = await Secretqt.comparesecretqts(answer2, answers.answer2);
@@ -274,39 +269,38 @@ export const verifySecretAnswers = async(req,res,next) => {
     
         //Answer 1
         if(resultAnswer1){
-            req.verifyUser = true;
             req.flash("inputCss1", "inputSucces");
         }else{
-            req.verifyUser = false;
             req.flash("inputCss1", "inputErr");
         }
         //Answer 1
         if(resultAnswer2){
-            req.verifyUser = true;
             req.flash("inputCss2", "inputSucces");
         }else{
-            req.verifyUser = false;
             req.flash("inputCss2", "inputErr");
-    }   
+        }   
         //Answer 3
         if(resultAnswer3){
-            req.verifyUser = true;
             req.flash("inputCss3", "inputSucces");
         }else{
-            req.verifyUser = false;
             req.flash("inputCss3", "inputErr");
         }
-        console.log(resultAnswer1);
-        console.log(resultAnswer2);
-        console.log(resultAnswer3);
-        console.log(req.verifyUser);
-        console.log(!req.verifyUser);
-
-        if(!req.verifyUser){
-            return res.status(404).redirect("/api/recovery/secretqts")
+        
+        //Asign value to variable
+        if(resultAnswer1 && resultAnswer2 && resultAnswer3){
+            req.verifyUser = true;
+        }else{
+            req.verifyUser = false;
         }
         
-        // return next();
+        if(!req.verifyUser){
+            req.flash("answer1", `${answer1}`)
+            req.flash("answer2", `${answer2}`)
+            req.flash("answer3", `${answer3}`)
+            return res.status(404).redirect("/api/recovery/secretqts")
+        }
+
+        return next();
     } catch (error) {
         console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
     }

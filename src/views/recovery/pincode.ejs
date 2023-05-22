@@ -2,8 +2,8 @@
 <section class="pinCode">
     <div class="pinCode_container pin_recovery">
         <h2>Enter 6-digit code</h2>
-        <% if(errorPIN){ %>
-        <span class="<%=errorStyle%>"><%= errorPIN %></span>
+        <% if(errorPIN || emptyField){ %>
+        <span class="<%=errorStyle%>"><%= errorPIN %><%=emptyField%></span>
         <hr>
         <form action="/api/recovery/pinaccess" method="POST">
             <div class="inputGroup">

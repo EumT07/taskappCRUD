@@ -255,3 +255,49 @@ export const checkResetPassword = async (req,res,next) => {
         console.log("There is an error: Middleware-Signup- Path: Recovery-Reset Password".red.bold, error.message);
     }
 }
+
+//Verify Pincode Fild
+export const checkEmptyFieldPincode = async (req,res,next) => {
+    const {pin1,pin2,pin3,pin4,pin5,pin6} = req.body;
+
+    const regExpPin1 = (/^$/).test(pin1)
+    const regExpPin2 = (/^$/).test(pin2)
+    const regExpPin3 = (/^$/).test(pin3)
+    const regExpPin4 = (/^$/).test(pin4)
+    const regExpPin5 = (/^$/).test(pin5)
+    const regExpPin6 = (/^$/).test(pin6)
+
+    try {
+        if(regExpPin1 || regExpPin2 || regExpPin3 || regExpPin4 || regExpPin5 || regExpPin6){
+            req.flash("emptyField", "It must not have Empty field")
+            res.status(303).redirect("/api/settings/pincode");
+            return;
+        }
+    
+        return next();
+    } catch (error) {
+        console.log("There is an Error: Check Empty Field: pincode".red.bold, error.message);
+    }
+}
+
+//Verify Secret QTS Fild 
+export const checkEmptyFieldSecreteqts = async (req,res,next) => {
+    const {answer1,answer2,answer3} = req.body;
+
+    const regExAnswer1 = (/^$/).test(answer1);
+    const regExAnswer2 = (/^$/).test(answer2);
+    const regExAnswer3 = (/^$/).test(answer3);
+    
+   try {
+        if(regExAnswer1 || regExAnswer2 || regExAnswer3){
+            req.flash("emptyField", "It must not have Empty field")
+            res.status(303).redirect("/api/settings/secretquestions");
+            return;
+        }
+
+        return next();
+   } catch (error) {
+        console.log("There is an Error: Check Empty Field: secretqts".red.bold, error.message);
+   }
+}
+

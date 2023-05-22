@@ -11,7 +11,9 @@ import {
  }  from "../middlewares/verifytoken.js";
 import {
     checkUsername,
-    checkNewPassword
+    checkNewPassword,
+    checkEmptyFieldSecreteqts,
+    checkEmptyFieldPincode
 } from "../middlewares/verifysignup.js";
 import {
     secretQuestions,
@@ -34,7 +36,7 @@ router
             user
         });
     })
-    .post("/secretquestions", secretQuestions)
+    .post("/secretquestions", checkEmptyFieldSecreteqts ,secretQuestions)
 
 //Asigning: Pin code to each user
 router
@@ -45,7 +47,7 @@ router
             user
         })
     })
-    .post("/pincode", pincode) 
+    .post("/pincode", checkEmptyFieldPincode ,pincode) 
 
 //Profile Page
 router 

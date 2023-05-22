@@ -6,7 +6,7 @@ import "colors";
 const pinNumberSchema = new Mongoose.Schema({
     pin1: {
         type: String,
-        required: true
+        required: true,
     },
     pin2: {
         type: String,
