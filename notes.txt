@@ -22,6 +22,9 @@ Pages:
         *privacy
         *cookies
 
+        Error
+        About
+        calendar
 
 *AI:
     "Ask how to Do it"

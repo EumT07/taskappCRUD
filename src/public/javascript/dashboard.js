@@ -14,3 +14,22 @@ upBtn.addEventListener("click", (e)=> {
     downBtn.style.display = "block";
     menu.style.display = "none";
 });
+
+//DASHBOARd SECTION
+
+//BTN to create new task
+const createBtn = document.getElementById("createBtn");
+//Modal
+const modalTaskCard = document.querySelector(".modal__container");
+
+createBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    modalTaskCard.style.display = "Block";
+});
+
+//Close esc
+document.addEventListener("keydown", (e)=>{
+    if(e.code === "Escape" || e.keyCode === 27){
+        modalTaskCard.style.display = "none"
+    }
+})

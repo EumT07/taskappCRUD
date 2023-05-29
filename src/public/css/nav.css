@@ -102,6 +102,7 @@ nav .userNav img {
     flex-direction: column;
     justify-content: space-around;
     align-items:center;
+    z-index: 100;
 }
 .menu .menu_options{
     align-self: start;
