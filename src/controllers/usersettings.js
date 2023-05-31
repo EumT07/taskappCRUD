@@ -2,9 +2,12 @@
 import * as dotenv from "dotenv"
 import User from "../models/user.js";
 import SecretQt from "../models/secretqt.js";
+import Tasks from "../models/tasks.js";
+import Category from "../models/category.js"
 import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import user from "../models/user.js";
 dotenv.config();
 
 //Cookies
@@ -231,5 +234,58 @@ export const removeAcc = async (req,res) => {
         return res.status(202).redirect("/");
     } catch (error) {
         
+    }
+}
+
+/**
+ * TASK SECTION
+ */
+//Create a new task and new category at the same time
+export const createNewTask = async (req, res) => {
+    try {
+        const {title, description, category, priority, userID} = req.body;
+
+        //Gettin user id
+        //Is category an Array or not?
+        if(Array.isArray(category)){
+            // Creating a new Category
+            const newCategory = await new Category({
+                name: category[1],
+                user: userID
+            });
+            newCategory.save();
+            //Creating new task
+            const task = await new Tasks({
+                title: title,
+                description: description,
+                category: newCategory._id,
+                priority: priority,
+                user: userID
+            });
+            task.save();
+            res.status(200).redirect("/dashboard")
+            return;
+        }
+        if(category.toLowerCase() === "categories" || priority.toLowerCase() === "levels" ){
+            //Add new Notification with messages
+            res.status(404).redirect("/dashboard")
+            return;
+        }
+        //Search if category exist
+        const categorySelected = await Category.findOne({name: category});
+
+        //Creating new task
+        const task = await new Tasks({
+            title: title,
+            description: description,
+            category: categorySelected._id,
+            priority: priority,
+            user: userID
+        });
+        task.save();
+        res.status(200).redirect("/dashboard")
+        return;
+    } catch (error) {
+        console.log("There is an erro: Creating new Task".red.bold, + error.message);
     }
 }

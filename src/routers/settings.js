@@ -22,7 +22,7 @@ import {
     pincode,
     changePassword,
     changeSecretquestions
- } from "../controllers/usersettigns.js";
+ } from "../controllers/usersettings.js";
 
 
 const router = Router();

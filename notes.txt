@@ -3,7 +3,13 @@ Profile: accounts
         Insert Pin until to Reset Account
 
 Footer: 
-
+Home: 
+    Change NAvitagion menu
+    add new colors
+    edit buttons
+    edit header section
+    edit task section
+    
 *Dashboard:
     Create a simple page, to show all tasks, and put some options to add new task.
 

@@ -1,0 +1,89 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/nav.ejs" ) %>
+
+<section class="sectionsDashboard">
+     <!-- Btns sections -->
+        <section class="btn-options">
+            <input id="createBtn" type="button" value="+ Create">
+            <select name="categories" id="">
+                <option selected="selected" value="category">All category</option>
+                <% if(categories) { %>
+                    <% for(let i = 0; i < categories.length; i++) { %>
+                    <option value="<%= categories[i].id %>" ><%=categories[i].name%></option>
+                    <% } %>
+                <% } %>
+            </select>
+            <select name="levels" id="">
+                <option selected="selected" value="all">All Levels</option>
+                <option value="high">High</option>
+                <option value="middle">Middle</option>
+                <option value="low">Low</option>
+            </select>
+        </section>
+        <!-- Task board -->
+        <section class="task__container">
+            <% if(categories) { %>
+                <% for(let i = 0; i < categories.length; i++) { %>
+                    <div class="category__card-container">
+                        <h2><%= categories[i].name %> </h2>
+                        <% for(let j = 0; j < tasks.length; j++) { %>
+                        <% if(tasks[j].category == categories[i].id) { %>
+                        <div class="task__card-container">
+                            <h3><%= tasks[j].title %></h3>
+                            <p><%= tasks[j].description %></p>
+                            <a href="#"><i class="updateIcon fa"></i></a>
+                            <a href="#"><i class="deleteIcon fa"></i></a>
+                            <div class="container_levels" >
+                                <p><i class="calendar fa"></i> May 25</p>
+                                <p class="colorLevels <%= tasks[j].priority %>"><%= tasks[j].priority %></p>
+                            </div>
+                        </div>
+                        <% } %> 
+                    <% }%>
+                </div>   
+                <% } %>
+            <% } %>
+        </section>
+    <!-- modal add task -->
+        <section class="modal__container">
+            <div class="modal-card">
+                <h3>Create New Task</h3>
+                <form action="/newtask" method="post">
+                    <label for="title">
+                        <input type="text" name="title" placeholder="Title">
+                    </label>
+                    <label for="decriptions">
+                        <p>
+                            <textarea name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
+                        </p>
+                    </label>
+                    <div class="categoryContainer" id="categoryContainer">
+                        <select name="category"  id="select">
+                            <option selected="selected">Categories</option>
+                            <% if(categories) { %>
+                                <% for(let i = 0; i < categories.length; i++) { %>
+                                <option name="<%= categories[i].id %>"><%=categories[i].name%></option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                        <i class="addNewCategory fa" id="addnewCategoryBtn"></i>
+                    </div>
+                    <select name="priority">
+                        <option selected="selected">Levels</option>
+                        <option value="high">High</option>
+                        <option value="middle">Middle</option>
+                        <option value="low">Low</option>
+                    </select>
+                    <input type="hidden" name="userID" value="<%= user.id %>">
+                    <button type="submit">Create</button>
+                </form>
+            </div>
+        </section>
+        
+
+
+        
+</section>
+
+<script src="/javascript/dashboard.js" ></script>
+<%- include("../partials/body.ejs") %>

@@ -6,6 +6,10 @@ const taskSchema = new Mongoose.Schema(
     {
         title:String,
         description: String,
+        category: {
+            type: Mongoose.Schema.Types.ObjectId,
+            ref: "Category"
+        },
         priority: String,
         status: {
             type: Boolean,
@@ -15,6 +19,9 @@ const taskSchema = new Mongoose.Schema(
             type: Mongoose.Schema.Types.ObjectId,
             ref: "User"
         }
+    },
+    {
+        timestamps: true
     }
 );
 

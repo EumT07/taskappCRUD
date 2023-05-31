@@ -2,7 +2,7 @@
 import { Router } from "express";
 import User from "../models/user.js";
 import Secretqt from "../models/secretqt.js";
-import { searchUser, resetPassword  } from "../controllers/usersettigns.js";
+import { searchUser, resetPassword  } from "../controllers/usersettings.js";
 import {checkResetPassword} from "../middlewares/verifysignup.js"
 import {
     verifyRecoveryToken,

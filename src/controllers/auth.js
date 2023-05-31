@@ -1,6 +1,7 @@
 "use strict"
 import * as dotenv from "dotenv";
 import User from "../models/user.js";
+import Category from "../models/category.js"
 import jwt from "jsonwebtoken";
 dotenv.config();
 

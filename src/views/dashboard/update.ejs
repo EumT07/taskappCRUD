@@ -1,0 +1,38 @@
+<%- include("../partials/head.ejs") %>
+<!-- modal Update task -->
+<section class="modal__container">
+    <div class="modal-card">
+        <h3>Create New Task</h3>
+        <form action="/update/<%= tasks.id %>" method="post">
+            <label for="title">
+                <input type="text" name="title" placeholder="<%= tasks.title %>">
+            </label>
+            <label for="decriptions">
+                <p>
+                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= tasks.description %>"></textarea>
+                </p>
+            </label>
+            <div class="categoryContainer" id="categoryContainer">
+                <select name="category"  id="select">
+                    <option selected="selected">Categories</option>
+                    <% if(categories) { %>
+                        <% for(let i = 0; i < categories.length; i++) { %>
+                        <option name="<%= categories[i].id %>"><%=categories[i].name%></option>
+                        <% } %>
+                    <% } %>
+                </select>
+                <i class="addNewCategory fa" id="addnewCategoryBtn"></i>
+            </div>
+            <select name="priority">
+                <option selected="selected">Levels</option>
+                <option value="high">High</option>
+                <option value="middle">Middle</option>
+                <option value="low">Low</option>
+            </select>
+            <button type="submit">Create</button>
+        </form>
+    </div>
+</section>
+
+<script src="/javascript/dashboard.js" ></script>
+<%- include("../partials/body.ejs") %>
