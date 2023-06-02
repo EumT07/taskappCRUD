@@ -4,7 +4,12 @@ import Task from "../models/tasks.js";
 import Category from "../models/category.js";
 import { Router } from "express";
 import {verifyToken}  from "../middlewares/verifytoken.js";
-import {createNewTask} from "../controllers/usersettings.js"
+import {
+    createNewTask,
+    updateTask,
+    deleteTask,
+    deleteCategory
+} from "../controllers/usersettings.js"
 
 const router = Router();
 //Lading Page
@@ -33,6 +38,26 @@ router
         });
     })
     .post("/newtask", createNewTask)
+
+router
+    .get("/updateTask/:id", verifyToken, async (req,res) => {
+        const {id} = req.params;
+        const task = await Task.findById(id);
+        const user = await User.findById(task.user);
+        const category = await Category.findById(task.category);
+        res.render("./dashboard/update.ejs", {
+            title: "Updating Task",
+            task,
+            category,
+            user
+        });
+    })
+    .post("/updateTask/:id", updateTask)
+
+//Delete Task and Category
+router
+    .get("/deleteTask/:id", deleteTask)
+    .get("/deleteCategory/:id", deleteCategory)
 
 
 export default router;

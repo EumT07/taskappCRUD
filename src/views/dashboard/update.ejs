@@ -1,33 +1,25 @@
 <%- include("../partials/head.ejs") %>
 <!-- modal Update task -->
-<section class="modal__container">
-    <div class="modal-card">
-        <h3>Create New Task</h3>
-        <form action="/update/<%= tasks.id %>" method="post">
+<section class="update__container">
+    <div class="update-card">
+        <h3>Update Task</h3>
+        <form action="/updateTask/<%= task.id %>" method="post">
             <label for="title">
-                <input type="text" name="title" placeholder="<%= tasks.title %>">
+                <input type="text" name="title" placeholder="<%= task.title %>">
             </label>
             <label for="decriptions">
                 <p>
-                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= tasks.description %>"></textarea>
+                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>"></textarea>
                 </p>
             </label>
-            <div class="categoryContainer" id="categoryContainer">
-                <select name="category"  id="select">
-                    <option selected="selected">Categories</option>
-                    <% if(categories) { %>
-                        <% for(let i = 0; i < categories.length; i++) { %>
-                        <option name="<%= categories[i].id %>"><%=categories[i].name%></option>
-                        <% } %>
-                    <% } %>
-                </select>
-                <i class="addNewCategory fa" id="addnewCategoryBtn"></i>
+            <div class="categoryContainer">
+                <input type="text" name="<%= category.id %>" placeholder="<%=category.name%>" readonly>
             </div>
             <select name="priority">
-                <option selected="selected">Levels</option>
-                <option value="high">High</option>
-                <option value="middle">Middle</option>
-                <option value="low">Low</option>
+                <option selected="selected"><%= task.priority %></option>
+                <option value="High">High</option>
+                <option value="Hiddle">Middle</option>
+                <option value="Low">Low</option>
             </select>
             <button type="submit">Create</button>
         </form>

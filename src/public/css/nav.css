@@ -52,9 +52,9 @@ nav .nav_content > li > a{
 }
 nav .userNav{
     position: relative;
-    width: 200px;
+    width: 160px;
     height: 40px;
-    background-color: #3b46504d;
+    /* background-color: #3b46504d; */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -69,14 +69,15 @@ nav .userNav .userimg__container{
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px solid #8f4c4c;
+    /* border: 2px solid #8f4c4c; */
+    box-shadow: 1px 2px 3px #6a6c6d;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 nav .userNav .userimg__container img{
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
     object-fit: cover;
 }
 nav .userNav img {

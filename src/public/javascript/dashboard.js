@@ -66,4 +66,67 @@ addNewCategoryBtn.addEventListener("click", (e)=>{
     })
 })
 
-//BTN to Updating new task
+//Date Task
+function getDateTask() {
+    //Get Element by Id
+    const dateTask = document.querySelectorAll("#date");
+    for (let i = 0; i < dateTask.length; i++) {
+        const dateTaskText = dateTask[i].textContent;
+        //Get index
+        //Value 4: render the index of the string we want to display
+        //Value 25: represent the end of the string
+        let date = dateTaskText.slice(4, 16)
+        //Repleace the old string for the new one
+        dateTask[i].textContent = date;
+    }
+}
+getDateTask();
+
+//Searching or filtering
+//Get Select options
+const selectCategory = document.getElementById("selectCategory");
+const selectLevels = document.getElementById("selectLevels");
+
+//Get container to show
+const categoriesContainer = document.querySelectorAll("#categoriesContainer");
+const tasksContainer = document.querySelectorAll("#tasksContainer");
+//Div filtered
+const tasksFilter = document.querySelectorAll(".tasksFilter");
+
+selectCategory.addEventListener("change", (e)=>{
+    let categoryNameSelected = e.target.value.toLowerCase().trim();  
+    categoriesContainer.forEach(category => {
+        const name_of_category = category.firstElementChild.firstElementChild.textContent.toLowerCase().trim();
+
+        if(categoryNameSelected === "all category") {
+            category.style.display = "block";
+        } else if(categoryNameSelected === name_of_category){
+            category.style.display = "block";
+        }else{
+            category.style.display = "none";
+        }
+        
+    });
+})
+
+selectLevels.addEventListener("change", (e)=>{
+    let levelsNameSelected = e.target.value.toLowerCase().trim(); 
+    console.log(levelsNameSelected);
+
+    tasksFilter.forEach(tasks => {
+        const priorityName = tasks.firstElementChild.lastElementChild.lastElementChild.textContent.toLowerCase().trim()
+        const divCategoryContainer = tasks.parentElement;
+        
+        
+        if(levelsNameSelected === "all levels") {
+            tasks.style.display = "block";
+        } else if(levelsNameSelected === priorityName){
+            tasks.style.display = "block";
+        }else{
+            tasks.style.display = "none";
+        }
+    })
+})
+
+
+

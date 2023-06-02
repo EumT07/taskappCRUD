@@ -21,7 +21,8 @@ import {
     removeAcc,
     pincode,
     changePassword,
-    changeSecretquestions
+    changeSecretquestions,
+    resetAcc
  } from "../controllers/usersettings.js";
 
 
@@ -100,6 +101,7 @@ router
 
 //Profile Page: Remove user
 router
+    .get("/resetAcc/:id", resetAcc)
     .get("/removeAcc/:id", removeAcc)
 
 export default router;

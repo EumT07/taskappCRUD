@@ -59,14 +59,26 @@
     min-width: 330px;
     background-color: #fff;
     padding: 20px 20px;
-    margin: 10px 10px;
+    margin: 15px 10px;
+}
+.category-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.category-btns{
+    width: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .category__card-container h2{
     text-transform: capitalize;
 }
 .task__card-container{
     width: 300px;
-    height: 140px;
+    height: 150px;
     background-color: #ffffffc9;
     box-shadow: 1px 2px 10px rgb(190, 184, 184);
     Display: flex;
@@ -111,19 +123,27 @@
     align-items: center;
     width: 100%;
 }
+.container_levels .container_levels-date{
+    width: 35%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+}
 .container_levels .colorLevels{
     padding: 4px 10px;
     border-radius: 10px;
     color: #fff;
     text-transform: capitalize;
 }
-.container_levels .high{
+.container_levels .High{
     background-color: #d32324;
 }
-.container_levels .middle{
+.container_levels .Middle{
     background-color: darkorange;
 }
-.container_levels .low{
+.container_levels .Low{
     background-color: #1597BB;
 }
 /*Iconos*/
@@ -137,10 +157,11 @@
 }
 .calendar::before {
     content: "\f133";
-    color: #D8D8D8;
+    color: #ada1a1;
     margin-right: 5px;
 }
 /*Modal Sections*/
+/*Creating Task*/
 .modal__container{
     display: none;
     position: fixed;
@@ -150,7 +171,18 @@
     height: 100vh;
     background-color: #29272775;
 }
-.modal__container .modal-card{
+/*Updating task*/
+.update__container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #29272775;
+}
+/*Updating task*/
+.modal__container .modal-card, 
+.update__container .update-card{
     position: absolute;
     top: 0;
     left: 0;
@@ -168,7 +200,8 @@
     justify-content: space-around;
     align-items: center;
 }
-.modal-card h3{
+.modal-card h3,
+.update-card h3{
     text-align: center;
     padding-top: 10px;
     padding-bottom: 20px;
@@ -176,7 +209,8 @@
     color: #a93638;
     font-weight: bold;
 }
-.modal-card form{
+.modal-card form,
+.update-card form{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -185,10 +219,12 @@
     height: 330px;
     padding: 0 10px;
 }
-.modal-card form > label{
+.modal-card form > label,
+.update-card form > label{
     width: 100%;
 }
-.modal-card form > label  input{
+.modal-card form > label  input,
+.update-card form > label  input{
     width: 97%;
     height: 30px;
     outline: none;
@@ -199,7 +235,8 @@
     text-transform: capitalize;
     font-size: 1rem;
 }
-.modal-card form > label p textarea{
+.modal-card form > label p textarea,
+.update-card form > label p textarea{
     width: 97%;
     height: 100px;
     resize: none;
@@ -208,24 +245,29 @@
     border-radius: 4px;
     font-size: 1rem;
 }
-.modal-card form > .categoryContainer{
+.modal-card form > .categoryContainer,
+.update-card form > .categoryContainer{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 135px;
 }
-.modal-card form > .categoryContainer .addNewCategory::before{
+.modal-card form > .categoryContainer .addNewCategory::before,
+.update-card form > .categoryContainer .addNewCategory::before{
     content: "\f0fe";
     cursor: pointer;
 }
-.modal-card form > .categoryContainer .closeInputCategory::before{
+.modal-card form > .categoryContainer .closeInputCategory::before,
+.update-card form > .categoryContainer .closeInputCategory::before{
     content: "\f057";
     cursor: pointer;
 }
 
 .modal-card form > .categoryContainer select,
-.modal-card form > select {
+.modal-card form > select,
+.update-card form > .categoryContainer select,
+.update-card form > select {
     outline: none;
     background: transparent;
     width: 120px;
@@ -234,7 +276,8 @@
     border-radius: 5px;
     margin-right: 8px;
 }
-.modal-card form > .categoryContainer input{
+.modal-card form > .categoryContainer input,
+.update-card form > .categoryContainer input{
     border: 1px solid #9c9595;
     outline: none;
     width: 133px;
@@ -242,13 +285,15 @@
     padding: 5px;
     border-radius: 5px;
 }
-.modal-card form > select option{
+.modal-card form > select option,
+.update-card form > select option{
     appearance: auto;
     cursor: pointer;
     text-transform: capitalize;
     z-index: 10;
 }
-.modal-card form > button {
+.modal-card form > button ,
+.update-card form > button {
     border: none;
     border-radius: 10px;
     box-shadow: 1px 1px 2px #000;
@@ -258,6 +303,7 @@
     background-color: #a93638;
     color: #fff;
 }
-.modal-card form > button:hover{
+.modal-card form > button:hover,
+.update-card form > button:hover{
     background-color: #d32324;
 }

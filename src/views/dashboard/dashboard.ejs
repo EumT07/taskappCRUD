@@ -5,16 +5,16 @@
      <!-- Btns sections -->
         <section class="btn-options">
             <input id="createBtn" type="button" value="+ Create">
-            <select name="categories" id="">
-                <option selected="selected" value="category">All category</option>
+            <select name="categories" id="selectCategory">
+                <option selected="selected" value="All Category">All category</option>
                 <% if(categories) { %>
                     <% for(let i = 0; i < categories.length; i++) { %>
-                    <option value="<%= categories[i].id %>" ><%=categories[i].name%></option>
+                    <option name="<%= categories[i].id %>" value="<%=categories[i].name%>" ><%=categories[i].name%></option>
                     <% } %>
                 <% } %>
             </select>
-            <select name="levels" id="">
-                <option selected="selected" value="all">All Levels</option>
+            <select name="levels" id="selectLevels">
+                <option selected="selected" value="all Levels">All Levels</option>
                 <option value="high">High</option>
                 <option value="middle">Middle</option>
                 <option value="low">Low</option>
@@ -24,18 +24,28 @@
         <section class="task__container">
             <% if(categories) { %>
                 <% for(let i = 0; i < categories.length; i++) { %>
-                    <div class="category__card-container">
-                        <h2><%= categories[i].name %> </h2>
+                <div class="category__card-container" id="categoriesContainer">
+                        <div class="category-title">
+                            <h2><%= categories[i].name %></h2>
+                            <div class="category-btns">
+                                <a href="/deleteCategory/<%= categories[i]._id %>"><i class="deleteIcon fa"></i></a>
+                            </div>
+                        </div>
                         <% for(let j = 0; j < tasks.length; j++) { %>
                         <% if(tasks[j].category == categories[i].id) { %>
-                        <div class="task__card-container">
-                            <h3><%= tasks[j].title %></h3>
-                            <p><%= tasks[j].description %></p>
-                            <a href="#"><i class="updateIcon fa"></i></a>
-                            <a href="#"><i class="deleteIcon fa"></i></a>
-                            <div class="container_levels" >
-                                <p><i class="calendar fa"></i> May 25</p>
-                                <p class="colorLevels <%= tasks[j].priority %>"><%= tasks[j].priority %></p>
+                        <div class="tasksFilter">
+                            <div class="task__card-container" id="tasksContainer">
+                                <h3><%= tasks[j].title %></h3>
+                                <p><%= tasks[j].description %></p>
+                                <a href="/updateTask/<%=tasks[j]._id%>"><i class="updateIcon fa"></i></a>
+                                <a href="/deleteTask/<%=tasks[j]._id%>"><i class="deleteIcon fa"></i></a>
+                                <div class="container_levels" >
+                                    <div class="container_levels-date">
+                                        <i class="calendar fa"></i>
+                                        <h5 id="date"><%= tasks[j].createdAt %> </h5>
+                                    </div>
+                                    <h5 class="colorLevels <%= tasks[j].priority %>"><%= tasks[j].priority %></h5>
+                                </div>
                             </div>
                         </div>
                         <% } %> 
@@ -70,9 +80,9 @@
                     </div>
                     <select name="priority">
                         <option selected="selected">Levels</option>
-                        <option value="high">High</option>
-                        <option value="middle">Middle</option>
-                        <option value="low">Low</option>
+                        <option value="High">High</option>
+                        <option value="Middle">Middle</option>
+                        <option value="Low">Low</option>
                     </select>
                     <input type="hidden" name="userID" value="<%= user.id %>">
                     <button type="submit">Create</button>
