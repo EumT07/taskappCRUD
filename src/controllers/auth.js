@@ -5,10 +5,12 @@ import Category from "../models/category.js"
 import jwt from "jsonwebtoken";
 dotenv.config();
 
-//Creating Secret varible
 const SECRET = process.env.SECRET_KEY_JWT;
 const cookieName = process.env.COOKIENAME;
-//Creating a new user
+/**
+ * Creatting user 
+ * Getting: all data in order to create a new user Account
+ */
 export const singup = async (req,res) => {
     const {
         username,
@@ -19,9 +21,9 @@ export const singup = async (req,res) => {
         confirmPassword
     } = req.body;
     try {
-        //Getting password and encrypt password
+        //Getting password to encrypt password
         const encryptPassword = await User.encryptPassword(password);
-        //Save info in mongo data base
+        //Save info in mongoDB
         const newUser = new User({
             username,
             name,
@@ -32,12 +34,14 @@ export const singup = async (req,res) => {
 
         //Saving data
         const savedUser = await newUser.save();
+
         //Creating a token
         const token = jwt.sign({id:savedUser._id},SECRET,{
             expiresIn: "24h"
         });
        
-        //Create our cookies
+        //Create our cookies (Cookiename, Token)
+        //It helps us to create a middlaware to allow the user to be in our app
         res.cookie(cookieName,token,{
             maxAge: 3600 * 1000,
             secure: true,
@@ -49,7 +53,9 @@ export const singup = async (req,res) => {
         console.log("There is an error: Auth: Signup ".red.bold, error.message);
     }
 };
-//Auth 
+/**
+ * Getting access to app
+ */
 export const singin = async (req,res) => {
     const {email} = req.body;
     try {
@@ -82,12 +88,4 @@ export const closeSession = async (req,res) => {
     } catch (error) {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
     }
-    
-    // req.session.destroy((err)=>{
-    //     if(err){
-    //         res.status(404).json({message: "error Closing session"});
-    //     }else{
-    //         return res.status(200).redirect("/")
-    //     }
-    // });
 };

@@ -13,7 +13,7 @@ import {
 
 const router = Router();
 
-//  Register Uer
+/*  Creating Users */
 
 //Sign Up: Creating a new user
 router
@@ -22,7 +22,7 @@ router
     })
     .post("/signup", [checkUserSignup, checkPassword] ,singup)
 
-//Login In
+//Sign In
 router
     .get("/signin", (req,res)=>{
         res.render("./register/signin.ejs", {title: "Sign In"});

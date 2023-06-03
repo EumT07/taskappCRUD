@@ -1,5 +1,14 @@
+/**
+ * Import Mongoose database
+ * @module Database
+*/
 import Mongoose from "mongoose";
 import "colors";
+/**
+ * Getting mongo Url from .env
+ * @constant
+ * @type {string} 
+ */
 const mongoURL = process.env.MONGO_URL;
 
 try {

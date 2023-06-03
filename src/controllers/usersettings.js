@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 dotenv.config();
 
-//Cookies
+//Getting: Environment Variables
 const cookieapp = process.env.COOKIENAME;
 const cookiepassword = process.env.COOKPINPASS;
 const cookiesecretqts = process.env.COOKPINSECRETQTS;
@@ -44,6 +44,7 @@ export const secretQuestions = async (req,res)=>{
             question3: question3,
             answer3: answer3Encrypted,
         });
+        //Saving user ID to identify each scretesqts
         setSecretqt.user = userID;
         await setSecretqt.save();
         return res.status(202).redirect("/api/settings/pincode");
@@ -66,7 +67,7 @@ export const pincode = async (req,res) => {
         const pin5Encrypted = await PIN.encryptPinCode(pin5);
         const pin6Encrypted = await PIN.encryptPinCode(pin6);
 
-        //Creating PIN
+        //Saving each PIN into models
         const pin = new PIN({
             pin1: pin1Encrypted,
             pin2: pin2Encrypted,
@@ -75,6 +76,7 @@ export const pincode = async (req,res) => {
             pin5: pin5Encrypted,
             pin6: pin6Encrypted,
         });
+        //Addin userID
         pin.user = userID;
         //Saving 
         await pin.save();
@@ -84,7 +86,6 @@ export const pincode = async (req,res) => {
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
     }
 }
-
 //Updating: user info
 export const updateUser = async (req,res) => {
     try {
@@ -105,7 +106,6 @@ export const updateUser = async (req,res) => {
         console.log("There is an Erro: Setting-Profile: Updating user".red.bold, error.message);
     }
 }
-
 //Changing: password 
 export const changePassword = async (req,res) => {
     try {
@@ -113,7 +113,7 @@ export const changePassword = async (req,res) => {
         const {userid, newPassword, confirmNewPassword} = req.body;
         const salt = await bcrypt.genSalt(12);
         const new_password = await bcrypt.hash(newPassword, salt);
-        //updating Data
+        //updating password
         await User.findOneAndUpdate({_id: userid},{password: new_password});
         //Cleaning all cookies
         res.clearCookie(cookieapp);
@@ -125,7 +125,6 @@ export const changePassword = async (req,res) => {
         console.log("There is an Error: Setting: Changing Password".red.bold, Error.message);
     }
 }
-
 //Changing: secret Password
 export const changeSecretquestions = async (req,res)=> {
     try {
@@ -142,7 +141,6 @@ export const changeSecretquestions = async (req,res)=> {
         
     }
 }
-
 //Searching: email / user
 export const searchUser = async (req,res) => {
     try {
@@ -197,7 +195,6 @@ export const searchUser = async (req,res) => {
         console.log("There is an Error: Recovery: Searching user".red.bold);
     }
 }
-
 //Reset Password
 export const resetPassword = async (req,res)=>{
     try {
@@ -214,7 +211,6 @@ export const resetPassword = async (req,res)=>{
         console.log("There is an Error: Recovery: Reset Password".red.bold, error.message);
     }
 }
-
 //Reset Account
 export const resetAcc = async (req,res) => {
     try {
@@ -245,7 +241,6 @@ export const removeAcc = async (req,res) => {
         await Tasks.deleteMany({user: id});
         //REmoving Category frim database
         await Category.deleteMany({user: id});
- 
         //Return
         return res.status(202).redirect("/");
     } catch (error) {
@@ -254,14 +249,14 @@ export const removeAcc = async (req,res) => {
 }
 
 /**
- * TASK SECTION
+ * todo: TASK SECTION
  */
-//Create a new task and new category at the same time
+//*Create a new task and new category at the same time
 export const createNewTask = async (req, res) => {
     try {
         const {title, description, category, priority, userID} = req.body;
-        //Gettin user id
         //Is category an Array or not?
+        //*Creating a new category and a new task
         if(Array.isArray(category)){
             //Search if category exist
              const categorySelected = await Category.findOne({name: category[1]});
@@ -299,15 +294,18 @@ export const createNewTask = async (req, res) => {
             return;
         }
 
+        //*Category is not an array
+        //Checking is category is one of thme (categories | leves)
         if(category.toLowerCase() === "categories" || priority.toLowerCase() === "levels"){
-            //Add new Notification with messages
+            //*Add new Notification with messages
             res.status(404).redirect("/dashboard")
             return;
         }
-        //Search if category exist
+
+        //*Search category to use.
         const categorySelected = await Category.findOne({name: category});
 
-        //Creating new task
+        //Creating new task with a category what was created
         const task = await new Tasks({
             title: title,
             description: description,
@@ -323,7 +321,7 @@ export const createNewTask = async (req, res) => {
     }
 }
 
-//Updating Task
+//*Updating Task
 export const updateTask = async (req,res) =>{
     try {
         const {id} = req.params;
@@ -342,7 +340,7 @@ export const updateTask = async (req,res) =>{
     }
 }
 
-//Deleting Task
+//*Deleting Task
 export const deleteTask = async (req,res)=>{
     try {
         const {id} = req.params;
@@ -353,7 +351,7 @@ export const deleteTask = async (req,res)=>{
         console.log("There is an Error: Deleting Task".red.bold, error.message);
     }
 }
-//Delete Category
+//*Delete Category
 export const deleteCategory = async(req,res) =>{
     try {
         const {id} = req.params;

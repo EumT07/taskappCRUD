@@ -1,8 +1,13 @@
+/** Start App
+ * @module Server
+ */
+/** Import app file */
 import app from "./app.js";
+/** Import database file */
 import "./database.js";
 import "colors";
 
-
+/** Run our API in PORT : 3000 */
 app.listen(app.get("PORT"),()=>{
     try{
         console.log(` This server is running on http://localhost:${app.get("PORT")} `.bgYellow.black.bold);

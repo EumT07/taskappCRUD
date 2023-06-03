@@ -24,7 +24,7 @@ router
     })
     .post("/searchuser", searchUser)
 
-//Options: Create a token
+//Options: Creating a new token: to view option
 router
     .get("/options", verifyRecoveryToken, (req,res)=>{
         res.render("./recovery/options.ejs", {
@@ -52,6 +52,7 @@ router
         });
     })
     .post("/secretanswers", verifySecretAnswers, verifySecretqtsAccess)
+//Email *
 //Reset Password
 router
     .get("/resetpassword", verifyAccessToken, async (req, res)=>{

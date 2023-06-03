@@ -2,7 +2,7 @@
 import Mongoose from "mongoose";
 import "colors";
 
-//Creating ideas model
+//Creating Categories model
 const categorySchema = new Mongoose.Schema(
   {
     name: {

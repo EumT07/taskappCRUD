@@ -49,6 +49,7 @@ export const checkPassword = async (req, res, next) => {
     const anyUppserLetter = (/(?=.*[A-Z])/).test(password);
     const notSpace = (/^\S+$/).test(password);
 
+    //Check this *
     try {
         if(password != confirmPassword ){
             req.flash("errSignup", "Password are different")
@@ -108,7 +109,7 @@ export const checkPassword = async (req, res, next) => {
 export const checkUserSignin = async (req,res,next) => {
     const {email, password} = req.body;
     try {
-        //Getting user Info 
+        //Getting user Info from DB
         const user = await User.findOne({email: email});
         //Checking is user Exist or not
         if(!user){
@@ -154,7 +155,7 @@ export const checkUsername = async (req,res,next) => {
            return next();
         }
         
-        //USer exist
+        //User exist
         if(usernameFound){
             //Css style
             req.flash("usernameFound", "inputUserName");
@@ -260,6 +261,7 @@ export const checkResetPassword = async (req,res,next) => {
 export const checkEmptyFieldPincode = async (req,res,next) => {
     const {pin1,pin2,pin3,pin4,pin5,pin6} = req.body;
 
+    //Figuring out if field are empty
     const regExpPin1 = (/^$/).test(pin1)
     const regExpPin2 = (/^$/).test(pin2)
     const regExpPin3 = (/^$/).test(pin3)
