@@ -3,13 +3,14 @@
 <section class="update__container">
     <div class="update-card">
         <h3>Update Task</h3>
+        <a href="/dashboard"><i class="closeIcon fa"></i></a>
         <form action="/updateTask/<%= task.id %>" method="post">
             <label for="title">
-                <input type="text" name="title" placeholder="<%= task.title %>">
+                <input type="text" name="title" placeholder="<%= task.title %>" value="<%= task.title %>">
             </label>
             <label for="decriptions">
                 <p>
-                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>"></textarea>
+                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>" value="<%= task.description %>"><%= task.description %></textarea>
                 </p>
             </label>
             <div class="categoryContainer">
@@ -21,7 +22,7 @@
                 <option value="Hiddle">Middle</option>
                 <option value="Low">Low</option>
             </select>
-            <button type="submit">Create</button>
+            <button type="submit">Update</button>
         </form>
     </div>
 </section>

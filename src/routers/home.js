@@ -8,7 +8,9 @@ import {
     createNewTask,
     updateTask,
     deleteTask,
-    deleteCategory
+    deleteCategory,
+    completeTask,
+    cancelCompleteTask
 } from "../controllers/usersettings.js"
 
 const router = Router();
@@ -56,6 +58,8 @@ router
 
 //Delete Task and Category
 router
+    .get("/completeTask/:id", completeTask)
+    .get("/cancelCompleteTask/:id", cancelCompleteTask)
     .get("/deleteTask/:id", deleteTask)
     .get("/deleteCategory/:id", deleteCategory)
 

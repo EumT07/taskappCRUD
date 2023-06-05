@@ -19,6 +19,7 @@ upBtn.addEventListener("click", (e)=> {
 
 //BTN to create new task
 const createBtn = document.getElementById("createBtn");
+const closeCreateTask = document.getElementById("closeCreateTask");
 //Modal
 const modalTaskCard = document.querySelector(".modal__container");
 
@@ -26,13 +27,17 @@ createBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     modalTaskCard.style.display = "Block";
 });
+closeCreateTask.addEventListener("click", (e)=>{
+    e.preventDefault();
+    modalTaskCard.style.display = "none";
+});
 
 //Close esc
 document.addEventListener("keydown", (e)=>{
     if(e.code === "Escape" || e.keyCode === 27){
         modalTaskCard.style.display = "none"
     }
-})
+});
 
 //Dashboard creating new task: New category
 //Container
@@ -63,8 +68,8 @@ addNewCategoryBtn.addEventListener("click", (e)=>{
         //Close
         newInput.style.display = "none";
         closeInputCategory.style.display = "none";
-    })
-})
+    });
+});
 
 //Date Task
 function getDateTask() {
@@ -129,4 +134,21 @@ selectLevels.addEventListener("change", (e)=>{
 })
 
 
+//Changing check icon by close
+const checkIcon = document.querySelectorAll("#checkIcon");
 
+
+checkIcon.forEach(element => {
+    element.addEventListener("mouseover", ()=>{
+        element.setAttribute("src", "/img/delete.png");
+    });
+    element.addEventListener("mouseleave", ()=>{
+        element.setAttribute("src", "/img/check.png");
+    })
+})
+
+//Refresh page
+const oneHour = 1000 * 3600;
+setTimeout(()=> {
+    window.location.reload();
+}, oneHour)

@@ -37,6 +37,7 @@
                             <div class="task__card-container" id="tasksContainer">
                                 <h3><%= tasks[j].title %></h3>
                                 <p><%= tasks[j].description %></p>
+                                <a href="/completeTask/<%=tasks[j]._id%>"><i class="completeIcon fa"></i></a>
                                 <a href="/updateTask/<%=tasks[j]._id%>"><i class="updateIcon fa"></i></a>
                                 <a href="/deleteTask/<%=tasks[j]._id%>"><i class="deleteIcon fa"></i></a>
                                 <div class="container_levels" >
@@ -46,6 +47,12 @@
                                     </div>
                                     <h5 class="colorLevels <%= tasks[j].priority %>"><%= tasks[j].priority %></h5>
                                 </div>
+                                <% if(tasks[j].status) { %>
+                                <div class="completeTask">
+                                    <!-- <img src="/img/star.png" alt="star"> -->
+                                    <a href="/cancelCompleteTask/<%=tasks[j]._id%>"><img id="checkIcon" src="/img/check.png" alt="star"></a>
+                                </div> 
+                                <% } %> 
                             </div>
                         </div>
                         <% } %> 
@@ -58,6 +65,7 @@
         <section class="modal__container">
             <div class="modal-card">
                 <h3>Create New Task</h3>
+                <i id="closeCreateTask" class="closeIcon fa"></i>
                 <form action="/newtask" method="post">
                     <label for="title">
                         <input type="text" name="title" placeholder="Title">

@@ -326,6 +326,10 @@ export const updateTask = async (req,res) =>{
     try {
         const {id} = req.params;
         const {title,description,priority} = req.body;
+
+        // if(title.length === 0 || description.length === 0 || priority.length === 0) {
+        //     return res.status(202).redirect("/dashboard");
+        // }
         const data = {
             title: title,
             description: description,
@@ -337,6 +341,28 @@ export const updateTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Updating Task".red.bold, error.message);
+    }
+}
+//*Task Done
+export const completeTask = async (req,res) =>{
+    try {
+        const {id} = req.params;
+        //Find task and update status
+        await Tasks.findByIdAndUpdate({_id: id},{status: true});
+        return res.status(202).redirect("/dashboard");
+    } catch (error) {
+        console.log("There is an Error: Completing Task".red.bold, error.message);
+    }
+}
+//* Cancel Task done
+export const cancelCompleteTask = async (req,res) =>{
+    try {
+        const {id} = req.params;
+        //Find task and update status
+        await Tasks.findByIdAndUpdate({_id: id},{status: false});
+        return res.status(202).redirect("/dashboard");
+    } catch (error) {
+        console.log("There is an Error: Canceling Complete Task".red.bold, error.message);
     }
 }
 

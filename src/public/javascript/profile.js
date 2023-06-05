@@ -87,3 +87,9 @@ document.addEventListener("keydown", (e)=>{
         deleteAcc.style.display = "none";
     }
 });
+
+//Refresh page
+const oneHour = 1000 * 3600;
+setTimeout(()=> {
+    window.location.reload();
+}, oneHour)
