@@ -1,6 +1,7 @@
 "user strict"
 import User from "../models/user.js";
 import Task from "../models/tasks.js";
+import Image from "../models/profileImg.js";
 import Category from "../models/category.js";
 import { Router } from "express";
 import {verifyToken}  from "../middlewares/verifytoken.js";
@@ -32,11 +33,13 @@ router
         const user = await User.findById(req.userID);
         const tasks = await Task.find({user: user.id});
         const categories = await Category.find({user: user.id});
+        const img = await Image.findOne({user: user.id})
         res.render("./dashboard/dashboard.ejs", {
             title: "Dashboard",
             user,
             tasks,
-            categories
+            categories,
+            img
         });
     })
     .post("/newtask", createNewTask)

@@ -3,6 +3,7 @@ import * as dotenv from "dotenv"
 import User from "../models/user.js";
 import SecretQt from "../models/secretqt.js";
 import Tasks from "../models/tasks.js";
+import Image from "../models/profileImg.js";
 import Category from "../models/category.js"
 import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
@@ -91,16 +92,35 @@ export const updateUser = async (req,res) => {
     try {
         //Getting user info
         const userID = req.body.userID;
+     
         const {username,name,lastname,country} = req.body;
+        
+        if(req.file !== undefined){
+            //Saving profile-user-image
+            const {filename, path, originalname, mimetype,size} = req.file;
+            console.log(req.file.path);
+            const imgObject = {
+                filename: filename,
+                path: '/uploads/' + filename,
+                originalname,
+                mimetype,
+                size
+            }
+            const profileImg = new Image(imgObject);
+            profileImg.user = userID;
+            console.log(profileImg);
+            await profileImg.save();
+        }
+        //Saving Data updated
         const data = {
             username: username,
             name: name,
             lastname: lastname,
             country: country
         }
-        //Updating
+        // Updating
         await User.findByIdAndUpdate({_id: userID}, data);
-        //Return
+        // Return
         return await res.status(202).redirect("/api/settings/profile");
     } catch (error) {
         console.log("There is an Erro: Setting-Profile: Updating user".red.bold, error.message);

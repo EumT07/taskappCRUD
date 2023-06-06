@@ -75,12 +75,14 @@ nav .userNav .userimg__container{
     justify-content: center;
     align-items: center;
 }
-nav .userNav .userimg__container img{
-    width: 70%;
-    height: 70%;
+nav .userNav  .userimg__container  img{
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    border-radius: 50%;
 }
-nav .userNav img {
+/* up and down arrow*/
+nav .userNav > img{
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -103,7 +105,7 @@ nav .userNav img {
     flex-direction: column;
     justify-content: space-around;
     align-items:center;
-    z-index: 100;
+    z-index: 200;
 }
 .menu .menu_options{
     align-self: start;

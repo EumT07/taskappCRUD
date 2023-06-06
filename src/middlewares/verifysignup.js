@@ -138,6 +138,7 @@ export const checkUsername = async (req,res,next) => {
     try {
         //New username 
         const newusername = req.body.username;
+        console.log(req.body.userID);
     
         //Searching user 
         const userID = req.body.userID;

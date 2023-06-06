@@ -5,7 +5,11 @@
     <section class="data__container">
         <div class="data_options">
             <div class="userImg">
+                <% if(img) {%>
+                <img src="<%= img.path %>" alt="<%= img.filename %>">
+                <% } else {%>
                 <img src="/img/user.png" alt="user">
+                <% } %>
             </div>
             <h3><%= user.username %></h3>
             <h3><%= user.email %></h3>
@@ -20,15 +24,19 @@
         </div>
         <div class="show_options">
             <div class="profile_form"> 
-                <form action="/api/settings/updateUser" method="POST" id="profile">
+                <form action="/api/settings/updateUser" method="POST" id="profile" enctype="multipart/form-data">
                     <div class="userSection">
                         <div class="iconcontainer">
-                            <img src="/img/user.png" alt="img">
+                            <% if(img) {%>
+                                <img src="<%= img.path %>" alt="<%= img.filename %>">
+                            <% } else {%>
+                                <img src="/img/user.png" alt="user">
+                            <% } %>
                         </div>
                         <div class="upload">
                             <button type="button" class="btn_uploaded">
                                 <i class="fas fa-upload"></i> Upload File
-                                <input type="file">
+                                <input type="file" name="image" >
                             </button>
                             <div class="trash">
                                 <i class="fas fa-trash"></i>
@@ -42,19 +50,19 @@
                     </label>
                     <% } %>
                     <label for="name">Name
-                        <input type="text" name="name" id="name" value="<%= user.name %>" required>
+                        <input type="text" name="name" id="name" value="<%= user.name %>" >
                     </label>
                     <label for="lastname">Lastname
-                        <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" required>
+                        <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" >
                     </label>
                     <label for="email">Email
                         <input type="email" name="email" id="email" value="<%= user.email %>" readonly >
                     </label>
                     <label for="country">Country
-                        <input type="text" name="country" id="country" value="<%= user.country %>" required>
+                        <input type="text" name="country" id="country" value="<%= user.country %>" >
                     </label>
-                    <button class="btnForm" type="submit">Send</button>
                     <input type="hidden" name="userID" value="<%= user.id %>"  id="">
+                    <button class="btnForm" type="submit">Send</button>
                 </form>
             </div>
             

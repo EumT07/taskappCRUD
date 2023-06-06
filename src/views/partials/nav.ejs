@@ -6,7 +6,11 @@
             </div>
             <div class="userNav">
                 <div class="userimg__container">
-                    <img src="/img/user.png" alt="user">
+                    <% if(img) {%>
+                        <img src="<%= img.path %>" alt="<%= img.filename %>">
+                    <% } else {%>
+                        <img src="/img/user.png" alt="user">
+                    <% } %>
                 </div>
                 <h2><%= user.username %></h2>
                 <img id="downBtn" class="down" src="/img/down.png" alt="down">

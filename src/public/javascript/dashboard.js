@@ -148,7 +148,6 @@ checkIcon.forEach(element => {
 })
 
 //Refresh page
-const oneHour = 1000 * 3600;
 setTimeout(()=> {
     window.location.reload();
-}, oneHour)
+}, 1000 * 3600)

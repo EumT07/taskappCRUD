@@ -1,6 +1,7 @@
 "user strict"
 import { Router } from "express";
 import User from "../models/user.js";
+import Image from "../models/profileImg.js";
 import {
     verifyToken,
     verifyPinCode,
@@ -24,6 +25,7 @@ import {
     changeSecretquestions,
     resetAcc
  } from "../controllers/usersettings.js";
+import upload from "../middlewares/multer.js";
 
 
 const router = Router();
@@ -47,22 +49,24 @@ router
             title: "Pin Code",
             user
         })
-    })
+    }) 
     .post("/pincode", checkEmptyFieldPincode ,pincode) 
 
 //Profile Page
 router 
     .get("/profile", verifyToken, async (req, res) =>{
         const user =  await User.findById(req.userID);
+        const img = await Image.findOne({user: user.id})
         res.render("./settings/profile.ejs", {
             title: "Profile",
-            user
+            user,
+            img
         })
     })
 
 //Profile Page: Updatting user
 router
-    .post("/updateUser", checkUsername ,updateUser)
+    .post("/updateUser", [upload, checkUsername ], updateUser)
 
 //Profile Page : 
 router
