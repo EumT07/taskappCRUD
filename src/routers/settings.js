@@ -18,12 +18,14 @@ import {
 } from "../middlewares/verifysignup.js";
 import {
     secretQuestions,
+    profilePhoteUpdate,
     updateUser,
     removeAcc,
     pincode,
     changePassword,
     changeSecretquestions,
-    resetAcc
+    resetAcc,
+    deleteProfilePhoto
  } from "../controllers/usersettings.js";
 import upload from "../middlewares/multer.js";
 
@@ -66,7 +68,8 @@ router
 
 //Profile Page: Updatting user
 router
-    .post("/updateUser", [upload, checkUsername ], updateUser)
+    .post("/updateUser", [upload, profilePhoteUpdate ,checkUsername ], updateUser)
+    .get("/removephoto/:id", deleteProfilePhoto)
 
 //Profile Page : 
 router

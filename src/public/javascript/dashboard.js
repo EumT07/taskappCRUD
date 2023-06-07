@@ -98,6 +98,7 @@ const tasksContainer = document.querySelectorAll("#tasksContainer");
 //Div filtered
 const tasksFilter = document.querySelectorAll(".tasksFilter");
 
+//Show Categories
 selectCategory.addEventListener("change", (e)=>{
     let categoryNameSelected = e.target.value.toLowerCase().trim();  
     categoriesContainer.forEach(category => {
@@ -114,6 +115,7 @@ selectCategory.addEventListener("change", (e)=>{
     });
 })
 
+//Show task 
 selectLevels.addEventListener("change", (e)=>{
     let levelsNameSelected = e.target.value.toLowerCase().trim(); 
     console.log(levelsNameSelected);
@@ -146,6 +148,7 @@ checkIcon.forEach(element => {
         element.setAttribute("src", "/img/check.png");
     })
 })
+
 
 //Refresh page
 setTimeout(()=> {

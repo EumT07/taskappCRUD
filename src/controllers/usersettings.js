@@ -8,6 +8,9 @@ import Category from "../models/category.js"
 import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import fs from "node:fs";
+import path from "node:path"
+import { fileURLToPath } from "node:url";
 dotenv.config();
 
 //Getting: Environment Variables
@@ -17,6 +20,11 @@ const cookiesecretqts = process.env.COOKPINSECRETQTS;
 const cookieRecovery = process.env.COOKRECOVERY;
 const cookieAccessToken = process.env.COOKREACCESS;
 const SECRET = process.env.SECRET_KEY_JWT;
+
+/** __Filename:  root-file */
+const __filename = fileURLToPath(import.meta.url);
+/** __Dirname: root:folder  */
+const __dirname = path.dirname(__filename);
 
 
 //Creating: security questions
@@ -87,30 +95,90 @@ export const pincode = async (req,res) => {
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
     }
 }
+
+//* Profile Photo
+export const profilePhoteUpdate = async(req,res,next) => {
+    try {
+        //Getting user info
+        const userID = req.body.userID;
+        
+        if(req.file == undefined){
+            return next();
+        }
+    
+
+        //Getting data
+        const {filename, originalname, mimetype,size} = req.file;
+        
+        const imgObject = {
+            filename: filename,
+            path: '/uploads/' + filename,
+            originalname,
+            mimetype,
+            size
+        }
+
+        //Search img by user ID
+        const photoUserFound = await Image.findOne({user: userID});
+
+        //Check if user has photo
+        if(photoUserFound){
+            //Get path filename
+            const photoUrl = photoUserFound.filename;
+            const pathUrl = path.join(__dirname, "../public/uploads")
+            
+            // Delete photo already exist in uploads
+            fs.unlinkSync(`${pathUrl}/${photoUrl}`)
+
+            await Image.findOneAndUpdate({user: userID}, imgObject);
+            return next();
+        }
+
+        //Create a new photo
+        const profileImg = new Image(imgObject);
+        profileImg.user = userID;
+
+        await profileImg.save();
+        
+        next();
+    } catch (error) {
+        console.log("There is an Error: Setting-ProfilePhoto: Updating user".red.bold, error.message);
+    }
+}
+//* Delete photo by id
+export const deleteProfilePhoto = async(req,res,next) => {
+   try {
+     //req id
+     const {id} = req.params;
+
+    //Search img by user ID
+    const photoUserFound = await Image.findById(id);
+
+    //Get path filename
+    const photoUrl = photoUserFound.filename;
+    const pathUrl = path.join(__dirname, "../public/uploads")
+
+    // Delete photo already exist in uploads
+    fs.unlinkSync(`${pathUrl}/${photoUrl}`)
+
+    //Search img by Img ID
+    await Image.deleteOne({_id: id});
+    // Return
+     return await res.status(202).redirect("/api/settings/profile");
+   } catch (error) {
+        console.log("There is an Error: Delting profilePhoto");
+   }
+
+}
+
 //Updating: user info
 export const updateUser = async (req,res) => {
     try {
         //Getting user info
         const userID = req.body.userID;
-     
+
         const {username,name,lastname,country} = req.body;
         
-        if(req.file !== undefined){
-            //Saving profile-user-image
-            const {filename, path, originalname, mimetype,size} = req.file;
-            console.log(req.file.path);
-            const imgObject = {
-                filename: filename,
-                path: '/uploads/' + filename,
-                originalname,
-                mimetype,
-                size
-            }
-            const profileImg = new Image(imgObject);
-            profileImg.user = userID;
-            console.log(profileImg);
-            await profileImg.save();
-        }
         //Saving Data updated
         const data = {
             username: username,
