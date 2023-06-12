@@ -11,6 +11,17 @@ import jwt from "jsonwebtoken";
 import fs from "node:fs";
 import path from "node:path"
 import { fileURLToPath } from "node:url";
+import {
+    changePasswordEmail,
+    changeSecretqtsEmail,
+    resetPasswordEmail,
+    resetAccEmail,
+    removetAccEmail } from "../mail/Template/emailTemplate.js";
+import {
+    taskAppError
+} from "../error/handlerError.js";
+import { sendMail, sendErrorMail,notificationAppMail } from "../mail/mail.js";
+
 dotenv.config();
 
 //Getting: Environment Variables
@@ -59,6 +70,8 @@ export const secretQuestions = async (req,res)=>{
         return res.status(202).redirect("/api/settings/pincode");
     } catch (error) {
         console.log("There is an Error: Settings: Secret Questions".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings - Secret Questions ",500);
+        sendErrorMail(message);
     }
 }
 //Creating: Pin code
@@ -93,6 +106,8 @@ export const pincode = async (req,res) => {
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings - Pin code ",500);
+        sendErrorMail(message);
     }
 }
 
@@ -106,7 +121,6 @@ export const profilePhoteUpdate = async(req,res,next) => {
             return next();
         }
     
-
         //Getting data
         const {filename, originalname, mimetype,size} = req.file;
         
@@ -143,6 +157,8 @@ export const profilePhoteUpdate = async(req,res,next) => {
         next();
     } catch (error) {
         console.log("There is an Error: Setting-ProfilePhoto: Updating user".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Setting-ProfilePhoto - Updating user ",500);
+        sendErrorMail(message);
     }
 }
 //* Delete photo by id
@@ -167,11 +183,13 @@ export const deleteProfilePhoto = async(req,res,next) => {
      return await res.status(202).redirect("/api/settings/profile");
    } catch (error) {
         console.log("There is an Error: Delting profilePhoto");
+        const message = taskAppError(res,"taskAppError: controller Settings Delting profilePhoto",500);
+        sendErrorMail(message);
    }
 
 }
 
-//Updating: user info
+//Updating: user info 
 export const updateUser = async (req,res) => {
     try {
         //Getting user info
@@ -192,9 +210,11 @@ export const updateUser = async (req,res) => {
         return await res.status(202).redirect("/api/settings/profile");
     } catch (error) {
         console.log("There is an Erro: Setting-Profile: Updating user".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings Updating user",500);
+        sendErrorMail(message);
     }
 }
-//Changing: password 
+//Changing: password *email
 export const changePassword = async (req,res) => {
     try {
         //Getting user info
@@ -207,13 +227,22 @@ export const changePassword = async (req,res) => {
         res.clearCookie(cookieapp);
         res.clearCookie(cookiepassword);
         res.clearCookie(cookiesecretqts);
+
+        //Send message
+        const user = await User.findById(userid);
+        const subjectText = `Your Password Has been changed`;
+        const htmlContent = changePasswordEmail(user.username);
+        await sendMail(user.email,subjectText,htmlContent);
+
         //Return
         return res.status(202).redirect("/api/auth/signin");
     } catch (error) {
         console.log("There is an Error: Setting: Changing Password".red.bold, Error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings Changing Password",500);
+        sendErrorMail(message);
     }
 }
-//Changing: secret Password
+//Changing: secret Password *email
 export const changeSecretquestions = async (req,res)=> {
     try {
         //Getting info
@@ -223,10 +252,18 @@ export const changeSecretquestions = async (req,res)=> {
         await SecretQt.findOneAndUpdate({user: userid}, data);
         //Cleaning cookies
         res.clearCookie(cookiesecretqts);
+        
+        //Send message
+        const user = await User.findById(userid);
+        const subjectText = `Your Secret questions has been changed`;
+        const htmlContent = changeSecretqtsEmail(user.username);
+        await sendMail(user.email,subjectText,htmlContent);
+
         //Return
         return res.status(202).redirect("/api/settings/profile");
     } catch (error) {
-        
+        const message = taskAppError(res,"taskAppError: controller Settings Changing Secret Questions",500);
+        sendErrorMail(message);
     }
 }
 //Searching: email / user
@@ -281,9 +318,11 @@ export const searchUser = async (req,res) => {
         return res.status(200).redirect("/api/recovery/options");
     } catch (error) {
         console.log("There is an Error: Recovery: Searching user".red.bold);
+        const message = taskAppError(res,"taskAppError: controller Settings Searching user",500);
+        sendErrorMail(message);
     }
 }
-//Reset Password
+//Reset Password *email
 export const resetPassword = async (req,res)=>{
     try {
         const {userid, newPassword, confirmNewPassword} = req.body;
@@ -293,13 +332,30 @@ export const resetPassword = async (req,res)=>{
         await User.findOneAndUpdate({_id: userid},{password: hashPassword});
         //Deleting Cookies
         res.clearCookie(cookieAccessToken);
+
+        //Send Email
+        const user = await User.findById(userid);
+        const subjectText = `Your Password has been reseted`;
+        const htmlContent = resetPasswordEmail(user.username);
+        await sendMail(user.email,subjectText,htmlContent);
+
+        //Send notification to taskAppEmail
+        const htmlNotification = `
+            <h1> Reset Account </h1> 
+            <hr>
+            <p> The password of this user <b> ${user.email} </b> has been reseted</p>
+        `
+        await notificationAppMail(htmlNotification);
+
         //Return
         return res.status(202).redirect("/api/auth/signin");
     } catch (error) {
         console.log("There is an Error: Recovery: Reset Password".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings Reset Password",500);
+        sendErrorMail(message);
     }
 }
-//Reset Account
+//Reset Account *email
 export const resetAcc = async (req,res) => {
     try {
         //Get user id
@@ -308,19 +364,38 @@ export const resetAcc = async (req,res) => {
         await Tasks.deleteMany({user: id});
         //REmoving Category frim database
         await Category.deleteMany({user: id});
+
+        //Cleaning all cookies
+        res.clearCookie(cookieapp);
+        res.clearCookie(cookieAccessToken);
+
+        //Send message
+        const user = await User.findById(id);
+        const subjectText = `Your Account has been reseted`;
+        const htmlContent = resetAccEmail(user.username);
+        await sendMail(user.email,subjectText,htmlContent);
+
+        //Send notification to taskAppEmail
+        const htmlNotification = `
+            <h1> Reset Account </h1> 
+            <hr>
+            <p> The account with this mail <b> ${user.email} </b> has been reseted</p>
+        `
+        await notificationAppMail(htmlNotification);
+
         //Return
         return await res.status(202).redirect("/api/settings/profile/?data=accountdiv");
     } catch (error) {
-        console.log("There is an Error: Remove Acc".red.bold, error.message);
+        console.log("There is an Error: Reset Acc".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings Reset Acc",500);
+        sendErrorMail(message);
     }
 }
-//Remove Account
+//Remove Account *email
 export const removeAcc = async (req,res) => {
     try {
         //Get user id
         const {id} = req.params;
-        //Removing User from dataBase 
-        await User.deleteOne({_id: id});
         //Removing Secret Questions from database
         await SecretQt.deleteOne({user: id});
         //Removing PIN Code From dataBase
@@ -329,10 +404,35 @@ export const removeAcc = async (req,res) => {
         await Tasks.deleteMany({user: id});
         //REmoving Category frim database
         await Category.deleteMany({user: id});
+        //Remove picture from database
+        await Image.deleteOne({user: id});
+
+        //Cleaning cookies
+        res.clearCookie(cookieapp);
+        res.clearCookie(cookieAccessToken);
+
+        //Send message to User
+        const user = await User.findById(id);
+        const subjectText = `Your Account has been deleted`;
+        const htmlContent = removetAccEmail(user.username);
+        await sendMail(user.email, subjectText, htmlContent);
+
+        //Send notification to taskAppEmail
+        const htmlNotification = `
+            <h1> Remove Account </h1> 
+            <hr>
+            <p> The account with this mail <b> ${user.email} </b> has been deleted</p>
+        `
+        await notificationAppMail(htmlNotification);
+
+        //Removing User from dataBase 
+        await User.deleteOne({_id: id});
         //Return
         return res.status(202).redirect("/");
     } catch (error) {
         console.log("There is an Error: Remove Acc".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Settings Remove Acc",500);
+        sendErrorMail(message);
     }
 }
 
@@ -406,6 +506,8 @@ export const createNewTask = async (req, res) => {
         return;
     } catch (error) {
         console.log("There is an error: Creating new Task".red.bold, + error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Creating new Task",500);
+        sendErrorMail(message);
     }
 }
 
@@ -429,6 +531,8 @@ export const updateTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Updating Task".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Updating Task",500);
+        sendErrorMail(message);
     }
 }
 //*Task Done
@@ -440,6 +544,8 @@ export const completeTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Completing Task".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Completing Task",500);
+        sendErrorMail(message);
     }
 }
 //* Cancel Task done
@@ -451,6 +557,8 @@ export const cancelCompleteTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Canceling Complete Task".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Reseting Completed Task",500);
+        sendErrorMail(message);
     }
 }
 
@@ -463,6 +571,8 @@ export const deleteTask = async (req,res)=>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Deleting Task",500);
+        sendErrorMail(message);
     }
 }
 //*Delete Category
@@ -475,5 +585,7 @@ export const deleteCategory = async(req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller dashboard Deleting category",500);
+        sendErrorMail(message);
     }
 }

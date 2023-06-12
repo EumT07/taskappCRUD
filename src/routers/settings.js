@@ -73,6 +73,10 @@ router
 
 //Profile Page : 
 router
+    //Checking email to change pincode
+    .post("/pincodeEmail",(req,res)=>{
+        // return res.status(200).redirect("/api/settings/changepincode");
+    })
     //Checking Pin to change password
     .post("/pinchangepass", [verifyPinCode, creatingPassToken], (req,res) => {
         req.flash("id", `${req.ID}`);

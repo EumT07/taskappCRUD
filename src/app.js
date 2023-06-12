@@ -11,6 +11,7 @@ import flash from "connect-flash"
 
 
 
+
 dotenv.config();
 //Getting all routes
 import homeRoute from "./routers/home.js";
@@ -96,7 +97,6 @@ app.use((req,res,next) => {
 
     next();
 })
-
 
 /**
  * Export All route

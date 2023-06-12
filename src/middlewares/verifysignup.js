@@ -1,5 +1,9 @@
 "Use strict"
 import User from "../models/user.js";
+import {
+    taskAppError
+} from "../error/handlerError.js";
+import { sendMail, sendErrorMail } from "../mail/mail.js";
 
 //Checking if user exist or not
 export const checkUserSignup = async (req, res, next)=>{
@@ -32,8 +36,8 @@ export const checkUserSignup = async (req, res, next)=>{
         //Success
        return next();
     } catch (error) {
-        // return res.status(501).json(error.message);
-        console.log("There is an error: Signup: Check user ".red.bold, error.message);
+        const message = taskAppError(res, "taskAppError: Signup --> check User Signup", 401);
+        sendErrorMail(message);
     }
 }
 
@@ -102,7 +106,8 @@ export const checkPassword = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Signup: Check Password ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Signup --> Check Password ", 406);
+        sendErrorMail(message);
     }
 }
 
@@ -128,9 +133,9 @@ export const checkUserSignin = async (req,res,next) => {
         //Return
         return next();
     } catch (error) {
-        console.log("There is an error: Signin: Check User ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Signin --> Check User Signin", 404);
+        sendErrorMail(message);
     }
-
 }
 
 //Updating User: username
@@ -166,9 +171,9 @@ export const checkUsername = async (req,res,next) => {
             return res.status(202).redirect("/api/settings/profile");
         }
     } catch (error) {
-        console.log("There is an error: Setting-Profile: check user name".red.bold, error.message);
+        const messge = taskAppError(res,"taskAppError: Setting-Profile: check username", 404);
+        sendErrorMail(messge)
     }
-
 }
 
 //Updating: Old password to a new passwords
@@ -212,6 +217,8 @@ export const checkNewPassword = async (req, res, next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Middlewate-Signup: Verifying new password".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Middlewate-Signup: Verifying new password",401);
+        sendErrorMail(message);
     }
 }
 
@@ -254,7 +261,8 @@ export const checkResetPassword = async (req,res,next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Middleware-Signup- Path: Recovery-Reset Password".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
+        sendErrorMail(message);
     }
 }
 
@@ -279,7 +287,8 @@ export const checkEmptyFieldPincode = async (req,res,next) => {
     
         return next();
     } catch (error) {
-        console.log("There is an Error: Check Empty Field: pincode".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",404);
+        sendErrorMail(message);
     }
 }
 
@@ -300,7 +309,8 @@ export const checkEmptyFieldSecreteqts = async (req,res,next) => {
 
         return next();
    } catch (error) {
-        console.log("There is an Error: Check Empty Field: secretqts".red.bold, error.message);
+    const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",404);
+    sendErrorMail(message);
    }
 }
 

@@ -15,11 +15,16 @@
             <h3><%= user.email %></h3>
             <hr>
             <div class="links">
+                <h3>Personal Data</h3>
+                <hr>
                 <a id ="profileBtn" href="?data=profile">Profile</a>
-                    <a id ="taskBtn" href="?data=taskdiv">Tasks</a>
-                    <a id ="changepassBtn" href="?data=changepass">Change Password</a>
-                    <a id ="changesecretqtsBtn" href="?data=changesecretqts">Change Secret Questions</a>
-                    <a id ="accountBtn" href="?data=accountdiv">Account</a>
+                <a id ="taskBtn" href="?data=taskdiv">Tasks</a>
+                <h3>Security</h3>
+                <hr>
+                <a id ="changepinBtn" href="?data=changepinreq">Change Pin-Code</a>
+                <a id ="changepassBtn" href="?data=changepass">Change Password</a>
+                <a id ="changesecretqtsBtn" href="?data=changesecretqts">Change Secret Questions</a>
+                <a id ="accountBtn" href="?data=accountdiv">Account</a>
             </div>
         </div>
         <div class="show_options">
@@ -91,9 +96,21 @@
                 </div>
             </div>
 
+            <div class="changePincode_container" id="changePin">
+                <div class="changePincode_req">
+                    <h3>Change your Pin-Code</h3>
+                    <p>We will send to you an email, with the link in order you can change your Pin-code..!!</p>
+                    <form action="/api/settings/pincodeEmail" method="post">
+                        <input type="email" name="email" value="<%= user.email %>" readonly>
+                        <input type="hidden" name="userID" value="<%= user.id %>"  id="">
+                        <button class="btnForm" type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="changepass_form gettingPIN">
                 <form  action="/api/settings/pinchangepass" method="post" id="changepass">
-                    <h2>Change Password</h2>
+                    <h3>Change Password</h3>
                     <p class="attention">Enter your 6-digit pin in order to change your Password</p>
                     <div class="inputGroup">
                         <label for="pin1">
@@ -125,7 +142,7 @@
 
             <div class="changesquestions_form gettingPIN">
                 <form  action="/api/settings/pinchangesecretqts" method="post" id="changescretqts">
-                    <h2>Security Questions</h2>
+                    <h3>Security Questions</h3>
                     <p class="attention">Enter your 6-digit pin in order to change your security questions</p>
                     <div class="inputGroup">
                         <label for="pin1">

@@ -4,6 +4,10 @@ import User from "../models/user.js";
 import Secretqt from "../models/secretqt.js";
 import PIN from "../models/pincode.js";
 import jwt from "jsonwebtoken";
+import {
+    taskAppError
+} from "../error/handlerError.js"
+import { sendMail, sendErrorMail } from "../mail/mail.js";
 dotenv.config();
 //Token Variables
 const SECRET = process.env.SECRET_KEY_JWT;//JWT
@@ -37,7 +41,8 @@ export const verifyToken = async (req, res, next) => {
         return next();
 
     } catch (error) {
-        console.log("There is an error: Middlewate-token : Verify Token ".red.bold, error.message);
+        const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",401)
+        sendErrorMail(message)
     }
 }
 
@@ -80,11 +85,8 @@ export const verifyPinCode = async (req, res,next) => {
         //return
         return next();
     } catch (error) {
-        console.log("There is an error: Verify Pin ".red.bold, error.message);
-        if(error){
-            res.status(404).redirect("/dashboard")
-            return; 
-        }
+        const message = taskAppError(res,"taskApp-Error: Verify Pin ",401);
+        sendErrorMail(message)
     }
 }
 
@@ -118,7 +120,8 @@ export const creatingPassToken = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Middleware-token: Creating pass-token ".red.bold, error.message);  
+        const message = taskAppError(res,"There is an error: Middleware-token: Creating pass-token ",401);
+        sendErrorMail(message) 
     }
 
 }
@@ -150,7 +153,8 @@ export const creatingSecretqtsToken = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Middleware-Token:  Creating SecretQts Token".red.bold, error.message);  
+        const message = taskAppError(res,"taskAppError: Middleware-Token:  Creating SecretQts Token" );
+        sendErrorMail(message)
     }
 }
 
@@ -170,6 +174,8 @@ export const verifyPassToken = async (req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verify Token pass ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Verify Token pass ",401 );
+        sendErrorMail(message)
     }
 }
 
@@ -189,6 +195,8 @@ export const verifySecretqtsToken = async (req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
+        const message = taskAppError(res,"There is an error: Verify Token secretqts ",401 )
+        sendErrorMail(message)
     }
 }
 
@@ -210,7 +218,8 @@ export const verifyRecoveryToken = async (req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
-        return res.status(404).redirect("/api/recovery/search")
+        const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",401);
+        sendErrorMail(message)
     }
 
 }
@@ -247,11 +256,11 @@ export const verifyPinAccess = async (req,res,next) => {
         return res.status(200).redirect("/api/recovery/resetpassword")
     } catch (error) {
         console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",401);
+        sendErrorMail(message)
     }
 
 }
-
-
 //Verify secret answers
 export const verifySecretAnswers = async(req,res,next) => {
     try {
@@ -303,6 +312,8 @@ export const verifySecretAnswers = async(req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",401);
+        sendErrorMail(message);
     }
 
 
@@ -337,6 +348,8 @@ export const verifySecretqtsAccess = async (req,res,next) => {
         return res.status(200).redirect("/api/recovery/resetpassword")
     } catch (error) {
         console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Verify secreteqts access ",401);
+        sendErrorMail(message);
     }
 }
 
@@ -356,6 +369,7 @@ export const verifyAccessToken = async (req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verify recovery Token ".red.bold, error.message);
-        return res.status(404).redirect("/api/recovery/search")
+        const message = taskAppError(res,"taskAppEror: Verify recovery Token ",401);
+        sendErrorMail(message)
     }
 }

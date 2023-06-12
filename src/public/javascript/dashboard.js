@@ -153,4 +153,4 @@ checkIcon.forEach(element => {
 //Refresh page
 setTimeout(()=> {
     window.location.reload();
-}, 1000 * 3600)
+}, 1000 * 1800)

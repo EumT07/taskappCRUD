@@ -4,11 +4,9 @@
 */
 import Mongoose from "mongoose";
 import "colors";
-/**
- * Getting mongo Url from .env
- * @constant
- * @type {string} 
- */
+import { sendErrorMail } from "./mail/mail.js";
+import {taskAppError} from "./error/handlerError.js"
+
 const mongoURL = process.env.MONGO_URL;
 
 try {
@@ -20,4 +18,6 @@ try {
     console.log("DataBase is connected to: ".bgBlue, dataBase.connection.name);
 } catch (error) {
     console.log("Erro Connection data base: ".red.bold, error.message);
+    const message = taskAppError(res,"Error Trying to connect with database:",500);
+    sendErrorMail(message);
 }

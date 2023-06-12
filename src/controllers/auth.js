@@ -1,8 +1,13 @@
 "use strict"
 import * as dotenv from "dotenv";
 import User from "../models/user.js";
-import Category from "../models/category.js"
+import {welcomeEmail} from "../mail/Template/emailTemplate.js"
 import jwt from "jsonwebtoken";
+import { sendMail, sendErrorMail,notificationAppMail } from "../mail/mail.js";
+import {
+    taskAppError
+} from "../error/handlerError.js"
+
 dotenv.config();
 
 const SECRET = process.env.SECRET_KEY_JWT;
@@ -35,6 +40,20 @@ export const singup = async (req,res) => {
         //Saving data
         const savedUser = await newUser.save();
 
+        //Send message
+        const subjectText = `Hello, ${username} Welcome to TaskApp.!!`;
+        const htmlContent = welcomeEmail(username);
+        await sendMail(email,subjectText,htmlContent);
+
+        //Send notification to taskAppEmail
+        const htmlNotification = `
+            <h1> New User </h1> 
+            <hr>
+            <p> User: <b> ${email} </b> has registered in the APP</p>
+        `
+        await notificationAppMail(htmlNotification);
+        
+
         //Creating a token
         const token = jwt.sign({id:savedUser._id},SECRET,{
             expiresIn: "24h"
@@ -51,6 +70,8 @@ export const singup = async (req,res) => {
         return res.redirect("/api/settings/secretquestions");
     } catch (error) {
         console.log("There is an error: Auth: Signup ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Auth - Signup ",500);
+        await sendErrorMail(message);
     }
 };
 /**
@@ -77,6 +98,8 @@ export const singin = async (req,res) => {
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an error: Auth: Signin".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Auth - Signin ",500);
+        sendErrorMail(message);
     }
 };
 //Logout
@@ -87,5 +110,7 @@ export const closeSession = async (req,res) => {
         return res.status(200).redirect("/");
     } catch (error) {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);
+        sendErrorMail(message);
     }
 };

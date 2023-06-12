@@ -24,7 +24,7 @@
 .data__container .data_options{
     width: 35%;
     height: 400px;
-    margin-top: 26px;
+    margin-top: 50px;
     align-self: flex-start;
     border-radius: 10px;
     display: flex;
@@ -53,10 +53,13 @@
 }
 .links {
     width: 80%;
-    height: 150px;
+    height: 230px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+.links > h3 {
+    text-align: center;
 }
 .links > a{
     text-decoration: none;
@@ -185,6 +188,37 @@
 
 .data__container .show_options > .taskContainer_form{
     display: none;
+}
+/*Change pin-code request*/
+.data__container .show_options > .changePincode_container{
+    display: none;
+}
+.data__container .show_options > .changePincode_container > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 220px;
+    padding: 15px 30px;
+}
+.data__container .show_options > .changePincode_container > div p {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #c4d0d8;
+    border: 2px solid #1410ec;
+}
+.data__container .show_options > .changePincode_container > div form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 80px;
+}
+.data__container .show_options > .changePincode_container > div form input[type="email"] {
+    padding: 5px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #b8afaf98;
 }
 
 /* change Password */

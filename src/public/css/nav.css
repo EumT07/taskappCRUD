@@ -125,25 +125,30 @@ nav .userNav > img{
     align-items: center;
     align-self: start;
 }
-.menu .menu_options li:nth-child(1) > .user,
-.menu .menu_options li:nth-child(2) > .settings,
-.menu .menu_options li:nth-child(3) > .logout {
+.menu .menu_options li:nth-child(1) > .dashIco,
+.menu .menu_options li:nth-child(2) > .user,
+.menu .menu_options li:nth-child(3) > .settings,
+.menu .menu_options li:nth-child(4) > .logout {
     position: absolute;
     left: -25px;
     align-items:start;
     color: #ffffff;
 }
-
-.menu .menu_options li:nth-child(1) > .user::before{
+.menu .menu_options li:nth-child(1) > .dashIco::before{
+    content: "\f0db";
+    margin-right: 10px;
+    margin-left: 0px;
+}
+.menu .menu_options li:nth-child(2) > .user::before{
     content: "\f007";
     margin-right: 10px;
     margin-left: 0px;
 }
-.menu .menu_options li:nth-child(2) > .settings::before{
+.menu .menu_options li:nth-child(3) > .settings::before{
     content: "\f013";
     margin-right: 10px;
 }
-.menu .menu_options li:nth-child(3) > .logout::before{
+.menu .menu_options li:nth-child(4) > .logout::before{
     content: "\f2f5";
     margin-right: 10px;
 }

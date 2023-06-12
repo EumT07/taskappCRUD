@@ -2,10 +2,11 @@
 
 //Gettings form info
 const profileForm = document.querySelector(".profile_form");
-const taskDiv = document.querySelector(".taskContainer_form");;
-const changepassForm = document.querySelector(".changepass_form");;
-const scrtqtForm = document.querySelector(".changesquestions_form");;
-const accountDiv = document.querySelector(".accountContainer_form");;
+const taskDiv = document.querySelector(".taskContainer_form");
+const changePincode_Req = document.querySelector(".changePincode_container");
+const changepassForm = document.querySelector(".changepass_form");
+const scrtqtForm = document.querySelector(".changesquestions_form");
+const accountDiv = document.querySelector(".accountContainer_form");
 
 
 //Get links 
@@ -18,9 +19,18 @@ if(value === "profile"){
     taskDiv.style.display = "none";
     changepassForm.style.display = "none";
     scrtqtForm.style.display = "none";
-    accountDiv.style.display = "none"; 
+    accountDiv.style.display = "none";
+    changePincode_Req.style.display = "none"; 
 }else if(value === "taskdiv"){
     taskDiv.style.display = "block";
+    profileForm.style.display = "none";
+    changepassForm.style.display = "none";
+    scrtqtForm.style.display = "none";
+    accountDiv.style.display = "none";
+    changePincode_Req.style.display = "none";
+}else if(value === "changepinreq"){
+    changePincode_Req.style.display = "block";
+    taskDiv.style.display = "none";
     profileForm.style.display = "none";
     changepassForm.style.display = "none";
     scrtqtForm.style.display = "none";
@@ -31,18 +41,21 @@ if(value === "profile"){
     changepassForm.style.display = "block";
     scrtqtForm.style.display = "none";
     accountDiv.style.display = "none";
+    changePincode_Req.style.display = "none";
 }else if(value === "changesecretqts"){
     taskDiv.style.display = "none";
     profileForm.style.display = "none";
     changepassForm.style.display = "none";
     scrtqtForm.style.display = "block";
     accountDiv.style.display = "none";
+    changePincode_Req.style.display = "none";
 }else if(value === "accountdiv"){
     taskDiv.style.display = "none";
     profileForm.style.display = "none";
     changepassForm.style.display = "none";
     scrtqtForm.style.display = "none";
     accountDiv.style.display = "block";
+    changePincode_Req.style.display = "none";
 }
 
 // Modal
