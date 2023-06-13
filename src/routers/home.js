@@ -66,5 +66,13 @@ router
     .get("/deleteTask/:id", deleteTask)
     .get("/deleteCategory/:id", deleteCategory)
 
+router
+    .get("/privacy-policy", (req,res)=>{
+        res.render("./politics/privacy.ejs")
+    })
+    .get("/termsandconditions", (req,res)=>{
+        res.render("./politics/terms.ejs")
+    });
+
 
 export default router;

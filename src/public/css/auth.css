@@ -106,7 +106,7 @@ body {
 /*Sign up Measure*/
 .register_main .form_section .measure_SingUp{
     width: 400px;
-    height: 480px;
+    height: 470px;
 }
 /*Sign in Measure*/
 .register_main .form_section .measure_SingIn{
@@ -127,9 +127,22 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+.form__container p{
+    position: absolute;
+    bottom: -50px;
+    padding: 0px 10px;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+.form__container p a{
+    color: #c04a4c;
+    color: rgb(40, 40, 187);
+    text-decoration: none;
+}
 .form__measure_SignUp{
     width: 320px;
-    height: 320px;
+    height: 340px;
 }
 .form__measure_SignIn{
     width: 320px;
