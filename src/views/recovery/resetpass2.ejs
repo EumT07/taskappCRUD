@@ -1,0 +1,23 @@
+<%- include("../partials/head.ejs")%>
+<section class="password">
+    <div class="pass_container">
+        <h2>Reset your password</h2>
+        <% if(errnewpass) { %>
+            <span class="flash_messages"><%= errnewpass %></span>
+        <% } %>
+        <form action="/api/recovery/resetpassword2" method="POST">
+            <input type="hidden" name="userid" value="<%= user.id %>">
+            <label for="">New Password
+                <input type="password" name="newPassword">
+                <span class="passIco fa"></span>
+            </label>
+            <label for="">Confirm New Password
+                <input type="password" name="confirmNewPassword">
+                <span class="passIco fa"></span>
+            </label>
+            <button type="submit">Send</button>
+                <input type="hidden" name="token" value="<%= token %>">
+        </form>
+    </div>
+</section>
+<%- include("../partials/body.ejs") %>

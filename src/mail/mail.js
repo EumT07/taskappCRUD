@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
         }
 });
 
+//Send Email to User
 export const sendMail = async (userEmail,subjectText,htmlContent) => {
     const info = await transporter.sendMail({
         from: "taskappsupport@gamil.com",
@@ -24,6 +25,7 @@ export const sendMail = async (userEmail,subjectText,htmlContent) => {
     return;
 }
 
+//Send Email to Support
 export const sendErrorMail = async (htmlContent) => {
   const info = await transporter.sendMail({
       from: "'AppError' <taskappsupport@gamil.com>",
@@ -35,7 +37,7 @@ export const sendErrorMail = async (htmlContent) => {
   console.log("Message sent: %s", info.messageId);
   return;
 }
-
+//Send notification To Support
 export const notificationAppMail = async (htmlContent) => {
   const info = await transporter.sendMail({
       from: "'New Status' <taskappsupport@gamil.com>",

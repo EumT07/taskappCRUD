@@ -8,14 +8,14 @@ import {
     taskAppError
 } from "../error/handlerError.js"
 import { sendMail, sendErrorMail } from "../mail/mail.js";
+import {
+    linkpinEmail } from "../mail/Template/emailTemplate.js";
 dotenv.config();
 //Token Variables
 const SECRET = process.env.SECRET_KEY_JWT;//JWT
-const deleteCookie = process.env.COOKRECOVERY;//REcovery
 
-
-//Verify Token
-export const verifyToken = async (req, res, next) => {
+//Verify Principal token to access into page 
+export const taskApp_Token = async (req, res, next) => {
     
     const cookieName = process.env.COOKIENAME;
     const token = req.cookies[cookieName] || req.headers[cookieName];
@@ -42,11 +42,11 @@ export const verifyToken = async (req, res, next) => {
 
     } catch (error) {
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",401)
-        sendErrorMail(message)
+        // sendErrorMail(message)
     }
 }
 
-//Verify Pincode
+//Verify Pincode : Insert Pincode in order to makes new changes (pass / secretsqts)
 export const verifyPinCode = async (req, res,next) => {
     try {
         //getting user
@@ -86,11 +86,91 @@ export const verifyPinCode = async (req, res,next) => {
         return next();
     } catch (error) {
         const message = taskAppError(res,"taskApp-Error: Verify Pin ",401);
-        sendErrorMail(message)
+        // sendErrorMail(message)
     }
 }
 
-//Creating token-pass
+//Todo: Check Empty Files PIN / Secret qts
+
+//Verify Pincode Fild *Errohandling
+export const emptyField_changePinCode = async (req,res,next) => {
+    const {pin1,pin2,pin3,pin4,pin5,pin6,token} = req.body;
+
+    //Figuring out if field are empty
+    const regExpPin1 = (/^$/).test(pin1)
+    const regExpPin2 = (/^$/).test(pin2)
+    const regExpPin3 = (/^$/).test(pin3)
+    const regExpPin4 = (/^$/).test(pin4)
+    const regExpPin5 = (/^$/).test(pin5)
+    const regExpPin6 = (/^$/).test(pin6)
+
+    try {
+        if(regExpPin1 || regExpPin2 || regExpPin3 || regExpPin4 || regExpPin5 || regExpPin6){
+            req.flash("emptyField", "It must not have Empty field")
+            res.status(303).redirect(`/api/settings/changepincode/${token}`);
+            return;
+        }
+    
+        return next();
+    } catch (error) {
+        const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",404);
+        // sendErrorMail(message);
+    }
+}
+
+//Verify Secret QTS Fild  *Errohandling
+export const emptyField_changesecretqts = async (req,res,next) => {
+    const {answer1,answer2,answer3} = req.body;
+
+    const regExAnswer1 = (/^$/).test(answer1);
+    const regExAnswer2 = (/^$/).test(answer2);
+    const regExAnswer3 = (/^$/).test(answer3);
+    
+   try {
+        if(regExAnswer1 || regExAnswer2 || regExAnswer3){
+            req.flash("emptyField", "It must not have Empty field")
+            res.status(404).redirect("/api/settings/changesecretquestions")
+            return;
+        }
+
+        return next();
+   } catch (error) {
+    const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",404);
+    // sendErrorMail(message);
+   }
+}
+
+//todo: Creating new tokens
+
+//Creating link / sending email to users in order to change pin code *Errohandling
+export const sendToken_to_userEmail = async (req, res, next)=>{
+    try {
+        const {email, userID} = req.body;
+        //Get user
+        const user = await User.findById(userID);
+
+        if(email !== user.email ){
+            return console.log("Not Email");
+        }
+
+        //Create a new token
+        const token = jwt.sign({id: user._id}, SECRET,{
+            expiresIn: "30m"
+        });
+
+        //Creating link to send to email
+        const subjectText = `Hello, ${user.username}, Change PinCode`
+        const url = `${token}`;
+        const htmlContent = linkpinEmail(user.username,url);
+        console.log(htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
+        return res.status(200).redirect("/api/settings/profile?data=changepinreq");
+
+    } catch (error) {
+        console.log("Error Creating Email pin",error);
+    }
+}
+//Creating token-pass : It allow to update users' passwords.
 export const creatingPassToken = async (req, res, next) => {
     req.verify;
     req.ID;
@@ -121,11 +201,11 @@ export const creatingPassToken = async (req, res, next) => {
         return next();
     } catch (error) {
         const message = taskAppError(res,"There is an error: Middleware-token: Creating pass-token ",401);
-        sendErrorMail(message) 
+        // sendErrorMail(message) 
     }
 
 }
-//Creating token-secretqts
+//Creating token-secretqts: It allow to update users' secret questions
 export const creatingSecretqtsToken = async (req, res, next) => {
     req.verify;
     const cookieName = process.env.COOKPINSECRETQTS;
@@ -154,11 +234,34 @@ export const creatingSecretqtsToken = async (req, res, next) => {
         return next();
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Middleware-Token:  Creating SecretQts Token" );
-        sendErrorMail(message)
+        // sendErrorMail(message)
     }
 }
 
-//Verify token Pass
+//todo: Verifying tokens
+
+//Verifying token from email *Errohandling
+export const verifyToken_from_UserEmail = async ( req,res,next)=>{
+    try {
+        //Getting token
+        const {token} = req.params;
+
+        if(!token){
+            return res.status(404).json({message: "You need to provide token"});
+        }
+
+        //decode-Token
+        const id = jwt.verify(token, SECRET);
+
+        //Pass id into a variable;
+        req.userID = id.id;
+        next();
+    } catch (error) {
+        console.log("Error verifying Email pin",error);
+    }
+}
+
+//Verify token Pass --> Will change password
 export const verifyPassToken = async (req,res,next) => {
     const cookieName = process.env.COOKPINPASS;
     const token = req.cookies[cookieName] || req.headers[cookieName];
@@ -175,11 +278,11 @@ export const verifyPassToken = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Verify Token pass ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verify Token pass ",401 );
-        sendErrorMail(message)
+        // sendErrorMail(message)
     }
 }
 
-//verify token secre qts
+//verify token secre qts --> will change Secret Questions
 export const verifySecretqtsToken = async (req,res,next) => {
     const cookieName = process.env.COOKPINSECRETQTS;
     const token = req.cookies[cookieName] || req.headers[cookieName];
@@ -196,180 +299,8 @@ export const verifySecretqtsToken = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
         const message = taskAppError(res,"There is an error: Verify Token secretqts ",401 )
-        sendErrorMail(message)
+        // sendErrorMail(message)
     }
 }
 
-//Verify token to reset password
-export const verifyRecoveryToken = async (req,res,next) => {
-    const SECRET = process.env.SECRET_KEY_JWT;
-    const cookieName = process.env.COOKRECOVERY;
-    const token = req.cookies[cookieName] || req.headers[cookieName];
 
-    //Checking token:
-    try {
-        if(!token){
-            return res.status(404).redirect("/api/recovery/search")
-        }
-        //Decode Token
-        const tokenDecoded = jwt.verify(token,SECRET);
-        req.ID = tokenDecoded.id;
-        //Return
-        return next();
-    } catch (error) {
-        console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",401);
-        sendErrorMail(message)
-    }
-
-}
-
-//Verify pincode and create a new token to reset password
-export const verifyPinAccess = async (req,res,next) => {
-    const cookieName = process.env.COOKIESACCESS;
-    const SECRET = process.env.SECRET_KEY_JWT;
-    req.ID;
-    req.verify;
-    try {
-        if(!req.verify){
-            req.flash("errorPIN","Incorrect PIN, try again..!!");
-            req.flash("errorStyle", "errorStyle");
-            req.flash("inputError", "inputError")
-            return res.status(404).redirect("/api/recovery/pincode")
-        }
-        //Delete previous cookie
-        res.clearCookie(deleteCookie)
-
-        //Creating a new Access-token
-        const token = jwt.sign({id: req.ID},SECRET,{
-            expiresIn: "4m"
-        });
-
-        //Creating Cookie
-        res.cookie(cookieName,token,{
-            maxAge: 250 * 1000,
-            secure: true,
-            httpOnly: true,
-            sameSite: "lax"
-        });
-    
-        return res.status(200).redirect("/api/recovery/resetpassword")
-    } catch (error) {
-        console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",401);
-        sendErrorMail(message)
-    }
-
-}
-//Verify secret answers
-export const verifySecretAnswers = async(req,res,next) => {
-    try {
-        //Getting answers
-        const {answer1, answer2, answer3, userid} = req.body;
-        //GEtting answers from database
-        const answers = await Secretqt.findOne({user: userid});
-        //Creating a variable to know if user is verify or not
-        req.verifyUser = null;
-        req.ID = userid;
-        //Comparing values
-        const resultAnswer1 = await Secretqt.comparesecretqts(answer1, answers.answer1);
-        const resultAnswer2 = await Secretqt.comparesecretqts(answer2, answers.answer2);
-        const resultAnswer3 = await Secretqt.comparesecretqts(answer3, answers.answer3);
-    
-        //Answer 1
-        if(resultAnswer1){
-            req.flash("inputCss1", "inputSucces");
-        }else{
-            req.flash("inputCss1", "inputErr");
-        }
-        //Answer 1
-        if(resultAnswer2){
-            req.flash("inputCss2", "inputSucces");
-        }else{
-            req.flash("inputCss2", "inputErr");
-        }   
-        //Answer 3
-        if(resultAnswer3){
-            req.flash("inputCss3", "inputSucces");
-        }else{
-            req.flash("inputCss3", "inputErr");
-        }
-        
-        //Asign value to variable
-        if(resultAnswer1 && resultAnswer2 && resultAnswer3){
-            req.verifyUser = true;
-        }else{
-            req.verifyUser = false;
-        }
-        
-        if(!req.verifyUser){
-            req.flash("answer1", `${answer1}`)
-            req.flash("answer2", `${answer2}`)
-            req.flash("answer3", `${answer3}`)
-            return res.status(404).redirect("/api/recovery/secretqts")
-        }
-
-        return next();
-    } catch (error) {
-        console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",401);
-        sendErrorMail(message);
-    }
-
-
-}
-
-//Verify Secrets answers and creating a new token access to reset password
-export const verifySecretqtsAccess = async (req,res,next) => {
-    const cookieName = process.env.COOKIESACCESS;
-    const SECRET = process.env.SECRET_KEY_JWT;
-    
-    req.verifyUser;
-    try {
-        if(!req.verifyUser){
-            return res.status(404).redirect("/api/recovery/secretqts")
-        }
-        //Delete previous cookie
-        res.clearCookie(deleteCookie)
-
-        //Creating token
-        const token = jwt.sign({id: req.ID},SECRET,{
-            expiresIn: "4m"
-        });
-
-        //Creating Cookie
-        res.cookie(cookieName,token,{
-            maxAge: 400 * 1000,
-            secure: true,
-            httpOnly: true,
-            sameSite: "lax"
-        });
-    
-        return res.status(200).redirect("/api/recovery/resetpassword")
-    } catch (error) {
-        console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Verify secreteqts access ",401);
-        sendErrorMail(message);
-    }
-}
-
-//verifying AccesToken to reset password
-export const verifyAccessToken = async (req,res,next) => {
-    const cookieName = process.env.COOKIESACCESS;
-    const token = req.cookies[cookieName] || req.headers[cookieName];
-
-    //Checking token:
-    try {
-        if(!token){
-            return res.status(404).redirect("/api/recovery/search")
-        }
-        //Token exists Decode Token
-        const tokenDecoded = jwt.verify(token,SECRET);
-        req.ID = tokenDecoded.id;
-        return next();
-    } catch (error) {
-        console.log("There is an error: Verify recovery Token ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppEror: Verify recovery Token ",401);
-        sendErrorMail(message)
-    }
-}

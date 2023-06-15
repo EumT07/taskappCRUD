@@ -3,60 +3,42 @@ import { Router } from "express";
 import User from "../models/user.js";
 import Image from "../models/profileImg.js";
 import {
-    verifyToken,
+    taskApp_Token,
     verifyPinCode,
     creatingPassToken,
     creatingSecretqtsToken,
     verifyPassToken,
-    verifySecretqtsToken
+    verifySecretqtsToken,
+    sendToken_to_userEmail,
+    verifyToken_from_UserEmail,
+    emptyField_changePinCode,
+    emptyField_changesecretqts
  }  from "../middlewares/verifytoken.js";
 import {
-    checkUsername,
-    checkNewPassword,
-    checkEmptyFieldSecreteqts,
     checkEmptyFieldPincode
 } from "../middlewares/verifysignup.js";
 import {
-    secretQuestions,
-    profilePhoteUpdate,
-    updateUser,
+    checkUsername,
+    checkNewPassword
+} from "../middlewares/updates.js";
+import {
+    profilePhotoUpdate,
+    updateProfile_UserInfo,
     removeAcc,
-    pincode,
     changePassword,
     changeSecretquestions,
     resetAcc,
-    deleteProfilePhoto
+    deleteProfilePhoto,
+    changePinCode
  } from "../controllers/usersettings.js";
 import upload from "../middlewares/multer.js";
 
 
 const router = Router();
 
-//Asigning: Secret Quetions to each user
-router
-    .get("/secretquestions", verifyToken, async (req,res)=>{
-        const user = await User.findById(req.userID);
-        res.render("./settings/secretqts.ejs", {
-            title: "Secret Questions",
-            user
-        });
-    })
-    .post("/secretquestions", checkEmptyFieldSecreteqts ,secretQuestions)
-
-//Asigning: Pin code to each user
-router
-    .get("/pincode", verifyToken, async (req,res)=>{
-        const user =  await User.findById(req.userID);
-        res.render("./settings/pincode.ejs", {
-            title: "Pin Code",
-            user
-        })
-    }) 
-    .post("/pincode", checkEmptyFieldPincode ,pincode) 
-
 //Profile Page
 router 
-    .get("/profile", verifyToken, async (req, res) =>{
+    .get("/profile", taskApp_Token, async (req, res) =>{
         const user =  await User.findById(req.userID);
         const img = await Image.findOne({user: user.id})
         res.render("./settings/profile.ejs", {
@@ -66,27 +48,41 @@ router
         })
     })
 
-//Profile Page: Updatting user
+//Profile Page: Updatting user (name, lastname, country)
 router
-    .post("/updateUser", [upload, profilePhoteUpdate ,checkUsername ], updateUser)
+    .post("/updateUser", [upload, profilePhotoUpdate ,checkUsername ], updateProfile_UserInfo)
     .get("/removephoto/:id", deleteProfilePhoto)
 
-//Profile Page : 
+//Profile Page : Updating Security
+
 router
     //Checking email to change pincode
-    .post("/pincodeEmail",(req,res)=>{
-        // return res.status(200).redirect("/api/settings/changepincode");
-    })
+    .post("/pincodeEmail", sendToken_to_userEmail)
+
     //Checking Pin to change password
     .post("/pinchangepass", [verifyPinCode, creatingPassToken], (req,res) => {
         req.flash("id", `${req.ID}`);
         return res.status(200).redirect("/api/settings/changepassword");
     })
+
     //Checking Secret Questions to change password
     .post("/pinchangesecretqts", [verifyPinCode, creatingSecretqtsToken],(req, res)=>{
         req.flash("id", `${req.ID}`)
         return res.status(200).redirect("/api/settings/changesecretquestions");
     })
+
+//Change Pincode: Not ready
+
+router
+    .get("/changepincode/:token", verifyToken_from_UserEmail,(req,res)=>{
+        const {id} = req.userID;
+        const {token} = req.params;
+        res.render("./settings/changepincode.ejs",{
+            title: "Change pin-code",
+            id,token
+        });
+    })
+    .post("/changepincode", emptyField_changePinCode, changePinCode )
 
 //Change Password
 router
@@ -99,7 +95,7 @@ router
     })
     .post("/changepassword", checkNewPassword ,changePassword)
 
-//change Secret Questions
+//change Secret Questions: * emptyfield
 router
     .get("/changesecretquestions",  verifySecretqtsToken ,async (req, res)=>{
         const user = await User.findById(req.userID);
@@ -108,7 +104,7 @@ router
             user
         });
     })
-    .post("/changesecretquestions", changeSecretquestions)
+    .post("/changesecretquestions", emptyField_changesecretqts ,changeSecretquestions)
 
 //Profile Page: Remove user
 router

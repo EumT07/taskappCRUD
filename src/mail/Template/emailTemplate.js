@@ -42,3 +42,20 @@ export const notificacionHtml = () => {
     return html;
 }
 
+export const linkpinEmail = (username, url)=>{
+    const html = `
+    <h1>Hello, ${username}</h1>
+    <p>We have received a request to change the security pin, to proceed you can click on the following link</p>
+    <a href="http://localhost:3000/api/settings/changepincode/${url}"> Click here </a>
+    `
+    return html;
+}
+
+export const emailResetPAssword = (username,url)=>{
+    const html = `
+    <h1>Hello, ${username}</h1>
+    <p>We have received a request to reset your password, to proceed you can click on the following link</p>
+    <a href="http://localhost:3000/api/recovery/resetpassword/${url}"> Click here </a>
+    `
+    return html;
+}

@@ -4,7 +4,7 @@ import Task from "../models/tasks.js";
 import Image from "../models/profileImg.js";
 import Category from "../models/category.js";
 import { Router } from "express";
-import {verifyToken}  from "../middlewares/verifytoken.js";
+import {taskApp_Token}  from "../middlewares/verifytoken.js";
 import {
     createNewTask,
     updateTask,
@@ -12,7 +12,7 @@ import {
     deleteCategory,
     completeTask,
     cancelCompleteTask
-} from "../controllers/usersettings.js"
+} from "../controllers/task.js"
 
 const router = Router();
 //Lading Page
@@ -29,7 +29,7 @@ router
     })
 //Dashboard
 router
-    .get("/dashboard", verifyToken, async (req,res)=>{
+    .get("/dashboard", taskApp_Token, async (req,res)=>{
         const user = await User.findById(req.userID);
         const tasks = await Task.find({user: user.id});
         const categories = await Category.find({user: user.id});
@@ -45,7 +45,7 @@ router
     .post("/newtask", createNewTask)
 
 router
-    .get("/updateTask/:id", verifyToken, async (req,res) => {
+    .get("/updateTask/:id", taskApp_Token, async (req,res) => {
         const {id} = req.params;
         const task = await Task.findById(id);
         const user = await User.findById(task.user);

@@ -2,16 +2,21 @@
 import { Router } from "express";
 import User from "../models/user.js";
 import Secretqt from "../models/secretqt.js";
-import { searchUser, resetPassword  } from "../controllers/usersettings.js";
-import {checkResetPassword} from "../middlewares/verifysignup.js"
+import { searchUser, resetPassword } from "../controllers/recovery.js";
+import {
+    verifyPinCode
+} from "../middlewares/verifytoken.js"
 import {
     verifyRecoveryToken,
-    verifyPinCode,
     verifyPinAccess,
     verifyAccessToken,
     verifySecretAnswers,
-    verifySecretqtsAccess
-} from "../middlewares/verifytoken.js"
+    verifySecretqtsAccess,
+    checkCookie_ResetPassword,
+    checkToken_ResetPassword,
+    sendEmail_resetPassword,
+    getAccssEmail_resetPassword
+} from "../middlewares/recovery.js"
 
 const router = Router();
 
@@ -53,7 +58,10 @@ router
     })
     .post("/secretanswers", verifySecretAnswers, verifySecretqtsAccess)
 //Email *
-//Reset Password
+router
+    .get("/email", verifyRecoveryToken, sendEmail_resetPassword)
+    
+//Reset Password: by Cookies
 router
     .get("/resetpassword", verifyAccessToken, async (req, res)=>{
         const user = await User.findById(req.ID);
@@ -62,6 +70,20 @@ router
             user
         })
     })
-    .post("/resetpassword", checkResetPassword, resetPassword)
+    .post("/resetpassword", checkCookie_ResetPassword, resetPassword)
+
+//reset Password: by Email token
+router
+    .get("/resetpassword/:token", getAccssEmail_resetPassword ,async (req, res)=>{
+        const user = await User.findById(req.userID);
+        const {token} = req.params;
+        res.render("./recovery/resetpass2.ejs",{
+            title: "Reset Password",
+            user,
+            token
+        })
+    })
+    
+    .post("/resetpassword2", checkToken_ResetPassword ,resetPassword)
 
 export default router;
