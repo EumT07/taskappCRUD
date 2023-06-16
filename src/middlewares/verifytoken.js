@@ -247,7 +247,7 @@ export const verifyToken_from_UserEmail = async ( req,res,next)=>{
         const {token} = req.params;
 
         if(!token){
-            return res.status(404).json({message: "You need to provide token"});
+            return res.status(404).redirect("/error");
         }
 
         //decode-Token
@@ -267,7 +267,7 @@ export const verifyPassToken = async (req,res,next) => {
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
         if(!token){
-            return res.status(404).json({message: "You need to provide token"});
+            return res.status(404).redirect("/error");
         }
         //decode-Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -288,7 +288,7 @@ export const verifySecretqtsToken = async (req,res,next) => {
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
         if(!token){
-            return res.status(404).json({message: "You need to provide token"});
+            return res.status(404).redirect("/error");
         }
         //decode Token
         const tokenDecoded = jwt.verify(token, SECRET);

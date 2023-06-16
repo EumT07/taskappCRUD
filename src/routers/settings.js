@@ -2,6 +2,7 @@
 import { Router } from "express";
 import User from "../models/user.js";
 import Image from "../models/profileImg.js";
+import Task from "../models/tasks.js";
 import {
     taskApp_Token,
     verifyPinCode,
@@ -41,10 +42,12 @@ router
     .get("/profile", taskApp_Token, async (req, res) =>{
         const user =  await User.findById(req.userID);
         const img = await Image.findOne({user: user.id})
+        const tasks = await Task.find({user: user.id});
         res.render("./settings/profile.ejs", {
             title: "Profile",
             user,
-            img
+            img,
+            tasks
         })
     })
 

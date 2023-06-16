@@ -8,7 +8,6 @@ import { sendMail, sendErrorMail } from "../mail/mail.js";
 //Checking if user exist or not
 export const checkUserSignup = async (req, res, next)=>{
     const {username, email, password, confirmPassword} = req.body;
-    
     try {
         const user = await User.findOne({username: username});
         
@@ -34,7 +33,7 @@ export const checkUserSignup = async (req, res, next)=>{
         };
 
         //Success
-       return next();
+    //    return next();
     } catch (error) {
         const message = taskAppError(res, "taskAppError: Signup --> check User Signup", 401);
         // sendErrorMail(message);

@@ -27,6 +27,7 @@ router
         const value = req.body.data;
         res.redirect(`/api/auth/signup/?data=${value}`)
     })
+
 //Dashboard
 router
     .get("/dashboard", taskApp_Token, async (req,res)=>{
@@ -74,5 +75,10 @@ router
         res.render("./politics/terms.ejs")
     });
 
+//Error Page
+router
+    .get("/error", (req,res)=>{
+        res.render("./error/error.ejs")
+    })
 
 export default router;
