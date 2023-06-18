@@ -23,7 +23,7 @@ export const taskApp_Token = async (req, res, next) => {
     try {
         //Check is token exists or not
         if(!token){
-            return res.status(404).redirect("/api/auth/signin")
+            return res.status(404).redirect("/api/token")
         }
         //Decoded-Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -43,6 +43,7 @@ export const taskApp_Token = async (req, res, next) => {
     } catch (error) {
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",401)
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/token")
     }
 }
 
@@ -87,6 +88,7 @@ export const verifyPinCode = async (req, res,next) => {
     } catch (error) {
         const message = taskAppError(res,"taskApp-Error: Verify Pin ",401);
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -115,6 +117,7 @@ export const emptyField_changePinCode = async (req,res,next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",404);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -137,6 +140,7 @@ export const emptyField_changesecretqts = async (req,res,next) => {
    } catch (error) {
     const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",404);
     // sendErrorMail(message);
+    return res.status(404).redirect("/api/failrequest");
    }
 }
 
@@ -168,6 +172,7 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
 
     } catch (error) {
         console.log("Error Creating Email pin",error);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 //Creating token-pass : It allow to update users' passwords.
@@ -201,7 +206,8 @@ export const creatingPassToken = async (req, res, next) => {
         return next();
     } catch (error) {
         const message = taskAppError(res,"There is an error: Middleware-token: Creating pass-token ",401);
-        // sendErrorMail(message) 
+        // sendErrorMail(message)
+        return res.status(404).redirect("/api/failrequest");
     }
 
 }
@@ -235,6 +241,7 @@ export const creatingSecretqtsToken = async (req, res, next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Middleware-Token:  Creating SecretQts Token" );
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -247,7 +254,7 @@ export const verifyToken_from_UserEmail = async ( req,res,next)=>{
         const {token} = req.params;
 
         if(!token){
-            return res.status(404).redirect("/error");
+            return res.status(404).redirect("/api/token")
         }
 
         //decode-Token
@@ -258,6 +265,7 @@ export const verifyToken_from_UserEmail = async ( req,res,next)=>{
         next();
     } catch (error) {
         console.log("Error verifying Email pin",error);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -267,7 +275,7 @@ export const verifyPassToken = async (req,res,next) => {
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
         if(!token){
-            return res.status(404).redirect("/error");
+            return res.status(404).redirect("/api/token")
         }
         //decode-Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -279,6 +287,7 @@ export const verifyPassToken = async (req,res,next) => {
         console.log("There is an error: Verify Token pass ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verify Token pass ",401 );
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/token");
     }
 }
 
@@ -288,7 +297,7 @@ export const verifySecretqtsToken = async (req,res,next) => {
     const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
         if(!token){
-            return res.status(404).redirect("/error");
+            return res.status(404).redirect("/api/token")
         }
         //decode Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -300,6 +309,8 @@ export const verifySecretqtsToken = async (req,res,next) => {
         console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
         const message = taskAppError(res,"There is an error: Verify Token secretqts ",401 )
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/token");
+        
     }
 }
 

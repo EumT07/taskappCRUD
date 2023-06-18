@@ -115,7 +115,7 @@ nav .userNav > img{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 100px;
+    height: 130px;
 }
 .menu .menu_options li{
     position: relative;
@@ -126,9 +126,10 @@ nav .userNav > img{
     align-self: start;
 }
 .menu .menu_options li:nth-child(1) > .dashIco,
-.menu .menu_options li:nth-child(2) > .user,
-.menu .menu_options li:nth-child(3) > .settings,
-.menu .menu_options li:nth-child(4) > .logout {
+.menu .menu_options li:nth-child(2) > .graphicsIco,
+.menu .menu_options li:nth-child(3) > .user,
+.menu .menu_options li:nth-child(4) > .settings,
+.menu .menu_options li:nth-child(5) > .logout {
     position: absolute;
     left: -25px;
     align-items:start;
@@ -139,16 +140,21 @@ nav .userNav > img{
     margin-right: 10px;
     margin-left: 0px;
 }
-.menu .menu_options li:nth-child(2) > .user::before{
+.menu .menu_options li:nth-child(2) > .graphicsIco::before{
+    content: "\f080";
+    margin-right: 10px;
+    margin-left: 0px;
+}
+.menu .menu_options li:nth-child(3) > .user::before{
     content: "\f007";
     margin-right: 10px;
     margin-left: 0px;
 }
-.menu .menu_options li:nth-child(3) > .settings::before{
+.menu .menu_options li:nth-child(4) > .settings::before{
     content: "\f013";
     margin-right: 10px;
 }
-.menu .menu_options li:nth-child(4) > .logout::before{
+.menu .menu_options li:nth-child(5) > .logout::before{
     content: "\f2f5";
     margin-right: 10px;
 }

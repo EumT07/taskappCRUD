@@ -170,10 +170,10 @@
     text-transform: capitalize;
 }
 .container_levels .High{
-    background-color: #d32324;
+    background-color: #cf2121;
 }
 .container_levels .Middle{
-    background-color: darkorange;
+    background-color: #ff8c00;
 }
 .container_levels .Low{
     background-color: #1597BB;

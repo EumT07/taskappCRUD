@@ -189,6 +189,33 @@
 .data__container .show_options > .taskContainer_form{
     display: none;
 }
+
+.tasksResult_Container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 400px;
+}
+.taskvalue_name{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    width: 90%;
+}
+.canvasContainer{
+    position: relative;
+    margin: auto;
+    width: 400px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /*Change pin-code request*/
 .data__container .show_options > .changePincode_container{
     display: none;

@@ -40,6 +40,7 @@ export const checkUsername = async (req,res,next) => {
     } catch (error) {
         const messge = taskAppError(res,"taskAppError: Setting-Profile: check username", 404);
         // sendErrorMail(messge)
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -86,5 +87,6 @@ export const checkNewPassword = async (req, res, next) => {
         console.log("There is an error: Middlewate-Signup: Verifying new password".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middlewate-Signup: Verifying new password",401);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }

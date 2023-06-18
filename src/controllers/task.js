@@ -17,6 +17,7 @@ dotenv.config();
 export const createNewTask = async (req, res) => {
     try {
         const {title, description, category, priority, userID} = req.body;
+        const date = new Date();
         //Is category an Array or not?
         //*Creating a new category and a new task
         if(Array.isArray(category)){
@@ -30,6 +31,7 @@ export const createNewTask = async (req, res) => {
                     description: description,
                     category: categorySelected._id,
                     priority: priority,
+                    month: date.getMonth(),
                     user: userID
                 });
                 task.save();
@@ -42,16 +44,17 @@ export const createNewTask = async (req, res) => {
                 name: category[1],
                 user: userID
             });
-            newCategory.save();
+            await newCategory.save();
             //Creating new task
             const task = await new Tasks({
                 title: title,
                 description: description,
                 category: newCategory._id,
                 priority: priority,
+                month: date.getMonth(),
                 user: userID
             });
-            task.save();
+            await task.save();
             res.status(202).redirect("/dashboard")
             return;
         }
@@ -72,7 +75,8 @@ export const createNewTask = async (req, res) => {
             title: title,
             description: description,
             category: categorySelected._id,
-            priority: priority,
+            priority: priority, 
+            month: date.getMonth(),
             user: userID
         });
         task.save();
@@ -82,6 +86,7 @@ export const createNewTask = async (req, res) => {
         console.log("There is an error: Creating new Task".red.bold, + error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Creating new Task",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -107,6 +112,7 @@ export const updateTask = async (req,res) =>{
         console.log("There is an Error: Updating Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Updating Task",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 //*Task Done
@@ -120,6 +126,7 @@ export const completeTask = async (req,res) =>{
         console.log("There is an Error: Completing Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Completing Task",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 //* Cancel Task done
@@ -133,6 +140,7 @@ export const cancelCompleteTask = async (req,res) =>{
         console.log("There is an Error: Canceling Complete Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Reseting Completed Task",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -147,6 +155,7 @@ export const deleteTask = async (req,res)=>{
         console.log("There is an Error: Deleting Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Deleting Task",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 //*Delete Category
@@ -161,5 +170,6 @@ export const deleteCategory = async(req,res) =>{
         console.log("There is an Error: Deleting Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Deleting category",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }

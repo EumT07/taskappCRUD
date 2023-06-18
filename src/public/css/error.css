@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 300px;
+    height: 350px;
 }
 
 .error h1{
@@ -25,13 +25,24 @@
     padding: 10px;
     text-align: center;
 }
-.error p{
+.error h3{
+    color: #d32324;
+}
+.error .statusCode{
     font-size: 8rem;
     font-size: bold;
     letter-spacing: 10px;
 }
-
-.error a{
+.error > p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.error > p > a{
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+.error > a{
     text-decoration: none;
     padding: 10px 15px;
     background-color: #a93638;
@@ -40,7 +51,7 @@
     border-radius: 8px;
     cursor: pointer;
 }
-.error a:hover{
+.error > a:hover{
     background-color: #d32324;
 }
 .error h5{

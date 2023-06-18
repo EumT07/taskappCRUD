@@ -71,21 +71,7 @@ addNewCategoryBtn.addEventListener("click", (e)=>{
     });
 });
 
-//Date Task
-function getDateTask() {
-    //Get Element by Id
-    const dateTask = document.querySelectorAll("#date");
-    for (let i = 0; i < dateTask.length; i++) {
-        const dateTaskText = dateTask[i].textContent;
-        //Get index
-        //Value 4: render the index of the string we want to display
-        //Value 25: represent the end of the string
-        let date = dateTaskText.slice(4, 16)
-        //Repleace the old string for the new one
-        dateTask[i].textContent = date;
-    }
-}
-getDateTask();
+
 
 //Searching or filtering
 //Get Select options
@@ -118,7 +104,6 @@ selectCategory.addEventListener("change", (e)=>{
 //Show task 
 selectLevels.addEventListener("change", (e)=>{
     let levelsNameSelected = e.target.value.toLowerCase().trim(); 
-    console.log(levelsNameSelected);
 
     tasksFilter.forEach(tasks => {
         const priorityName = tasks.firstElementChild.lastElementChild.lastElementChild.textContent.toLowerCase().trim()
@@ -135,6 +120,21 @@ selectLevels.addEventListener("change", (e)=>{
     })
 })
 
+//Date Task
+function getDateTask() {
+    //Get Element by Id
+    const dateTask = document.querySelectorAll("#date");
+    for (let i = 0; i < dateTask.length; i++) {
+        const dateTaskText = dateTask[i].textContent;
+        //Get index
+        //Value 4: render the index of the string we want to display
+        //Value 25: represent the end of the string
+        let date = dateTaskText.slice(4, 16)
+        //Repleace the old string for the new one
+        dateTask[i].textContent = date;
+    }
+}
+getDateTask();
 
 //Changing check icon by close
 const checkIcon = document.querySelectorAll("#checkIcon");

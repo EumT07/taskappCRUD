@@ -62,23 +62,25 @@ router
 
 //Delete Task and Category
 router
-    .get("/completeTask/:id", completeTask)
-    .get("/cancelCompleteTask/:id", cancelCompleteTask)
-    .get("/deleteTask/:id", deleteTask)
-    .get("/deleteCategory/:id", deleteCategory)
+    .get("/completeTask/:id", taskApp_Token,completeTask)
+    .get("/cancelCompleteTask/:id",taskApp_Token, cancelCompleteTask)
+    .get("/deleteTask/:id",taskApp_Token, deleteTask)
+    .get("/deleteCategory/:id",taskApp_Token, deleteCategory)
 
 router
-    .get("/privacy-policy", (req,res)=>{
-        res.render("./politics/privacy.ejs")
+    .get("/privacy-policy", async (req,res)=>{
+        const user = await User.findById(req.userID);
+        res.render("./politics/privacy.ejs",{
+            title: "Politc Policy",
+            user
+        })
     })
-    .get("/termsandconditions", (req,res)=>{
-        res.render("./politics/terms.ejs")
+    .get("/termsandconditions", async (req,res)=>{
+        const user = await User.findById(req.userID);
+        res.render("./politics/terms.ejs",{
+            title: "Term and Conditions",
+            user
+        })
     });
-
-//Error Page
-router
-    .get("/error", (req,res)=>{
-        res.render("./error/error.ejs")
-    })
 
 export default router;

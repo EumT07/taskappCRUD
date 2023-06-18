@@ -1,7 +1,6 @@
 "use strict"
 import Mongoose from "mongoose";
 import "colors";
-
 const taskSchema = new Mongoose.Schema(
     {
         title:String,
@@ -18,7 +17,8 @@ const taskSchema = new Mongoose.Schema(
         user: {
             type: Mongoose.Schema.Types.ObjectId,
             ref: "User"
-        }
+        },
+        month: String
     },
     {
         timestamps: true

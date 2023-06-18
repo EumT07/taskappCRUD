@@ -76,24 +76,18 @@
             </div>
             
             <div class="taskContainer_form" id="taskdiv">
-                <div class="task_form" >
-                    <% for(let = 0; i < taks.length; i++) { %>
+                <div class="tasksResult_Container" >
                     <div class="taskvalue_name">
-                        <h3>High: </h3>
-                        <h3>Middle:</h3>
-                        <h3>Low: </h3>
+                        <h3>All Taks: <%= tasks.length %></h3>
+                        <h3> <span id="highTag">High</span>: <span id="highValue"><%= highCount %></span>  </h3>
+                        <h3><span id="middleTag">Middle</span>: <span id="middleValue"><%= middleCount %></span></h3>
+                        <h3><span id="logTag">Low</span>: <span id="lowValue"><%= lowCount %></span></h3>
                     </div>
-                    <div class="taskvalue_graphic">
+                    <div class="canvasContainer">
+                        <canvas id="myChart" class="taskvalue_graphic">
 
+                        </canvas>
                     </div>
-                    <div class="taskprogres_name">
-                        <h3>Doing: </h3>
-                        <h3>Completed: </h3>
-                    </div>
-                    <div class="taskprogres_graphic">
-
-                    </div>
-                    <% } %>
                 </div>
             </div>
 
@@ -218,4 +212,37 @@
 
 <script src="/javascript/profile.js" ></script>
 <script src="/javascript/dashboard.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+//Profile Chart js
+const graphicContainer = document.getElementById("myChart");
+
+//Values
+const highValue = document.getElementById("highValue");
+const middleValue = document.getElementById("middleValue");
+const lowValue = document.getElementById("lowValue");
+
+new Chart(graphicContainer,{
+        type: "pie",
+        data: {
+            labels: ["High","Middle","Low"],
+            datasets: [{
+                label: "Tasks",
+                data: [
+                    highValue.textContent,
+                    middleValue.textContent,
+                    lowValue.textContent],
+                backgroundColor: [
+                    "#d32324",
+                    "#ff8c00",
+                    "#1597BB"
+                ],
+            }]
+        }
+        
+    }
+);
+
+</script>
 <%- include("../partials/body.ejs") %>

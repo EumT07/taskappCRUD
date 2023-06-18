@@ -33,10 +33,11 @@ export const checkUserSignup = async (req, res, next)=>{
         };
 
         //Success
-    //    return next();
+       return next();
     } catch (error) {
         const message = taskAppError(res, "taskAppError: Signup --> check User Signup", 401);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -107,6 +108,7 @@ export const checkUserPassword = async (req, res, next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Signup --> Check Password ", 406);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -134,6 +136,7 @@ export const checkUserSignin = async (req,res,next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Signin --> Check User Signin", 404);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -160,6 +163,7 @@ export const checkEmptyFieldPincode = async (req,res,next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",404);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -182,6 +186,7 @@ export const checkEmptyFieldSecreteqts = async (req,res,next) => {
    } catch (error) {
     const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",404);
     // sendErrorMail(message);
+    return res.status(404).redirect("/api/failrequest");
    }
 }
 

@@ -13,94 +13,6 @@ dotenv.config();
 const SECRET = process.env.SECRET_KEY_JWT;//JWT
 const deleteCookie = process.env.COOKRECOVERY;//REcovery
 
-//Reset Password to a new One by cookies
-export const checkCookie_ResetPassword = async (req,res,next) => {
-    //Checking data users
-    const {newPassword, confirmNewPassword} = req.body;
-    //Regular Expresion
-    const characteresLng = (/(?=^.{8,}$)/).test(newPassword);
-    const anyNumber = (/(?=.*\d)/).test(newPassword);
-    const lowerLetter = (/(?=.*[a-z])/).test(newPassword);
-    const anyUppserLetter = (/(?=.*[A-Z])/).test(newPassword);
-    const notSpace = (/^\S+$/).test(newPassword);
-
-    try {
-        if(newPassword !== confirmNewPassword ){
-            req.flash("errnewpass", "Password are different")
-            return res.redirect("/api/recovery/resetpassword");
-        }else if(!characteresLng){
-            //pass length > 8
-            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
-            return res.redirect("/api/recovery/resetpassword");
-        }else if(!lowerLetter){
-            //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least a letter")
-            return res.redirect("/api/recovery/resetpassword");
-        }else if(!anyNumber){
-            //pass must have numbers
-            req.flash("errnewpass", "Password must have at least a number")
-            return res.redirect("/api/recovery/resetpassword");
-        }else if(!anyUppserLetter){
-            //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least an Upper letter")
-            return res.redirect("/api/recovery/resetpassword");
-        }else if(!notSpace){
-            //pass must not have any space
-            req.flash("errnewpass", "Password must not have any blank space")
-            return res.redirect("/api/recovery/resetpassword");
-        }
-
-        return next();
-    } catch (error) {
-        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
-        // sendErrorMail(message);
-    }
-}
-
-//Reset Password to a new One by token
-export const checkToken_ResetPassword = async (req,res,next) => {
-    //Checking data users
-    const {newPassword, confirmNewPassword,token} = req.body;
-    //Regular Expresion
-    const characteresLng = (/(?=^.{8,}$)/).test(newPassword);
-    const anyNumber = (/(?=.*\d)/).test(newPassword);
-    const lowerLetter = (/(?=.*[a-z])/).test(newPassword);
-    const anyUppserLetter = (/(?=.*[A-Z])/).test(newPassword);
-    const notSpace = (/^\S+$/).test(newPassword);
-
-    try {
-        if(newPassword !== confirmNewPassword ){
-            req.flash("errnewpass", "Password are different")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }else if(!characteresLng){
-            //pass length > 8
-            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }else if(!lowerLetter){
-            //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least a letter")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }else if(!anyNumber){
-            //pass must have numbers
-            req.flash("errnewpass", "Password must have at least a number")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }else if(!anyUppserLetter){
-            //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least an Upper letter")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }else if(!notSpace){
-            //pass must not have any space
-            req.flash("errnewpass", "Password must not have any blank space")
-            return res.redirect(`/api/recovery/resetpassword/${token}`);
-        }
-
-        return next();
-    } catch (error) {
-        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
-        console.log(message);
-        // sendErrorMail(message);
-    }
-}
 
 //Todo: Verify token to reset password -> Options view
 export const verifyRecoveryToken = async (req,res,next) => {
@@ -111,7 +23,7 @@ export const verifyRecoveryToken = async (req,res,next) => {
     //Checking token:
     try {
         if(!token){
-            return res.status(404).redirect("/api/recovery/search")
+            return res.status(404).redirect("/api/token")
         }
         //Decode Token
         const tokenDecoded = jwt.verify(token,SECRET);
@@ -123,6 +35,7 @@ export const verifyRecoveryToken = async (req,res,next) => {
         console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",401);
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/token")
     }
 
 }
@@ -179,6 +92,7 @@ export const verifyPinAccess = async (req,res,next) => {
         console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",401);
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/failrequest");
     }
 
 }
@@ -236,6 +150,7 @@ export const verifySecretAnswers = async(req,res,next) => {
         console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",401);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 
 
@@ -272,6 +187,7 @@ export const verifySecretqtsAccess = async (req,res,next) => {
         console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verify secreteqts access ",401);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 
@@ -284,7 +200,7 @@ export const getAccssEmail_resetPassword = async (req,res,next)=>{
         const {token} = req.params;
 
         if(!token){
-            return res.status(404).json({message: "You need to provide token"});
+            return res.status(404).redirect("/api/token")
         }
 
         //decode-Token
@@ -294,6 +210,7 @@ export const getAccssEmail_resetPassword = async (req,res,next)=>{
         next();
     } catch (error) {
         console.log("Error verifying Email pin",error);
+        return res.status(404).redirect("/api/token")
     }
 }
 
@@ -305,7 +222,7 @@ export const verifyAccessToken = async (req,res,next) => {
     //Checking token:
     try {
         if(!token){
-            return res.status(404).redirect("/api/recovery/search")
+            return res.status(404).redirect("/api/token")
         }
         //Token exists Decode Token
         const tokenDecoded = jwt.verify(token,SECRET);
@@ -315,5 +232,98 @@ export const verifyAccessToken = async (req,res,next) => {
         console.log("There is an error: Verify recovery Token ".red.bold, error.message);
         const message = taskAppError(res,"taskAppEror: Verify recovery Token ",401);
         // sendErrorMail(message)
+        return res.status(404).redirect("/api/token")
+    }
+}
+
+//Todo: check before rest password
+//Reset Password to a new One by cookies
+export const checkCookie_ResetPassword = async (req,res,next) => {
+    //Checking data users
+    const {newPassword, confirmNewPassword} = req.body;
+    //Regular Expresion
+    const characteresLng = (/(?=^.{8,}$)/).test(newPassword);
+    const anyNumber = (/(?=.*\d)/).test(newPassword);
+    const lowerLetter = (/(?=.*[a-z])/).test(newPassword);
+    const anyUppserLetter = (/(?=.*[A-Z])/).test(newPassword);
+    const notSpace = (/^\S+$/).test(newPassword);
+
+    try {
+        if(newPassword !== confirmNewPassword ){
+            req.flash("errnewpass", "Password are different")
+            return res.redirect("/api/recovery/resetpassword");
+        }else if(!characteresLng){
+            //pass length > 8
+            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
+            return res.redirect("/api/recovery/resetpassword");
+        }else if(!lowerLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least a letter")
+            return res.redirect("/api/recovery/resetpassword");
+        }else if(!anyNumber){
+            //pass must have numbers
+            req.flash("errnewpass", "Password must have at least a number")
+            return res.redirect("/api/recovery/resetpassword");
+        }else if(!anyUppserLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least an Upper letter")
+            return res.redirect("/api/recovery/resetpassword");
+        }else if(!notSpace){
+            //pass must not have any space
+            req.flash("errnewpass", "Password must not have any blank space")
+            return res.redirect("/api/recovery/resetpassword");
+        }
+
+        return next();
+    } catch (error) {
+        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
+        // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
+    }
+}
+
+//Reset Password to a new One by token
+export const checkToken_ResetPassword = async (req,res,next) => {
+    //Checking data users
+    const {newPassword, confirmNewPassword,token} = req.body;
+    //Regular Expresion
+    const characteresLng = (/(?=^.{8,}$)/).test(newPassword);
+    const anyNumber = (/(?=.*\d)/).test(newPassword);
+    const lowerLetter = (/(?=.*[a-z])/).test(newPassword);
+    const anyUppserLetter = (/(?=.*[A-Z])/).test(newPassword);
+    const notSpace = (/^\S+$/).test(newPassword);
+
+    try {
+        if(newPassword !== confirmNewPassword ){
+            req.flash("errnewpass", "Password are different")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }else if(!characteresLng){
+            //pass length > 8
+            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }else if(!lowerLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least a letter")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }else if(!anyNumber){
+            //pass must have numbers
+            req.flash("errnewpass", "Password must have at least a number")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }else if(!anyUppserLetter){
+            //pass must have an Upper letter
+            req.flash("errnewpass", "Password must have at least an Upper letter")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }else if(!notSpace){
+            //pass must not have any space
+            req.flash("errnewpass", "Password must not have any blank space")
+            return res.redirect(`/api/recovery/resetpassword/${token}`);
+        }
+
+        return next();
+    } catch (error) {
+        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
+        console.log(message);
+        // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }

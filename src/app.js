@@ -18,6 +18,7 @@ import homeRoute from "./routers/home.js";
 import settingsRoute from "./routers/settings.js";
 import authRoute from "./routers/auth.js";
 import search from "./routers/recovery.js";
+import errors from "./routers/errors.js";
 
 
 
@@ -104,7 +105,8 @@ app.use((req,res,next) => {
 app.use(homeRoute);
 app.use("/api/settings",settingsRoute);
 app.use("/api/auth",authRoute);
-app.use("/api/recovery",search)
+app.use("/api/recovery",search);
+app.use("/api",errors);
 
 //Static files: css, javascript
 app.use(express.static(path.join(__dirname, "./public")));

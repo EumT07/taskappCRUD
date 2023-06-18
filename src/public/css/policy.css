@@ -1,17 +1,4 @@
-* {
-    margin: 0;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-body{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 .politics,.terms{
     width: 90%;
     height: 100%;
@@ -22,38 +9,45 @@ body{
     padding: 20px 20px;
     text-align: justify;
 }
-.politics h1,h3,p,h4,ul,
-.terms h1,h3,p,h4,ul{
-    align-self: flex-start;
-    margin-bottom: 20px;
-}
 
-h1{
+.politics > h1,
+.terms > h1{
+    align-self: flex-start;
     font-size: 2rem;
     letter-spacing: 1.5px;
 }
-h3{
+.politics > h3,
+.terms > h3{
+    align-self: flex-start;
     font-size: 1.7rem;
     
 }
-p,h4{
+.politics > p,.politics > h4,
+.terms > p,.terms > h4 {
+    align-self: flex-start;
     font-size: 1.2rem;
 }
-.politics ul{
+.politics > ul{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     height: 130px;
+    margin-bottom: 20px;
+    align-self: flex-start;
 }
-.terms ul{
+.terms > ul{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     height: 80px;
+    margin-bottom: 20px;
+    align-self: flex-start;
 }
-a{
+.politics > a,
+.terms > a{
+    align-self: flex-start;
     text-decoration: none;
     font-size: 1.1rem;
     color: blue;

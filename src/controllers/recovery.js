@@ -58,12 +58,12 @@ export const searchUser = async (req,res) => {
     
         //Creating a new token 
         const token = jwt.sign({id: user._id}, SECRET,{
-            expiresIn: "10m"
+            expiresIn: "5m"
         });
 
         //Creating Cookie: Recovery Cookie
         res.cookie(cookieRecovery,token,{
-            maxAge: 600 * 1000, //10 minutes
+            maxAge: 450 * 1000, //10 minutes
             secure: true,
             httpOnly: true,
             sameSite: "lax"
@@ -75,6 +75,7 @@ export const searchUser = async (req,res) => {
         console.log("There is an Error: Recovery: Searching user".red.bold);
         const message = taskAppError(res,"taskAppError: controller Settings Searching user",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }
 //Reset Password *email
@@ -108,5 +109,6 @@ export const resetPassword = async (req,res)=>{
         console.log("There is an Error: Recovery: Reset Password".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Reset Password",500);
         // sendErrorMail(message);
+        return res.status(404).redirect("/api/failrequest");
     }
 }

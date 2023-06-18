@@ -1,0 +1,173 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/nav.ejs") %>
+<section class="graphics">
+    <div  class="tasksContainer">
+        <h2>Tasks</h2>
+        <input id="allTasks" type="hidden" value="<%= tasks.length %>">
+        <input id="high" type="hidden" value="<%= highCount %>">
+        <input id="middle" type="hidden" value="<%= middleCount %>">
+        <input id="low" type="hidden" value="<%= lowCount %>">
+        <div  class="tasks_chart">
+            <canvas id="myTasksChart" class="taskvalue_graphic">
+
+            </canvas>
+        </div>
+    </div>
+    <div class="tasksStatus">
+        <h2>Status</h2>
+        <input id="completedTasks" type="hidden" value="<%= completeTaskCount %>">
+        <input id="doingTasks" type="hidden" value="<%= doingTaskCount %>">
+        <div  class="status_chart">
+            <canvas id="myStatusChart" class="taskvalue_graphic">
+
+            </canvas>
+        </div>
+
+    </div>
+    <div class="tasksMonths">
+        <h2>Tasks-Months</h2>
+        <input id="month" type="hidden" value="<%= monthValues %>">
+        <div  class="tasksMonth_chart">
+            <canvas id="myTasksMonthChart" class="taskvalue_graphic">
+
+            </canvas>
+        </div>
+
+
+    </div>
+    <div class="statusMonths">
+        <h2>Status Months</h2>
+        <input id="taskMonthsCompleted" type="hidden" value="<%= tasksCompleted %>">
+        <input id="tasksMonthsDoing" type="hidden" value="<%= tasksDoing %>">
+        <div  class="statusMonth_chart">
+            <canvas id="myStatusMonthChart" class="taskvalue_graphic">
+
+            </canvas>
+        </div>
+
+    </div>
+</section>
+
+
+<script src="/javascript/dashboard.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+//Profile Chart js
+// const taskContainer = document.querySelector(".tasks_chart");
+const taskContainer = document.getElementById("myTasksChart");
+const myStatusChart = document.getElementById("myStatusChart");
+const myTasksMonthChart = document.getElementById("myTasksMonthChart");
+const myStatusMonthChart = document.getElementById("myStatusMonthChart");
+
+//Taks Values
+const highValue = document.getElementById("high").value;
+const middleValue = document.getElementById("middle").value;
+const lowValue = document.getElementById("low").value;
+
+const monthValue = document.getElementById("month").value;
+const months = JSON.parse(monthValue);
+
+//Months 
+const newArryKeys = Object.keys(months);
+const newArryValues = Object.values(months);
+
+//TasksCompleted
+const taskMonthsCompleted = document.getElementById("taskMonthsCompleted").value;
+const taskMonthsDoing = document.getElementById("tasksMonthsDoing").value;
+
+const tasksCompleteJSON = JSON.parse(taskMonthsCompleted);
+const tasksDoingJSON = JSON.parse(taskMonthsDoing);
+
+const tasksCompletedValue = Object.values(tasksCompleteJSON);
+const tasksDoingValues = Object.values(tasksDoingJSON);
+
+console.log(tasksCompletedValue);
+console.log(tasksDoingValues);
+
+//Status Values
+const completedTaks = document.getElementById("completedTasks").value;
+const doingTasks = document.getElementById("doingTasks").value;
+
+
+//Tasks
+new Chart(taskContainer,{
+        type: "pie",
+        data: {
+            labels: ["High","Middle","Low"],
+            datasets: [{
+                label: "Tasks",
+                data: [
+                    highValue,
+                    middleValue,
+                    lowValue],
+                backgroundColor: [
+                    "#d32324",
+                    "#ff8c00",
+                    "#1597BB"
+                ],
+            }]
+        }
+        
+    }
+);
+
+//Status
+new Chart(myStatusChart,{
+        type: "pie",
+        data: {
+            labels: ["Completed","Doing"],
+            datasets: [{
+                label: "Tasks",
+                data: [
+                    completedTaks,
+                    doingTasks
+                ],
+                backgroundColor: [
+                    "#AF7AB3",
+                    "#54BAB9"
+                ],
+            }]
+        }
+        
+    }
+);
+
+//Task months
+new Chart(myTasksMonthChart,{
+        type: "bar",
+        data: {
+            labels: newArryKeys,
+            datasets: [{
+                label: "Tasks",
+                data: newArryValues,
+                backgroundColor: "#2C74B3",
+            }]
+        }
+        
+    }
+);
+
+//Status months
+new Chart(myStatusMonthChart,{
+        type: "bar",
+        data: {
+            labels: newArryKeys ,
+            datasets: [
+                {
+                    label: "Doing",
+                    data: tasksDoingValues,
+                    backgroundColor: "#3FA796",
+                },  {
+                    label: "Completed",
+                    data: tasksCompletedValue,
+                    backgroundColor: "#FEC260",
+            },
+        ]
+        }
+        
+    }
+);
+
+</script>
+<%- include("../partials/body.ejs") %>
