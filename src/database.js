@@ -19,5 +19,5 @@ try {
 } catch (error) {
     console.log("Erro Connection data base: ".red.bold, error.message);
     const message = taskAppError(res,"Error Trying to connect with database:",500);
-    sendErrorMail(message);
+    // sendErrorMail(message);
 }
