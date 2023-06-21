@@ -130,6 +130,41 @@
     background-color: #a93132;
 }
 
+/*Email sent*/
+.options_container .modalContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 360px;
+    height: 180px;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 3px #1d6cb6a4;
+    z-index: 200;
+}
+.options_container .modalContent h1 {
+    color: #a93132;
+    text-align: center;
+}
+.options_container .modalContent .gifContainer {
+    width: 80%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.options_container .modalContent .gifContainer img{
+    width: 70px;
+    height: 70px;
+}
 /*Erro pin code*/
 .inputError{
     border: 2px solid #a93132;

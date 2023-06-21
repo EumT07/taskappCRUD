@@ -128,18 +128,21 @@ new Chart(myTasksMonthChart,{
         type: "bar",
         data: {
             labels: newArryKeys,
-            datasets: [{
+            datasets: [
+            {
+                label: "Doing",
+                data: tasksDoingValues,
+                backgroundColor: "#54BAB9" 
+            },
+            {
+                label: "Completed",
+                data: tasksCompletedValue,
+                backgroundColor: "#AF7AB3"
+            },
+            {
                 label: "Tasks",
                 data: newArryValues,
-                backgroundColor: "#2C74B3",
-            },{
-                    label: "Doing",
-                    data: tasksDoingValues,
-                    backgroundColor: "#54BAB9",
-                },  {
-                    label: "Completed",
-                    data: tasksCompletedValue,
-                    backgroundColor: "#AF7AB3",
+                backgroundColor: "#2C74B3"
             }]
         }
         

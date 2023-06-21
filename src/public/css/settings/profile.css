@@ -205,6 +205,15 @@
     height: 100px;
     width: 90%;
 }
+.taskvalue_name #highTag{
+    color: #a93132;
+}
+.taskvalue_name #middleTag{
+    color: #ff8c00;
+}
+.taskvalue_name #lowTag{
+    color: #1597BB;
+}
 .canvasContainer{
     position: relative;
     margin: auto;
@@ -246,6 +255,36 @@
     border-radius: 4px;
     outline: none;
     border: 1px solid #b8afaf98;
+}
+
+.data__container .show_options > .changePincode_container > .changePincode_emailMessage {
+    display: none;
+}
+
+.data__container .show_options > .changePincode_container > .emailSent {
+    display: block;
+}
+
+.data__container .show_options > .changePincode_container > .changePincode_emailMessage .containerInfo_email { 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 180px;
+}
+.data__container .show_options > .changePincode_container > .changePincode_emailMessage .containerInfo_email > div {
+    width: 100px;
+    height: 100px;
+}
+.data__container .show_options > .changePincode_container > .changePincode_emailMessage .containerInfo_email > div img{
+    width: 100%;
+    height: 100%;
+}
+.data__container .show_options > .changePincode_container > .changePincode_emailMessage .containerInfo_email > h3{
+    color: #15a127;
+    font-size: bolder;
+    
 }
 
 /* change Password */

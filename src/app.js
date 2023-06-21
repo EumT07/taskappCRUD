@@ -95,7 +95,9 @@ app.use((req,res,next) => {
     app.locals.answer1 = req.flash("answer1") 
     app.locals.answer2 = req.flash("answer2") 
     app.locals.answer3 = req.flash("answer3")
-
+    
+    //Sent emal To pinchange
+    app.locals.emailSent = req.flash("emailSent");
     next();
 })
 

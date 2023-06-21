@@ -63,7 +63,7 @@ export const searchUser = async (req,res) => {
 
         //Creating Cookie: Recovery Cookie
         res.cookie(cookieRecovery,token,{
-            maxAge: 450 * 1000, //10 minutes
+            maxAge: 250 * 1000, //5 minutes
             secure: true,
             httpOnly: true,
             sameSite: "lax"

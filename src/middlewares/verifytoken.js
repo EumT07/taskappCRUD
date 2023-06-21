@@ -154,7 +154,7 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
         const user = await User.findById(userID);
 
         if(email !== user.email ){
-            return console.log("Not Email");
+            return res.status(404).redirect("/api/failrequest");
         }
 
         //Create a new token
@@ -168,8 +168,9 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
         const htmlContent = linkpinEmail(user.username,url);
         console.log(htmlContent);
         // await sendMail(user.email,subjectText,htmlContent);
+        req.flash("emailSent", "emailSent")
         return res.status(200).redirect("/api/settings/profile?data=changepinreq");
-
+        
     } catch (error) {
         console.log("Error Creating Email pin",error);
         return res.status(404).redirect("/api/failrequest");

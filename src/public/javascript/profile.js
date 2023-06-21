@@ -102,6 +102,10 @@ document.addEventListener("keydown", (e)=>{
     }
 });
 
+//Change pin code
+
+
+
 //Refresh page
 const oneHour = 1000 * 3600;
 setTimeout(()=> {

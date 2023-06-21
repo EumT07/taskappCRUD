@@ -7,7 +7,7 @@ import {
     taskAppError
 } from "../error/handlerError.js"
 import { sendMail, sendErrorMail } from "../mail/mail.js";
-import { emailResetPAssword } from "../mail/Template/emailTemplate.js";
+import { emailResetPassword } from "../mail/Template/emailTemplate.js";
 dotenv.config();
 //Token Variables
 const SECRET = process.env.SECRET_KEY_JWT;//JWT
@@ -42,20 +42,34 @@ export const verifyRecoveryToken = async (req,res,next) => {
 
 export const sendEmail_resetPassword = async (req, res, next) => {
   
-    //Search user
-    const user = await User.findById(req.ID);
+    try {
+        //Search user
+        const user = await User.findById(req.ID);
 
-    //Creating token
-    const token = jwt.sign({id: user.id},SECRET,{
-        expiresIn: "30m"
-    })
+        //Delete old cookie
+        res.clearCookie(deleteCookie)
 
-    //Sending Email
-    //Creating link to send to email
-    const subjectText = `Hello, ${user.username}, reset Passwor`
-    const url = `${token}`;
-    const htmlContent = emailResetPAssword(user.username,url);
-    console.log(htmlContent);
+        //Creating token
+        const token = jwt.sign({id: user.id},SECRET,{
+            expiresIn: "30m"
+        })
+
+        //Sending Email
+        //Creating link to send to email
+        const subjectText = `Hello, ${user.username}, reset Password`
+        const url = `${token}`;
+        const htmlContent = emailResetPassword(user.username,url);
+        // await sendMail(user.email,subjectText,htmlContent);
+
+        console.log(url);
+        return;
+    } catch (error) {
+        console.log("There is an error: Middlewate-token:Sending an email to user".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Middlewate-token:Sending an email to user",401);
+        // sendErrorMail(message)
+        return res.status(404).redirect("/api/failrequest");
+    }
+    
 }
 
 //Verify pincode and create a new token to reset password
@@ -207,6 +221,7 @@ export const getAccssEmail_resetPassword = async (req,res,next)=>{
         const id = jwt.verify(token, SECRET);
         //Pass id into a variable;
         req.userID = id.id;
+        res.clearCookie(deleteCookie);
         next();
     } catch (error) {
         console.log("Error verifying Email pin",error);

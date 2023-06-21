@@ -81,7 +81,7 @@
                         <h3>All Taks: <%= tasks.length %></h3>
                         <h3> <span id="highTag">High</span>: <span id="highValue"><%= highCount %></span>  </h3>
                         <h3><span id="middleTag">Middle</span>: <span id="middleValue"><%= middleCount %></span></h3>
-                        <h3><span id="logTag">Low</span>: <span id="lowValue"><%= lowCount %></span></h3>
+                        <h3><span id="lowTag">Low</span>: <span id="lowValue"><%= lowCount %></span></h3>
                     </div>
                     <div class="canvasContainer">
                         <canvas id="myChart" class="taskvalue_graphic">
@@ -98,9 +98,19 @@
                     <form action="/api/settings/pincodeEmail" method="post">
                         <input type="email" name="email" value="<%= user.email %>" readonly>
                         <input type="hidden" name="userID" value="<%= user.id %>"  id="">
-                        <button class="btnForm" type="submit">Send</button>
+                        <button id="sendBtn_pincode" class="btnForm" type="submit">Send</button>
                     </form>
                 </div>
+                <% if(emailSent) {%>
+                <div class="changePincode_emailMessage <%= emailSent %>">
+                    <div class="containerInfo_email">
+                        <div class="imgContainer">
+                            <img src="/img/emailSent.png" alt="email">
+                        </div>
+                        <h3>We have sent you an email, please check it out</h3>
+                    </div>
+                </div>
+                <% } %>
             </div>
 
             <div class="changepass_form gettingPIN">
@@ -226,7 +236,7 @@ const lowValue = document.getElementById("lowValue");
 new Chart(graphicContainer,{
         type: "pie",
         data: {
-            labels: ["High","Middle","Low"],
+            // labels: ["High","Middle","Low"],
             datasets: [{
                 label: "Tasks",
                 data: [
