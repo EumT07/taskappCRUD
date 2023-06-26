@@ -1,5 +1,5 @@
 "user strict"
-
+import {runArrays} from "./export.js";
 
 //Gettings form info
 const profileForm = document.querySelector(".profile_form");
@@ -103,7 +103,15 @@ document.addEventListener("keydown", (e)=>{
 });
 
 //Change pin code
+//* Pin code Profile
+const changepass_PIN = document.querySelectorAll("#pinPass");
+changepass_PIN[0].focus();
+runArrays(changepass_PIN);
 
+//PIN- Change Password
+const changesecretQts_PIN = document.querySelectorAll("#pinSecreteQts");
+changesecretQts_PIN[0].focus();
+runArrays(changesecretQts_PIN);
 
 
 //Refresh page

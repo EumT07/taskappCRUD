@@ -12,27 +12,27 @@
                 <input type="hidden" name="userid" value="<%= user.id %>">
                 <div class="inputGroup">
                     <label for="pin1">
-                        <input type="number" name="pin1"  maxlength="1"  tabindex="1" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin1"  maxlength="1"  tabindex="1" placeholder="·" autocomplete="off" required>
                     </label>
                     <label for="pin2">
-                        <input type="number" name="pin2" maxlength="1" tabindex="2" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin2" maxlength="1" tabindex="2" placeholder="·" autocomplete="off" required>
                     </label>
                     <label for="pin3">
-                        <input type="number" name="pin3" maxlength="1" tabindex="3" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin3" maxlength="1" tabindex="3" placeholder="·" autocomplete="off" required>
                     </label>
                     <label for="pin4">
-                        <input type="number" name="pin4" maxlength="1" tabindex="4" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin4" maxlength="1" tabindex="4" placeholder="·" autocomplete="off" required>
                     </label>
                     <label for="pin5">
-                        <input type="number" name="pin5"  maxlength="1" tabindex="5" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin5"  maxlength="1" tabindex="5" placeholder="·" autocomplete="off" required>
                     </label>
                     <label for="pin6">
-                        <input type="number" name="pin6" maxlength="1" tabindex="6" placeholder="·" autocomplete="off" required>
+                        <input id="pin" type="number" name="pin6" maxlength="1" tabindex="6" placeholder="·" autocomplete="off" required>
                     </label>
                 </div>
                 <button type="submit">Send</button>
             </form>
         </div>
 </section>
-
+<script src="/javascript/pincode.js" type="module"></script>
 <%- include("../partials/body.ejs") %>
