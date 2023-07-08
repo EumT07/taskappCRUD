@@ -6,7 +6,7 @@
         <section class="btn-options">
             <input id="createBtn" type="button" value="+ Create">
             <select name="categories" id="selectCategory">
-                <option selected="selected" value="All Category">All category</option>
+                <option selected="selected" value="all Category">Category</option>
                 <% if(categories) { %>
                     <% for(let i = 0; i < categories.length; i++) { %>
                     <option name="<%= categories[i].id %>" value="<%=categories[i].name%>" ><%=categories[i].name%></option>
@@ -14,7 +14,7 @@
                 <% } %>
             </select>
             <select name="levels" id="selectLevels">
-                <option selected="selected" value="all Levels">All Levels</option>
+                <option selected="selected" value="all levels">Priority</option>
                 <option value="high">High</option>
                 <option value="middle">Middle</option>
                 <option value="low">Low</option>
@@ -49,8 +49,7 @@
                                 </div>
                                 <% if(tasks[j].status) { %>
                                 <div class="completeTask">
-                                    <!-- <img src="/img/star.png" alt="star"> -->
-                                    <a href="/cancelCompleteTask/<%=tasks[j]._id%>"><img id="checkIcon" src="/img/check.png" alt="star"></a>
+                                    <a id="completed" href="/cancelCompleteTask/<%=tasks[j]._id%>"><img id="checkIcon" src="/img/check.png" alt="star"></a>
                                 </div> 
                                 <% } %> 
                             </div>
@@ -97,10 +96,7 @@
                 </form>
             </div>
         </section>
-        
-
-
-        
+             
 </section>
 
 <script src="/javascript/dashboard.js" ></script>

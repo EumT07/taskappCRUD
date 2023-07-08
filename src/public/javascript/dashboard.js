@@ -107,18 +107,17 @@ selectLevels.addEventListener("change", (e)=>{
 
     tasksFilter.forEach(tasks => {
         const priorityName = tasks.firstElementChild.lastElementChild.lastElementChild.textContent.toLowerCase().trim()
-        const divCategoryContainer = tasks.parentElement;
-        
-        
+
         if(levelsNameSelected === "all levels") {
             tasks.style.display = "block";
         } else if(levelsNameSelected === priorityName){
-            tasks.style.display = "block";
+            tasks.style.display = "block";    
         }else{
             tasks.style.display = "none";
         }
     })
 })
+
 
 //Date Task
 function getDateTask() {
