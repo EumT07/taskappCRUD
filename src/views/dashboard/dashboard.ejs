@@ -35,16 +35,24 @@
                         <% if(tasks[j].category == categories[i].id) { %>
                         <div class="tasksFilter">
                             <div class="task__card-container" id="tasksContainer">
-                                <h3><%= tasks[j].title %></h3>
+                                <div class="titleContainer">
+                                    <h3><%= tasks[j].title %></h3>
+                                    <div class="btnsContainer">
+                                        <a href="/completeTask/<%=tasks[j]._id%>"><i class="completeIcon fa"></i></a>
+                                        <a href="/updateTask/<%=tasks[j]._id%>"><i class="updateIcon fa"></i></a>
+                                        <a href="/deleteTask/<%=tasks[j]._id%>"><i class="deleteIcon fa"></i></a>
+                                    </div>
+                                </div>
                                 <p><%= tasks[j].description %></p>
-                                <a href="/completeTask/<%=tasks[j]._id%>"><i class="completeIcon fa"></i></a>
-                                <a href="/updateTask/<%=tasks[j]._id%>"><i class="updateIcon fa"></i></a>
-                                <a href="/deleteTask/<%=tasks[j]._id%>"><i class="deleteIcon fa"></i></a>
                                 <div class="container_levels" >
                                     <div class="container_levels-date">
                                         <i class="calendar fa"></i>
                                         <h5 id="date"><%= tasks[j].createdAt %> </h5>
                                     </div>
+                                    <% if(tasks[j].dateline){ %>
+                                        <i class="dateline fs fa"></i>
+                                        <input id="dateline" type="hidden" value="<%=tasks[j].dateline%>">
+                                    <%}%>
                                     <h5 class="colorLevels <%= tasks[j].priority %>"><%= tasks[j].priority %></h5>
                                 </div>
                                 <% if(tasks[j].status) { %>
@@ -63,16 +71,18 @@
     <!-- modal add task -->
         <section class="modal__container">
             <div class="modal-card">
-                <h3>Create New Task</h3>
+                <h3>New Task</h3>
                 <i id="closeCreateTask" class="closeIcon fa"></i>
                 <form action="/newtask" method="post">
                     <label for="title">
                         <input type="text" name="title" placeholder="Title">
                     </label>
                     <label for="decriptions">
-                        <p>
-                            <textarea name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
-                        </p>
+                        <textarea name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
+                    </label>
+                    <label class="dateline_container">
+                        Dateline:
+                        <input class="dateline" type="date" name="dateline" id="">
                     </label>
                     <div class="categoryContainer" id="categoryContainer">
                         <select name="category"  id="select">
@@ -86,7 +96,7 @@
                         <i class="addNewCategory fa" id="addnewCategoryBtn"></i>
                     </div>
                     <select name="priority">
-                        <option selected="selected">Levels</option>
+                        <option selected="selected">Priority</option>
                         <option value="High">High</option>
                         <option value="Middle">Middle</option>
                         <option value="Low">Low</option>

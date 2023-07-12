@@ -11,7 +11,8 @@ import {
     deleteTask,
     deleteCategory,
     completeTask,
-    cancelCompleteTask
+    cancelCompleteTask,
+    dateline
 } from "../controllers/task.js"
 
 const router = Router();
@@ -30,7 +31,7 @@ router
 
 //Dashboard
 router
-    .get("/dashboard", taskApp_Token, async (req,res)=>{
+    .get("/dashboard", taskApp_Token, dateline, async (req,res)=>{
         const user = await User.findById(req.userID);
         const tasks = await Task.find({user: user.id});
         const categories = await Category.find({user: user.id});

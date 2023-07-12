@@ -118,6 +118,124 @@ selectLevels.addEventListener("change", (e)=>{
     })
 })
 
+//Change Css card task
+categoriesContainer.forEach( container => {
+    if(container.childElementCount >= 5 ){
+       for (let i = 0; i < container.childElementCount; i++) {
+        if(container.children[i].classList.contains("tasksFilter")){
+            container.children[i].firstElementChild.style.height = "80px";
+            container.children[i].firstElementChild.style.padding = "10px";
+            container.children[i].firstElementChild.firstElementChild.nextElementSibling.style.display = "none";
+            let completeTask = container.children[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling;
+            if(completeTask){
+                container.children[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.style.height = "80px";
+            }
+            let btnsContainer = container.children[i].firstElementChild.firstElementChild.lastElementChild;
+            //Changing width
+            btnsContainer.style.width = "90px";
+            //Getting first btn reference
+            let firstBtn = container.children[i].firstElementChild.firstElementChild.lastElementChild.firstElementChild;
+
+            //Creating a new btn 
+            let viewBtn = document.createElement("a");
+            let viewIcon = document.createElement("i");
+            viewIcon.className = "view fa"
+            //Adding i tag to a tag
+            viewBtn.appendChild(viewIcon);
+
+            //inser new btn to btns container
+            btnsContainer.insertBefore(viewBtn, firstBtn);
+            
+        }
+       }
+       return;
+    }
+    
+    return;
+})
+
+function showDescriptions() {
+    //All taks title
+    const tasksTitle = document.querySelectorAll(".titleContainer");
+    
+    //Tasks loop
+    tasksTitle.forEach(tasks => {
+        const viewBtn = tasks.querySelectorAll(".view");    
+        let task_to_compare = tasks.firstElementChild.textContent;
+            
+        viewBtn.forEach(btn => {
+            //Getting all btns
+            btn.addEventListener("click",(e)=>{
+            
+           
+            tasksTitle.forEach(item => {
+                
+                //Comparing if the tittle of the taks is the same what we are clicking 
+                if(item.firstElementChild.textContent !== task_to_compare){
+                    let element_i = item.lastElementChild.firstElementChild.firstElementChild;
+
+                    if(element_i.classList.contains("closeView")){
+                        let taskCard = element_i.parentElement.parentElement.parentElement.parentElement;
+                        let tasksCard_description = element_i.parentElement.parentElement.parentElement.nextElementSibling
+
+                        element_i.classList.remove("closeView");
+                        element_i.classList.add("view");
+                        taskCard.style.height = "80px";
+                        tasksCard_description.style.display = "none";
+                        return;
+                    }
+                    return;
+                }
+
+                //Chaning structure of each taks
+                btn.classList.remove("view");
+                btn.classList.add("closeView");
+                btn.parentElement.parentElement.parentElement.parentElement.style.height = "150px";
+                btn.parentElement.parentElement.parentElement.nextElementSibling.style.display = "block";
+                
+            });
+            
+            const closeViewBtn = document.querySelector(".closeView");
+
+            closeViewBtn.addEventListener("click", (e)=>{
+                e.target.classList.remove("closeView");
+                e.target.classList.add("view");
+                e.target.parentElement.parentElement.parentElement.parentElement.style.height = "80px";
+                e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "none";
+            });
+        
+            });
+        });
+    });
+};
+//*Show description first Option
+
+// function showDescriptions() {
+//     //Btns view 
+//     const viewBtn = document.querySelectorAll(".view");
+
+//     viewBtn.forEach(btn => {
+//         btn.addEventListener("click",(e)=>{
+//             e.target.classList.remove("view");
+//             e.target.classList.add("closeView");
+//             e.target.parentElement.parentElement.parentElement.parentElement.style.height = "150px";
+//             e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "block";
+
+//             const closeViewBtn = document.querySelector(".closeView");
+
+//             closeViewBtn.addEventListener("click", (e)=>{
+//             e.target.classList.remove("closeView");
+//             e.target.classList.add("view");
+//             e.target.parentElement.parentElement.parentElement.parentElement.style.height = "80px";
+//             e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "none";
+//             showDescriptions()
+//                 });
+//         });
+//     });  
+// };
+
+showDescriptions();
+
 
 //Date Task
 function getDateTask() {
@@ -134,10 +252,23 @@ function getDateTask() {
     }
 }
 getDateTask();
+//date Done or lost
+function lostDateLine() {
+    //icon
+    //Value
+    const dateline = document.querySelectorAll("#dateline");
 
+    dateline.forEach(elm => {
+        if(elm.value === "lost"){
+            elm.previousElementSibling.classList.remove("dateline");
+            elm.previousElementSibling.classList.add("dateline-lost");
+            return;
+        }
+    });
+}
+lostDateLine();
 //Changing check icon by close
 const checkIcon = document.querySelectorAll("#checkIcon");
-
 
 checkIcon.forEach(element => {
     element.addEventListener("mouseover", ()=>{

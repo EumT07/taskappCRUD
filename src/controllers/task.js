@@ -1,5 +1,6 @@
 "use strict"
 import * as dotenv from "dotenv"
+import User from "../models/user.js";
 import Tasks from "../models/tasks.js";
 import Category from "../models/category.js"
 import {
@@ -16,7 +17,7 @@ dotenv.config();
 //*Create a new task and new category at the same time
 export const createNewTask = async (req, res) => {
     try {
-        const {title, description, category, priority, userID} = req.body;
+        const {title, description, category, priority, userID, dateline} = req.body;
         const date = new Date();
         //Is category an Array or not?
         //*Creating a new category and a new task
@@ -32,9 +33,10 @@ export const createNewTask = async (req, res) => {
                     category: categorySelected._id,
                     priority: priority,
                     month: date.getMonth(),
+                    dateline: dateline,
                     user: userID
                 });
-                task.save();
+                // task.save();
                 res.status(202).redirect("/dashboard")
                 return;
              }
@@ -52,16 +54,17 @@ export const createNewTask = async (req, res) => {
                 category: newCategory._id,
                 priority: priority,
                 month: date.getMonth(),
+                dateline: dateline,
                 user: userID
             });
-            await task.save();
+            // await task.save();
             res.status(202).redirect("/dashboard")
             return;
         }
 
         //*Category is not an array
         //Checking is category is one of thme (categories | leves)
-        if(category.toLowerCase() === "categories" || priority.toLowerCase() === "levels"){
+        if(category.toLowerCase() === "category" || priority.toLowerCase() === "priority"){
             //*Add new Notification with messages
             res.status(404).redirect("/dashboard")
             return;
@@ -77,6 +80,7 @@ export const createNewTask = async (req, res) => {
             category: categorySelected._id,
             priority: priority, 
             month: date.getMonth(),
+            dateline: dateline,
             user: userID
         });
         task.save();
@@ -89,12 +93,45 @@ export const createNewTask = async (req, res) => {
         return res.status(404).redirect("/api/failrequest");
     }
 }
+//*dateline
+export const dateline = async (req,res,next) => {
+    try {
+        const user = await User.findById(req.userID);
+        const tasks = await Tasks.find({user: user.id});
+        const date = new Date();
+        const dateNow = date.getTime();
+    
+        tasks.forEach( async (task) => {
+            if(task.dateline){
+                const date2 = new Date(task.dateline)
+                let rest = date2.getTime() - dateNow;
+                let days = Math.round(rest / (1000*60*60*24));
+                 
+                if(days === 0 || days < 0){
+                    //Send message
+                    console.log(`
+                        User ID: ${user.id}
+                        Task Title: ${task.title}
+                        Task Description: ${task.description}
+                    `);
+                    //Change dateline -> done don't send email again
+                    await Tasks.findByIdAndUpdate({_id: task.id},{dateline: "lost"});
+                    return;
+                }
+                return;
+            }
+        })
 
+        next();
+    } catch (error) {
+        console.log("Error Dateline", error);
+    }
+}
 //*Updating Task
 export const updateTask = async (req,res) =>{
     try {
         const {id} = req.params;
-        const {title,description,priority} = req.body;
+        const {title,description,priority, dateline} = req.body;
 
         // if(title.length === 0 || description.length === 0 || priority.length === 0) {
         //     return res.status(202).redirect("/dashboard");
@@ -102,7 +139,8 @@ export const updateTask = async (req,res) =>{
         const data = {
             title: title,
             description: description,
-            priority: priority
+            priority: priority,
+            dateline: dateline
         }
         //Finding taks
         const tasks = await Tasks.findByIdAndUpdate({_id: id}, data);

@@ -9,9 +9,11 @@
                 <input type="text" name="title" placeholder="<%= task.title %>" value="<%= task.title %>">
             </label>
             <label for="decriptions">
-                <p>
-                    <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>" value="<%= task.description %>"><%= task.description %></textarea>
-                </p>
+                <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>" value="<%= task.description %>"><%= task.description %></textarea>
+            </label>
+            <label class="dateline_container">
+                Dateline:
+                <input class="dateline" type="date" name="dateline" id="" value="<%= task.dateline %>">
             </label>
             <div class="categoryContainer">
                 <input type="text" name="<%= category.id %>" placeholder="<%=category.name%>" readonly>

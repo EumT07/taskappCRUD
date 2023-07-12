@@ -18,7 +18,11 @@ const taskSchema = new Mongoose.Schema(
             type: Mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        month: String
+        month: String,
+        dateline: {
+            type: String,
+            default: null
+        }
     },
     {
         timestamps: true
