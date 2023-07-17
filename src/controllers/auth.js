@@ -107,7 +107,6 @@ export const singin = async (req,res) => {
 };
 
 // Creating SecurityQuestions
-
 export const setSecretQuestions = async (req,res)=>{
     try {
         //Getting data: Questions and Answers from form

@@ -7,14 +7,15 @@
 body{
     overflow-x: hidden;
 }
-
+body.dark {
+	background: #292C35;
+}
 /* Main */
-
 main .intro{
-    background-image: url("/img/pexels-andrea-piacquadio-3769706.jpg");
-    position: relative;
     max-width: 100vw;
     height: 100vh;
+    position: relative;
+    background-image: url("/img/pexels-andrea-piacquadio-3769706.jpg");
     background-position: cover;
 }
 main .intro .intro_info{
@@ -24,22 +25,25 @@ main .intro .intro_info{
     top: 350px;
     left: 280px;
 }
-
 main .intro .intro_info h1{
-    font-size: 6rem;
-    margin-bottom: 40px;
+    font-family: "Lilita One", cursive;
+    font-size: 8rem;
+    margin-bottom: 20px;
 }
 main .intro .intro_info h1 > span{
     color: #d32324;
+    margin-left: 3px;
 }
 main .intro .intro_info p {
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
     font-weight: bold;
+    color: #fff;
+    letter-spacing: 2px;
 }
 main .intro .intro_link{
     background-color: #878e9142;
     text-align: center;
-    color: #fff;
     width: 200px;
     height: 40px;
     position: absolute;
@@ -52,12 +56,10 @@ main .intro .intro_link:hover{
     cursor: pointer;
 }
 main .intro .intro_link h2 {
-    color: #d32324;
+    font-family: "Lilita One", cursive ;
     font-size: 2rem;
     font-weight: bold;
-}
-main .intro .intro_link h2:hover{
-    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 1.5px;
 }
 main .intro .intro_link h2 a{
     text-decoration: none;
@@ -139,9 +141,11 @@ main .intro .intro_link h2 a{
     align-items: center;
 }
 .task .tasks_info h2{
-    color: #d32324;
+    font-family: "Lilita One", cursive ;
+    color: #c72727;
     font-size: 6rem;
     margin-bottom: 15px;
+    letter-spacing: 2.6px;
 }
 .task .tasks_info > ul {
     width: 300px;
@@ -153,15 +157,15 @@ main .intro .intro_link h2 a{
     list-style: none;
 }
 .task .tasks_info > ul > li {
-    width: 210px;
-    font-size: 1.2rem;
+    width: 220px;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #858a8f;
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
     align-items: center;
-
+    font-family: 'Open Sans', sans-serif;
 
 }
 .task .tasks_info > ul > li > img {
@@ -179,9 +183,11 @@ main .intro .intro_link h2 a{
     align-items: center;
 }
 .price > h2 {
+    font-family: "Lilita One", cursive ;
     color: #d32324;
     font-size: 4rem;
     margin-bottom: 20px;
+    letter-spacing: 2.6px;
 }
 .price .card_Container{
     width: 60%;
@@ -218,12 +224,11 @@ main .intro .intro_link h2 a{
     
 }
 .price .card_Container > div > .info h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #fff;
     color: #FFD93D;
     letter-spacing: 2px;
-
+    font-family: 'Open Sans', sans-serif;
 }
 .price .card_Container > div > .info h4 {
     font-size: 2rem;
@@ -239,7 +244,7 @@ main .intro .intro_link h2 a{
     align-self: first baseline;
 }
 .price .card_Container div > ul li {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #858a8f;
     display: flex;
@@ -248,6 +253,7 @@ main .intro .intro_link h2 a{
     align-items: center;
     margin-top: 10px;
     margin-bottom: 5px;
+    font-family: 'Open Sans', sans-serif;
 }
 .price .card_Container div > ul li > img{
     width: 20px;
@@ -295,9 +301,11 @@ main .intro .intro_link h2 a{
     padding: 20px;
 }
 .FAQ .title > h2 {
+    font-family: "Lilita One", cursive ;
     color: #d32324;
     font-size: 4rem;
     margin-bottom: 20px;
+    letter-spacing: 2.6px;
 }
 .FAQ .questions > article {
     padding: 1.5rem 1rem 0.5rem 1rem;
@@ -313,8 +321,10 @@ main .intro .intro_link h2 a{
 }
 .FAQ .questions article .question h4{
     color: #FFD93D;
-    font-size: 1.2rem;
+    font-size: 1.12rem;
     font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.3px;
 }
 .FAQ .questions article button{
     font-size: 1.5rem;
@@ -340,6 +350,8 @@ main .intro .intro_link h2 a{
     color: #fff;
     font-size: 1.2rem;
     text-align: justify;
+    font-family: 'Open Sans', sans-serif;
+    padding-right: 5px;
 }
 /*text hide*/
 .FAQ .questions article .answer {
@@ -360,7 +372,6 @@ main .intro .intro_link h2 a{
     content: "\f106";
     display: block;
 }
-
 /* Ideas Sections */
 /* Footer */
 footer{
@@ -393,10 +404,15 @@ footer{
 .footer_logoContainer h1 > span{
     color: #d32324;
 }
-
+.footer_logoContainer p {
+    font-family: 'Open Sans', sans-serif;
+    color: #FFD93D;
+}
 footer .email_container > h4{
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.4rem;
     margin-bottom: 10px;
+    color: #FFD93D;
 }
 footer .email_container .email_form label input{ 
     height: 30px;
@@ -409,10 +425,10 @@ footer .email_container .email_form label input{
 footer .email_container .email_form button{
     height: 30px;
     width: 80px;
-    background-color: #d47172;
-    border: none;
+    background-color: transparent;
+    border: 1px solid #5c5959b9;
     outline: none;
-    color: #fff;
+    color: #d32324;
     font-size: 1.2rem;
     border-radius: 10px;
     margin: 0;
@@ -420,7 +436,7 @@ footer .email_container .email_form button{
 }
 footer .email_container .email_form button:hover{
     background-color: #d32324;
-
+    color: #fff;
 }
 .footer__content .policy{
     height: 140px;
@@ -429,12 +445,15 @@ footer .email_container .email_form button:hover{
     justify-content: space-around;
 }
 .footer__content .policy > h4{
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.4rem;
+    color: #FFD93D;
 }
 .footer__content .policy ul > li {
     list-style: none;
     text-align: justify;
     margin: 10px 0px;
+    font-family: 'Open Sans', sans-serif;
 }
 .footer__content .policy ul > li > a{
     color: #a09b9b;
@@ -445,7 +464,8 @@ footer .email_container .email_form button:hover{
     color: rgb(240, 248, 255);
     transition: 1s;
 }
-
 footer .skills_container > h3, footer > h3{
+    font-size: 0.9rem;
     color: #fff;
+    font-family: 'Open Sans', sans-serif;
 }

@@ -6,10 +6,10 @@
         <a href="/dashboard"><i class="closeIcon fa"></i></a>
         <form action="/updateTask/<%= task.id %>" method="post">
             <label for="title">
-                <input type="text" name="title" placeholder="<%= task.title %>" value="<%= task.title %>">
+                <input id="titleText" type="text" name="title" placeholder="<%= task.title %>" value="<%= task.title %>">
             </label>
             <label for="decriptions">
-                <textarea name="description" id="" cols="30" rows="10" placeholder="<%= task.description %>" value="<%= task.description %>"><%= task.description %></textarea>
+                <textarea name="description" id="descriptionText" cols="30" rows="10" placeholder="<%= task.description %>" value="<%= task.description %>"><%= task.description %></textarea>
             </label>
             <label class="dateline_container">
                 Dateline:
@@ -24,10 +24,10 @@
                 <option value="Hiddle">Middle</option>
                 <option value="Low">Low</option>
             </select>
-            <button type="submit">Update</button>
+            <button id="buttonChange"  type="submit">Update</button>
         </form>
     </div>
 </section>
 
-<script src="/javascript/dashboard.js" ></script>
+<script src="/javascript/update.js" type="module" ></script>
 <%- include("../partials/body.ejs") %>

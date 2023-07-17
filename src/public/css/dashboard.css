@@ -18,11 +18,13 @@
     border-radius: 8px;
     border: none;
     outline: none;
-    box-shadow: 1px 1px 2px #000;
+    box-shadow: 0 15px 30px -4px rgba(54, 53, 53, 0.459);
     cursor: pointer;
     background-color: #a93638;
     color: #fff;
     margin-right: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
 }
 .btn-options input:hover{
     background-color: #d32324;
@@ -30,16 +32,27 @@
 .btn-options select {
     border: none;
     outline: none;
-    background: transparent;
+    /* background: transparent; */
+    background:#a93638;
+    box-shadow: 0 15px 30px -4px rgba(54, 53, 53, 0.459);
     width: 120px;
     font-size: 0.9rem;
     cursor: pointer;
     margin-right: 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 2px 4px;
+    color: #fff;
 }
 .btn-options select > option {
-    border: none;
     text-transform: capitalize;
     cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    background:#a93638;
+    border-radius: 5px;
+    padding: 2px 4px;
 }
 
 /*Task Sections*/
@@ -57,7 +70,7 @@
 }
 .category__card-container{
     min-width: 330px;
-    background-color: #fff;
+    background-color: transparent;
     padding: 20px 20px;
     margin: 15px 10px;
 }
@@ -75,6 +88,8 @@
 }
 .category__card-container h2{
     text-transform: capitalize;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.5px;
 }
 .task__card-container{
     width: 300px;

@@ -2,8 +2,9 @@
 <%- include("./partials/nav.ejs") %>
 
 <main>
+    <!-- Intro Section  -->
     <section class="intro">
-        <div class="intro_info">
+        <div  class="intro_info">
             <h1>Task<span>App</span></h1>
             <p>Enjoy creating tasks and managing your time in a good way, have control over all your projects keep your tasks organized, and work without any kind of stress, with taskapp you will have a good workflow, get free and join to a big community.</p>
         </div>
@@ -11,7 +12,8 @@
             <h2><a href="/api/auth/signup">Get start</a></h2>
         </div>
     </section>
-    <section class="task">
+    <!-- Task Section -->
+    <section  class="task">
         <div class="tasks_container">
             <div class="task1">
                 <img src="/img/Tasks1.png" alt="">
@@ -29,7 +31,7 @@
                 <img src="/img/Tasks5.png" alt="">
             </div>
         </div>
-        <div class="tasks_info">
+        <div data-aos="fade-right" class="tasks_info">
             <h2>Manage your tasks productively.</h2>
             <ul>
                 <li><img src="img/check.png" alt="check">Create your tasks</li>
@@ -42,6 +44,7 @@
             </ul>
         </div>
     </section>
+    <!-- Price Section -->
     <section class="price">
         <h2>Our Pricing</h2>
         <div class="card_Container">
@@ -94,6 +97,7 @@
             </div>
         </div>
     </section>
+    <!-- FAG Section -->
     <section class="FAQ">
         <div class="title">
             <h2>General Questions</h2>
@@ -170,4 +174,5 @@
 
 <%- include("./partials/footer.ejs") %>
 <script src="/javascript/home.js"></script>
+
 <%- include("./partials/body.ejs") %>

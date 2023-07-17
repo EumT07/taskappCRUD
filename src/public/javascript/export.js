@@ -1,3 +1,20 @@
+"use strict"
+//Menu
+export const menuDisplay = (down,up,menu) =>{
+    down.addEventListener("click", (e) => {
+        up.style.display = "block";
+        down.style.display = "none";
+        menu.style.display = "block";
+    });
+    
+    up.addEventListener("click", (e) => {
+        up.style.display = "none";
+        down.style.display = "block";
+        menu.style.display = "none";
+    });
+};
+
+//Pin code
 export const runArrays = (array) => {
     //moving to next field
 for (let i = 0; i < array.length; i++) {
@@ -35,4 +52,35 @@ for (let i = 0; i < array.length; i++) {
     })
 }
 return;
-}
+};
+
+//Max letter -> Creating and updating tasks
+export const maxLetter = (title,description,button)=>{
+    //Title text
+    title.addEventListener("keyup", (e)=>{
+        const words = e.target.value;
+
+        if(words.length >= 16){
+            titleText.style.border = "2px solid #E52020";
+            button.style.zIndex = "-4000";
+        }else{
+            titleText.style.border = "1px solid #000";
+            button.style.zIndex = "0";
+        }
+        
+    });
+    //Description Text
+    description.addEventListener("keyup", (e)=>{
+        const words = e.target.value;
+        console.log(words.length);
+        if(words.length >= 110){
+            descriptionText.style.border = "2px solid #E52020";
+            button.style.zIndex = "-4000";
+        }else{
+            descriptionText.style.border = "1px solid #000";
+            button.style.zIndex = "0";
+        }
+        
+    }); 
+};
+

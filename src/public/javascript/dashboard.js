@@ -1,43 +1,63 @@
-// Menu 
-const downBtn = document.getElementById("downBtn");
-const upBtn = document.getElementById("upBtn");
-const menu = document.querySelector(".menu_container");
+"use strict"
+import {maxLetter, menuDisplay } from "./export.js";
 
-downBtn.addEventListener("click", (e)=> {
-    upBtn.style.display = "block";
-    downBtn.style.display = "none";
-    menu.style.display = "block";
+//Menu
+function menuAction() {
+    // Menu 
+    const downBtn = document.getElementById("downBtn");
+    const upBtn = document.getElementById("upBtn");
+    const menu = document.querySelector(".menu_container");
+    
+    menuDisplay(downBtn,upBtn,menu);
+}
+menuAction();
+
+//Dark mode
+const btnDark = document.getElementById("chk");
+
+//Funcion dark mode
+btnDark.addEventListener("click", () =>{
+    document.body.classList.toggle('dark');
 });
 
-upBtn.addEventListener("click", (e)=> {
-    upBtn.style.display = "none";
-    downBtn.style.display = "block";
-    menu.style.display = "none";
-});
 
 //DASHBOARd SECTION
+//Creaking character numbers 
+function number_of_characters() {
+    //Get value from input element
+    const titleText = document.getElementById("titleText");
+    //Get calues from textarea element
+    const descriptionText = document.getElementById("descriptionText");
+    //Button
+    const buttonChange = document.getElementById("buttonChange");
+    
+    maxLetter(titleText,descriptionText,buttonChange);
+}
+number_of_characters();
 
-//BTN to create new task
-const createBtn = document.getElementById("createBtn");
-const closeCreateTask = document.getElementById("closeCreateTask");
-//Modal
-const modalTaskCard = document.querySelector(".modal__container");
+function creatingTask() {
+    //BTN to create new task
+    const createBtn = document.getElementById("createBtn");
+    const closeCreateTask = document.getElementById("closeCreateTask");
+    //Modal
+    const modalTaskCard = document.querySelector(".modal__container");
 
-createBtn.addEventListener("click",(e)=>{
-    e.preventDefault();
-    modalTaskCard.style.display = "Block";
-});
-closeCreateTask.addEventListener("click", (e)=>{
-    e.preventDefault();
-    modalTaskCard.style.display = "none";
-});
-
-//Close esc
-document.addEventListener("keydown", (e)=>{
-    if(e.code === "Escape" || e.keyCode === 27){
-        modalTaskCard.style.display = "none"
-    }
-});
+    createBtn.addEventListener("click",(e)=>{
+        e.preventDefault();
+        modalTaskCard.style.display = "Block";
+    });
+    closeCreateTask.addEventListener("click", (e)=>{
+        e.preventDefault();
+        modalTaskCard.style.display = "none";
+    });
+    //Close esc
+    document.addEventListener("keydown", (e)=>{
+        if(e.code === "Escape" || e.keyCode === 27){
+            modalTaskCard.style.display = "none"
+        }
+    });
+}
+creatingTask();
 
 //Dashboard creating new task: New category
 //Container
@@ -70,7 +90,6 @@ addNewCategoryBtn.addEventListener("click", (e)=>{
         closeInputCategory.style.display = "none";
     });
 });
-
 
 
 //Searching or filtering

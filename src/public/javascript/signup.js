@@ -6,20 +6,26 @@ let password = document.getElementById("password");
 let confirm_password = document.getElementById("confirmPassword");
 
 //Show password
-const btn_Check = document.getElementById("checkbox");
-btn_Check.addEventListener("click", (e)=>{
-    try {
-        if(e.target.checked){
+function showPass() {
+    const btn_Check = document.getElementById("checkbox");
+    btn_Check.addEventListener("click", (e)=>{
             password.type = "text";
             confirm_password.type = "text";
-        }else{
-            password.type = "password"
-            confirm_password.type = "password"
-        }
-    } catch (error) {
-        console.log(error);
-    }
-});
+            btn_Check.classList.remove("checkIcon")
+            btn_Check.classList.add("closeEye")
+        
+            let closeBtn = document.querySelector(".closeEye");
+            closeBtn.addEventListener("click", (e)=>{
+                password.type = "password"
+                confirm_password.type = "password"
+                btn_Check.classList.remove("closeEye")
+                btn_Check.classList.add("checkIcon")
+                showPass();
+            });
+            
+    });
+}
+showPass();
 
 //Gettings params: email
 const dataParams = window.location.search;

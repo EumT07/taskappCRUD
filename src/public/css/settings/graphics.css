@@ -30,6 +30,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
+
 }
 .graphics .tasksContainer > h2{
     padding: 0 10px;
@@ -50,6 +52,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
+
 }
 .graphics .tasksStatus > h2{
     padding: 0 10px;
@@ -70,6 +74,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
 }
 .graphics .tasksMonths > h2{
     padding: 0 10px;

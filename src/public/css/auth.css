@@ -16,6 +16,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+/*Logo Section*/
 .register_main .logo_section{
     position: relative;
     background-image: url("/img/brain.jpg");
@@ -61,8 +62,6 @@ body {
 .register_main  .linkBack .backlink_iconIn::before{
     content: "\f015";
 }
-
-
 .register_main .logo_section > h2 {
     position: absolute;
     top: 80px;
@@ -70,6 +69,8 @@ body {
     left: 0;
     color: #fff;
     font-size: 2.8rem;
+    font-family: "Lilita One", cursive;
+    letter-spacing: 2px;
 }
 .register_main .logo_section > h3{
     position: absolute;
@@ -77,12 +78,14 @@ body {
     right: 0;
     left: 0;
     color: #fff;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
+    font-family: 'Open Sans', sans-serif;
 }
 .register_main .logo_section > h3 > a {
-    color: #232425;
+    color: #FFD93D;
     text-decoration: none;
 }
+/*Form Section*/
 .register_main .form_section{
     position: relative;
     width: 50vw;
@@ -106,16 +109,18 @@ body {
 /*Sign up Measure*/
 .register_main .form_section .measure_SingUp{
     width: 400px;
-    height: 470px;
+    height: 450px;
 }
 /*Sign in Measure*/
 .register_main .form_section .measure_SingIn{
     width: 400px;
-    height: 320px;
+    height: 290px;
 }
 .register_main .container h2{
     color: #fff;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.4px;
 }
 .register_main .container h2 > span{
     color: #c04a4c;
@@ -140,13 +145,14 @@ body {
     color: rgb(40, 40, 187);
     text-decoration: none;
 }
+/*Measure*/
 .form__measure_SignUp{
     width: 320px;
-    height: 340px;
+    height: 320px;
 }
 .form__measure_SignIn{
     width: 320px;
-    height: 190px;
+    height: 170px;
 }
 .form__container label{
     position: relative;
@@ -230,7 +236,24 @@ body {
 .form__container > .showPass{
     position: relative;
 }
-.form__container .checkBox{
+
+.form__container .checkIcon::before{
+    content: "\f06e";
+    cursor: pointer;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+}
+.form__container .closeEye::before{
+    content: "\f070";
+    cursor: pointer;
+    color: #fff;
     position: absolute;
     top: 0;
     left: 0;

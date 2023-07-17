@@ -7,10 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import engine from "ejs-mate";
 import session from "express-session";
-import flash from "connect-flash"
-
-
-
+import flash from "connect-flash";
 
 dotenv.config();
 //Getting all routes
@@ -20,11 +17,8 @@ import authRoute from "./routers/auth.js";
 import search from "./routers/recovery.js";
 import errors from "./routers/errors.js";
 
-
-
 /** Create APP */
 const app = express();
-
 
 /** __Filename:  root-file */
 const __filename = fileURLToPath(import.meta.url);
