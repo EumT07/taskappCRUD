@@ -2,16 +2,21 @@
     position: relative;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
 }
 .pinCode_container{
     width: 320px;
     height: 380px;
-    position: absolute;
+    /* position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto;
+    margin: auto; */
     background-color: #3b4650;
     color: #fff;
     border-radius: 8px;
@@ -173,4 +178,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .pass_container > form button:hover{
     background-color: #a93132;
+}
+
+@media screen and (max-width: 360px ){
+    .pinCode_container{
+        max-width: 100%;
+    }
 }

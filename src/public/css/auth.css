@@ -109,7 +109,7 @@ body {
 /*Sign up Measure*/
 .register_main .form_section .measure_SingUp{
     width: 400px;
-    height: 450px;
+    height: 420px;
 }
 /*Sign in Measure*/
 .register_main .form_section .measure_SingIn{
@@ -262,4 +262,65 @@ body {
     margin: auto;
     width: 20px;
     height: 20px;
+}
+
+/*Responsive*/
+@media screen and (max-width: 1200px) {
+    .register_main{
+        grid-template-columns: 1fr;
+    }
+    .register_main > .linkBack{
+        top: 30px;
+        left: 30px;
+        z-index: 11;
+    }
+    .register_main  .linkBack .backlink_iconUp{
+        color: #a93638;
+        border: 2px solid #a93638;
+    }
+    .register_main .logo_section{
+        width: 100vw;
+        position: absolute;
+        background-image: none;
+    }
+    .register_main .logo_section > h2{
+        color: #c04a4c;
+        font-weight: bold;
+        top: 120px;
+    }
+    .register_main .logo_section > h3{
+        color: #c04a4c;
+        font-weight: bold;
+        bottom: 100px;
+        z-index: 11;
+    }
+    .register_main .form_section{
+        width: 100vw;
+        z-index: 10;
+    }
+}
+@media screen and (max-width: 400px){
+    /*Sign up Measure*/
+    .register_main .form_section .measure_SingUp{
+        width: 90%;
+        height: 380px;
+    }
+    /*Sign in Measure*/
+    .register_main .form_section .measure_SingIn{
+        width: 90%;
+    }
+    /*Form*/
+    .form__measure_SignUp{
+        width: 90%;
+        height: 290px;
+    }
+    .form__measure_SignIn{
+        width: 90%;
+    }
+    .form__container label{
+        height: 30px;
+    }
+    .form__container label > input{
+        height: 40px;
+    }
 }

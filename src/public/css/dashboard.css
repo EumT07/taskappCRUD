@@ -402,3 +402,32 @@
 .update-card form > button:hover{
     background-color: #d32324;
 }
+
+/*Responsive*/
+@media screen and (max-width: 1105px) {
+    .task__container{
+        justify-content: center;
+    }
+}
+@media screen and (max-width: 430px){
+    .btn-options{
+        width: 100%;
+        margin-left: 0;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 140px;
+    }
+    .task__container{
+        max-width: 100vw;
+    }
+    .category__card-container{
+        min-width: 100%;
+    }
+    .task__card-container {
+        max-width: 100%;
+    }
+    .task__card-container .completeTask{
+        max-width: 100%;
+    }
+    
+}

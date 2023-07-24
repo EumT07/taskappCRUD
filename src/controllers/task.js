@@ -36,7 +36,7 @@ export const createNewTask = async (req, res) => {
                     dateline: dateline,
                     user: userID
                 });
-                // task.save();
+                await task.save();
                 res.status(202).redirect("/dashboard")
                 return;
              }
@@ -57,7 +57,7 @@ export const createNewTask = async (req, res) => {
                 dateline: dateline,
                 user: userID
             });
-            // await task.save();
+            await task.save();
             res.status(202).redirect("/dashboard")
             return;
         }

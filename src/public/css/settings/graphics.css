@@ -88,3 +88,48 @@ body{
     width: 100%;
     height: 450px;
 }
+/*responsive*/
+@media screen and (max-width: 1000px ) {
+    .graphics{
+        max-width: 100vw;
+        grid-template-columns: 1fr 1fr;
+    }
+    .graphics .tasksContainer{
+        max-width: 350Px;
+    }
+    .graphics .tasksStatus{
+        max-width: 350Px;
+    }
+    .graphics .tasksContainer > .tasks_chart{
+        height: 260px;
+    }
+    .graphics .tasksStatus > .status_chart{
+        height: 260px;
+    }
+    .graphics .tasksMonths{
+        max-width: 708px;
+        height: 350px;
+    }
+    .graphics .tasksMonths > .tasksMonth_chart{
+        height: 280px;
+    }
+}
+@media screen and (max-width: 750px ){
+    .graphics{
+        grid-template-columns: 1fr;
+        grid-row: 1fr;
+    }
+    .graphics .tasksContainer{
+        grid-column: 1/2;
+    }
+    .graphics .tasksStatus{
+        grid-column: 1/2;   
+    }
+    .graphics .tasksMonths{
+        grid-column: 1/2;
+        max-width: 350px;
+    }
+    .graphics .tasksMonths > .tasksMonth_chart{
+        height: 260px;
+    }
+}

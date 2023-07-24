@@ -17,13 +17,14 @@ main .intro{
     position: relative;
     background-image: url("/img/pexels-andrea-piacquadio-3769706.jpg");
     background-position: cover;
+    background-attachment:scroll;
 }
 main .intro .intro_info{
     color: #fff;
-    width: 30%;
+    width: 50%;
     position: absolute;
     top: 350px;
-    left: 280px;
+    left: 240px;
 }
 main .intro .intro_info h1{
     font-family: "Lilita One", cursive;
@@ -190,10 +191,10 @@ main .intro .intro_link h2 a{
     letter-spacing: 2.6px;
 }
 .price .card_Container{
-    width: 60%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 .price .card_Container > div {
@@ -206,6 +207,8 @@ main .intro .intro_link h2 a{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 .price .card_Container > div:hover {
     box-shadow: 1px 1px 5px #000;
@@ -299,11 +302,12 @@ main .intro .intro_link h2 a{
 .FAQ .title {
     margin: 20px;
     padding: 20px;
+    text-align: center;
 }
 .FAQ .title > h2 {
     font-family: "Lilita One", cursive ;
     color: #d32324;
-    font-size: 4rem;
+    font-size: 6rem;
     margin-bottom: 20px;
     letter-spacing: 2.6px;
 }
@@ -468,4 +472,122 @@ footer .skills_container > h3, footer > h3{
     font-size: 0.9rem;
     color: #fff;
     font-family: 'Open Sans', sans-serif;
+}
+
+/*Responsive*/
+@media screen and (max-width: 1528px)  { 
+    .task{
+        flex-direction: column;
+    }
+    .task .tasks_container{
+        display: none;
+    }
+    /* .task .tasks_container > div:nth-child(1){
+        display: none;
+    }
+    .task .tasks_container > div:nth-child(2){
+        display: none;
+    }
+    .task .tasks_container > div:nth-child(3){
+        display: none;
+    }
+    .task .tasks_container > div:nth-child(4){
+        display: none;
+    }
+    .task .tasks_container > div:nth-child(5){
+        display: none;
+    } */
+    .task .tasks_info{
+        width: 100%;
+    }
+    .FAQ .questions > article{
+        width: 50vw;
+    }
+    
+
+}
+@media screen and (max-width: 1300px){
+    .FAQ .questions{
+        width: 90%;
+    }
+    .FAQ .questions > article{
+        width: 60vw;
+    }
+}
+@media screen and (max-width: 1180px)  {
+    .price {
+        height: 100%;
+    }
+    .price .card_Container{
+        flex-direction: column;
+        height: 100%;
+    }
+    .price .card_Container{
+        height: 100%;
+    }
+    .price .card_Container > div{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+@media screen and (max-width: 1028px)  {
+    main .intro{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    main .intro .intro_info{
+        position: relative;
+        width: 80%;
+        top: 0;
+        left: 0;
+        margin-bottom: 40px;
+    }
+    main .intro .intro_info h1{
+        font-size: 5rem;
+    }
+    main .intro .intro_link{
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 40px;
+    }
+    .task .tasks_info{
+        width: 80%;
+    }
+    .task .tasks_info h2{
+        font-size: 4rem;
+    }
+    .FAQ .title{
+        margin: 10px;
+        padding: 10px;
+    }
+    .FAQ .title > h2{
+        font-size: 4rem;
+    }
+    .FAQ .questions > article{
+        width: 80vw;
+    }
+}
+@media screen and (max-width: 930px) {
+    footer{
+        height: 60vh;
+    }
+    .footer__content{
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px 0;
+    }
+    .footer__content .policy > h4{
+        text-align: center;
+    }
+    .footer__content .policy ul > li{
+        position:relative;
+        right:15%;
+        text-align: center;
+    }
+    footer > h3{
+        padding: 10px 0;
+    }
 }
