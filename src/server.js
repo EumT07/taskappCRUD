@@ -13,7 +13,7 @@ app.listen(app.get("PORT"),()=>{
         console.log("Made by EumT07".bgGreen);
     }catch(err){
         console.log(`There is an Error started app: ${err}`.bgRed);
-        const message = taskAppError(res,`There is an Error started app: ${err}`,500);
+        const message = taskAppError(res = null,`There is an Error started app: ${err}`,500);
         sendErrorMail(message);  
     }
 })

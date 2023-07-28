@@ -89,8 +89,29 @@ nav .userNav > img{
     width: 20px;
     height: 20px;
     cursor: pointer;
-    color: #d32324;
 }
+nav .userNav > .iconContainer{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#menuBtn{
+    color: #000;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+#closeMenu{
+    color: #000;
+    font-size: 1.7rem;
+    cursor: pointer;
+    display: none;
+}
+#closeMenu::before{
+    content: "\f00d";
+}
+
 /*Menu user photo and show name*/
 .menu_container{
     position: relative;
@@ -102,7 +123,8 @@ nav .userNav > img{
     right: 40px;
     width: 210px;
     height: 180px;
-    background-color: #3b4650c5;
+    background-color: #ffffffc9;
+    box-shadow: 1px 2px 10px rgb(190, 184, 184);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -136,7 +158,8 @@ nav .userNav > img{
     position: absolute;
     left: -25px;
     align-items:start;
-    color: #ffffff;
+    /* color: #ffffff; */
+    color: #000;
 }
 .menu .menu_options li:nth-child(1) > .dashIco::before{
     content: "\f0db";
@@ -165,7 +188,8 @@ nav .userNav > img{
     text-decoration:  none;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #fff;
+    /* color: #fff; */
+    color: #000;
     padding-left: 10px;
 }
 .up {
@@ -208,9 +232,9 @@ nav .userNav > img{
     transform: translate(0px);
     transition: transform 0.2s linear;
 }
-.checkbox:checked + label .ball{
+/* .checkbox:checked + label .ball{
     transform: translate(24px);
-}
+} */
 .fa-moon{
     color: #fff;
 }

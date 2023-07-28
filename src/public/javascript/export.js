@@ -1,15 +1,15 @@
 "use strict"
 //Menu
-export const menuDisplay = (down,up,menu) =>{
-    down.addEventListener("click", (e) => {
-        up.style.display = "block";
-        down.style.display = "none";
+export const menuDisplay = (menuBtn,closeMenu,menu) =>{
+    menuBtn.addEventListener("click", (e) => {
+        closeMenu.style.display = "block";
+        menuBtn.style.display = "none";
         menu.style.display = "block";
     });
     
-    up.addEventListener("click", (e) => {
-        up.style.display = "none";
-        down.style.display = "block";
+    closeMenu.addEventListener("click", (e) => {
+        closeMenu.style.display = "none";
+        menuBtn.style.display = "block";
         menu.style.display = "none";
     });
 };

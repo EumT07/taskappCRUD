@@ -11,7 +11,7 @@ import { emailResetPassword } from "../mail/Template/emailTemplate.js";
 dotenv.config();
 //Token Variables
 const SECRET = process.env.SECRET_KEY_JWT;//JWT
-const deleteCookie = process.env.COOKRECOVERY;//REcovery
+const recoveryCookie = process.env.COOKRECOVERY;//REcovery
 
 
 //Todo: Verify token to reset password -> Options view
@@ -27,15 +27,17 @@ export const verifyRecoveryToken = async (req,res,next) => {
         }
         //Decode Token
         const tokenDecoded = jwt.verify(token,SECRET);
+
+        //Creating a new variable
         req.ID = tokenDecoded.id;
     
         //Return
         return next();
     } catch (error) {
         console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",401);
+        const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",500);
         // sendErrorMail(message)
-        return res.status(404).redirect("/api/token")
+        return res.status(503).redirect("/api/token")
     }
 
 }
@@ -43,18 +45,18 @@ export const verifyRecoveryToken = async (req,res,next) => {
 export const sendEmail_resetPassword = async (req, res, next) => {
   
     try {
-        //Search user
+        //Search user by id
         const user = await User.findById(req.ID);
 
-        //Delete old cookie
-        res.clearCookie(deleteCookie)
+        //Delete old cookie 
+        res.clearCookie(recoveryCookie)
 
-        //Creating token
+        //Creating a new token in order to be able to change the password
         const token = jwt.sign({id: user.id},SECRET,{
             expiresIn: "30m"
         })
 
-        //Sending Email
+        //*Sending Email
         //Creating link to send to email
         const subjectText = `Hello, ${user.username}, reset Password`
         const url = `${token}`;
@@ -65,9 +67,9 @@ export const sendEmail_resetPassword = async (req, res, next) => {
         return;
     } catch (error) {
         console.log("There is an error: Middlewate-token:Sending an email to user".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middlewate-token:Sending an email to user",401);
+        const message = taskAppError(res,"taskAppError: Middlewate-token:Sending an email to user",500);
         // sendErrorMail(message)
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
     
 }
@@ -82,11 +84,11 @@ export const verifyPinAccess = async (req,res,next) => {
         if(!req.verify){
             req.flash("errorPIN","Incorrect PIN, try again..!!");
             req.flash("errorStyle", "errorStyle");
-            req.flash("inputError", "inputError")
-            return res.status(404).redirect("/api/recovery/pincode")
+            req.flash("inputError", "inputError");
+            return res.status(404).redirect("/api/recovery/pincode");
         }
         //Delete previous cookie
-        res.clearCookie(deleteCookie)
+        res.clearCookie(recoveryCookie);
 
         //Creating a new Access-token
         const token = jwt.sign({id: req.ID},SECRET,{
@@ -101,12 +103,12 @@ export const verifyPinAccess = async (req,res,next) => {
             sameSite: "lax"
         });
     
-        return res.status(200).redirect("/api/recovery/resetpassword")
+        return res.status(200).redirect("/api/recovery/resetpassword");
     } catch (error) {
         console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",401);
+        const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",500);
         // sendErrorMail(message)
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 
 }
@@ -116,11 +118,12 @@ export const verifySecretAnswers = async(req,res,next) => {
     try {
         //Getting answers
         const {answer1, answer2, answer3, userid} = req.body;
+        req.ID = userid;
         //GEtting answers from database
         const answers = await Secretqt.findOne({user: userid});
+
         //Creating a variable to know if user is verify or not
         req.verifyUser = null;
-        req.ID = userid;
         //Comparing values
         const resultAnswer1 = await Secretqt.comparesecretqts(answer1, answers.answer1);
         const resultAnswer2 = await Secretqt.comparesecretqts(answer2, answers.answer2);
@@ -152,6 +155,7 @@ export const verifySecretAnswers = async(req,res,next) => {
             req.verifyUser = false;
         }
         
+        //If user is not verify
         if(!req.verifyUser){
             req.flash("answer1", `${answer1}`)
             req.flash("answer2", `${answer2}`)
@@ -162,9 +166,9 @@ export const verifySecretAnswers = async(req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",401);
+        const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 
 
@@ -172,16 +176,17 @@ export const verifySecretAnswers = async(req,res,next) => {
 
 //Verify Secrets answers and creating a new token access to reset password
 export const verifySecretqtsAccess = async (req,res,next) => {
-    const cookieName = process.env.COOKIESACCESS;
-    const SECRET = process.env.SECRET_KEY_JWT;
-    
-    req.verifyUser;
     try {
+        const cookieName = process.env.COOKIESACCESS;
+        const SECRET = process.env.SECRET_KEY_JWT;
+        
+        req.verifyUser;
+
         if(!req.verifyUser){
             return res.status(404).redirect("/api/recovery/secretqts")
         }
         //Delete previous cookie
-        res.clearCookie(deleteCookie)
+        res.clearCookie(recoveryCookie)
 
         //Creating token
         const token = jwt.sign({id: req.ID},SECRET,{
@@ -199,9 +204,9 @@ export const verifySecretqtsAccess = async (req,res,next) => {
         return res.status(200).redirect("/api/recovery/resetpassword")
     } catch (error) {
         console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Verify secreteqts access ",401);
+        const message = taskAppError(res,"taskAppError: Verify secreteqts access ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -221,11 +226,13 @@ export const getAccssEmail_resetPassword = async (req,res,next)=>{
         const id = jwt.verify(token, SECRET);
         //Pass id into a variable;
         req.userID = id.id;
-        res.clearCookie(deleteCookie);
+        res.clearCookie(recoveryCookie);
         next();
     } catch (error) {
         console.log("Error verifying Email pin",error);
-        return res.status(404).redirect("/api/token")
+        const message = taskAppError(res,"taskAppError: Error verifying Email pin ",500);
+        // sendErrorMail(message);
+        return res.status(503).redirect("/api/token")
     }
 }
 
@@ -265,7 +272,7 @@ export const checkCookie_ResetPassword = async (req,res,next) => {
 
     try {
         if(newPassword !== confirmNewPassword ){
-            req.flash("errnewpass", "Password are different")
+            req.flash("errnewpass", "Password are different");
             return res.redirect("/api/recovery/resetpassword");
         }else if(!characteresLng){
             //pass length > 8
@@ -273,27 +280,27 @@ export const checkCookie_ResetPassword = async (req,res,next) => {
             return res.redirect("/api/recovery/resetpassword");
         }else if(!lowerLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least a letter")
+            req.flash("errnewpass", "Password must have at least a letter");
             return res.redirect("/api/recovery/resetpassword");
         }else if(!anyNumber){
             //pass must have numbers
-            req.flash("errnewpass", "Password must have at least a number")
+            req.flash("errnewpass", "Password must have at least a number");
             return res.redirect("/api/recovery/resetpassword");
         }else if(!anyUppserLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least an Upper letter")
+            req.flash("errnewpass", "Password must have at least an Upper letter");
             return res.redirect("/api/recovery/resetpassword");
         }else if(!notSpace){
             //pass must not have any space
-            req.flash("errnewpass", "Password must not have any blank space")
+            req.flash("errnewpass", "Password must not have any blank space");
             return res.redirect("/api/recovery/resetpassword");
         }
 
         return next();
     } catch (error) {
-        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
+        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -310,35 +317,35 @@ export const checkToken_ResetPassword = async (req,res,next) => {
 
     try {
         if(newPassword !== confirmNewPassword ){
-            req.flash("errnewpass", "Password are different")
+            req.flash("errnewpass", "Password are different");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }else if(!characteresLng){
             //pass length > 8
-            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
+            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }else if(!lowerLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least a letter")
+            req.flash("errnewpass", "Password must have at least a letter");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }else if(!anyNumber){
             //pass must have numbers
-            req.flash("errnewpass", "Password must have at least a number")
+            req.flash("errnewpass", "Password must have at least a number");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }else if(!anyUppserLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least an Upper letter")
+            req.flash("errnewpass", "Password must have at least an Upper letter");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }else if(!notSpace){
             //pass must not have any space
-            req.flash("errnewpass", "Password must not have any blank space")
+            req.flash("errnewpass", "Password must not have any blank space");
             return res.redirect(`/api/recovery/resetpassword/${token}`);
         }
 
         return next();
     } catch (error) {
-        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 401);
+        const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 500);
         console.log(message);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }

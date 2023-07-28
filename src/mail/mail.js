@@ -25,7 +25,7 @@ export const sendMail = async (userEmail,subjectText,htmlContent) => {
     return;
 }
 
-//Send Email to Support
+//Send Email to Support (Errors from APP)
 export const sendErrorMail = async (htmlContent) => {
   const info = await transporter.sendMail({
       from: "'AppError' <taskappsupport@gamil.com>",

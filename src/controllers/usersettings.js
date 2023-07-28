@@ -7,7 +7,7 @@ import Image from "../models/profileImg.js";
 import Category from "../models/category.js"
 import PIN from "../models/pincode.js";
 import bcrypt from "bcryptjs";
-import fs from "node:fs";
+import fs from "node:fs";//File system
 import path from "node:path"
 import { fileURLToPath } from "node:url";
 import {
@@ -18,7 +18,11 @@ import {
 import {
     taskAppError
 } from "../error/handlerError.js";
-import { sendMail, sendErrorMail,notificationAppMail } from "../mail/mail.js";
+import {
+    sendMail,
+    sendErrorMail,
+    notificationAppMail
+} from "../mail/mail.js";
 
 dotenv.config();
 
@@ -42,7 +46,7 @@ export const profilePhotoUpdate = async(req,res,next) => {
         //Getting user info
         const userID = req.body.userID;
         
-        if(req.file == undefined){
+        if(req.file === undefined){
             return next();
         }
     
@@ -84,7 +88,7 @@ export const profilePhotoUpdate = async(req,res,next) => {
         console.log("There is an Error: Setting-ProfilePhoto: Updating user".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Setting-ProfilePhoto - Updating user ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 //* Delete photo by id
@@ -111,7 +115,7 @@ export const deleteProfilePhoto = async(req,res,next) => {
         console.log("There is an Error: Delting profilePhoto");
         const message = taskAppError(res,"taskAppError: controller Settings Delting profilePhoto",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
    }
 
 }
@@ -125,10 +129,10 @@ export const updateProfile_UserInfo = async (req,res) => {
         
         //Saving Data updated
         const data = {
-            username: username,
-            name: name,
-            lastname: lastname,
-            country: country
+            username: username.toLowerCase(),
+            name: name.toLowerCase(),
+            lastname: lastname.toLowerCase(),
+            country: country.toLowerCase()
         }
         // Updating
         await User.findByIdAndUpdate({_id: userID}, data);
@@ -138,7 +142,7 @@ export const updateProfile_UserInfo = async (req,res) => {
         console.log("There is an Erro: Setting-Profile: Updating user".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Updating user",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -176,7 +180,7 @@ export const changePinCode = async (req,res)=>{
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings - Pin code ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -198,7 +202,7 @@ export const changePassword = async (req,res) => {
         const user = await User.findById(userid);
         const subjectText = `Your Password Has been changed`;
         const htmlContent = changePasswordEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Return
         return res.status(202).redirect("/api/auth/signin");
@@ -206,7 +210,7 @@ export const changePassword = async (req,res) => {
         console.log("There is an Error: Setting: Changing Password".red.bold, Error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Changing Password",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -245,14 +249,14 @@ export const changeSecretquestions = async (req,res)=> {
         const user = await User.findById(userid);
         const subjectText = `Your Secret questions has been changed`;
         const htmlContent = changeSecretqtsEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Return
         return res.status(202).redirect("/api/settings/profile");
     } catch (error) {
         const message = taskAppError(res,"taskAppError: controller Settings Changing Secret Questions",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -290,7 +294,7 @@ export const resetAcc = async (req,res) => {
         console.log("There is an Error: Reset Acc".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Reset Acc",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 //Remove Account *email
@@ -345,7 +349,7 @@ export const removeAcc = async (req,res) => {
         console.log("There is an Error: Remove Acc".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Remove Acc",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 

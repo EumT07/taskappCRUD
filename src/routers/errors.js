@@ -2,7 +2,6 @@ import { Router } from "express";
 
 const router = Router();
 
-
 //Error Page
 router
     .get("/error", (req,res)=>{

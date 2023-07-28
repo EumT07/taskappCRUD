@@ -35,6 +35,7 @@ app.use(morgan("dev"));
 /** Red, JSON, formats, request and params from POST */
 app.use(express.json());
 /** Helmet */
+// helps you secure your Node.js application by setting several HTTP headers. It acts as a middleware for Express and similar technologies, automatically adding or removing HTTP headers to comply with web security standards.
 app.use(helmet());
 /** Flash connect */
 app.use(flash());

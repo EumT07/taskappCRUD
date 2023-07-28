@@ -3,7 +3,7 @@ import Mongoose from "mongoose";
 import "colors";
 const taskSchema = new Mongoose.Schema(
     {
-        title:String,
+        title: String,
         description: String,
         category: {
             type: Mongoose.Schema.Types.ObjectId,

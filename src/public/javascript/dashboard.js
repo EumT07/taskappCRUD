@@ -1,25 +1,191 @@
 "use strict"
 import {maxLetter, menuDisplay } from "./export.js";
+// import { profileContainer } from "./profile.js";
+
+//todo: All variables
+
+//* Searching or filtering
+
+//Get Select options
+const selectCategory = document.getElementById("selectCategory");
+const selectLevels = document.getElementById("selectLevels");
+
+//*Dashboard creating new task: New category
+
+//* Category Container variables
+
+// Creating a new task
+const categoryContainer = document.getElementById("categoryContainer");
+const selectElement = document.getElementById("select");
+const addNewCategoryBtn = document.getElementById("addnewCategoryBtn");
+
+//Get container to show
+const categoriesContainer = document.querySelectorAll("#categoriesContainer");
+//Task container
+const tasksContainer = document.querySelectorAll("#tasksContainer");
+//Div filtered
+const tasksFilter = document.querySelectorAll(".tasksFilter");
 
 //Menu
-function menuAction() {
+let nav = document.getElementById("navigator");
+let menu = document.querySelector(".menu");
+let menuList = document.querySelectorAll(".menu_li");
+let menuBtn = document.getElementById("menuBtn");
+let closeMenu = document.getElementById("closeMenu");
+let inputCheck = document.getElementById("chk");
+let ball = document.querySelector(".ball");
+
+
+//Settings
+let profileContainer = document.querySelector(".data__container");
+//Btns
+const profileBtn = document.getElementById("profileBtn");
+const taskBtn = document.getElementById("taskBtn");
+const changepinBtn = document.getElementById("changepinBtn");
+const changepassBtn = document.getElementById("changepassBtn");
+const changesecretqtsBtn = document.getElementById("changesecretqtsBtn");
+const accountBtn = document.getElementById("accountBtn");
+//Profile form
+const profileForm = document.getElementById("profile");
+const profileLinks = document.querySelector(".links");
+
+
+
+// Load Page
+window.addEventListener("load", loadingPage());
+
+//Menu
+function menuAction(menuBtn,closeMenu){
     // Menu 
-    const downBtn = document.getElementById("downBtn");
-    const upBtn = document.getElementById("upBtn");
     const menu = document.querySelector(".menu_container");
     
-    menuDisplay(downBtn,upBtn,menu);
+    menuDisplay(menuBtn,closeMenu,menu);
 }
-menuAction();
+menuAction(menuBtn,closeMenu);
 
 //Dark mode
 const btnDark = document.getElementById("chk");
 
 //Funcion dark mode
 btnDark.addEventListener("click", () =>{
-    document.body.classList.toggle('dark');
+    let value = document.body.classList.toggle('dark');
+    //localstorage Variable
+    let localStorage_valueDarkMode = JSON.stringify(value);
+    //*Local Storage
+    localStorage.setItem("darkMode",localStorage_valueDarkMode);
+    
+    if(inputCheck.checked == true){
+        ball.style.transform = "translate(24px)";
+    }else{
+        ball.style.transform = "translate(0px)";
+    }
+
+    //*Darkmode Function
+    localStorage_darkMode(value);
 });
 
+function localStorage_darkMode(value) {
+    
+    if(value === true){
+        document.body.style.background = "#313131"
+        //Darnode ball
+        inputCheck.checked= true;
+        ball.style.transform = "translate(24px)";
+        categoriesContainer.forEach(target => {
+            //Category Tittle
+            target.firstElementChild.firstElementChild.style.color = "#fff";
+        });
+        tasksContainer.forEach(target => {
+            //Task Container
+            target.style.background = "#525252";
+            //Task Container box-shadow
+            target.style.boxShadow = "none";
+            //Task Title
+            target.firstElementChild.firstElementChild.style.color = "#fff";
+            //Task Description
+            target.firstElementChild.nextElementSibling.style.color = "#fff";
+            //Task Date_container > Icon
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.style.color = "#fff";
+            //Task Date_container > date
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.style.color = "#fff";
+            // Task dateline
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#fff";
+        });
+        //*Menu
+        nav.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#fff";
+        menuBtn.style.color = "#fff"
+        closeMenu.style.color = "#fff"
+        menu.style.background = "#525252";
+        menu.style.boxShadow = "none";
+        menuList.forEach(li=>{
+            li.firstElementChild.style.color = "#fff";
+            li.firstElementChild.nextElementSibling.style.color = "#fff";
+        });
+        //*Settings
+        if(profileContainer){
+            profileContainer.style.background = "#525252";
+            profileContainer.firstElementChild.style.color = "#fff";
+            profileBtn.style.color = "#fff";
+            taskBtn.style.color = "#fff";
+            changepinBtn.style.color = "#fff";
+            changepassBtn.style.color = "#fff";
+            changesecretqtsBtn.style.color = "#fff";
+            accountBtn.style.color = "#fff";
+            profileForm.style.color = "#FFD93D";
+            profileLinks.style.color = "#FFD93D";
+        }
+
+    }else{
+        document.body.style.background = "#fff"
+        //darkmode ball
+        inputCheck.checked = false;
+        ball.style.transform = "translate(0px)";
+        categoriesContainer.forEach(target => {
+            //Category Tittle
+            target.firstElementChild.firstElementChild.style.color = "#000";
+        });
+        tasksContainer.forEach(target => {
+            //Task Container
+            target.style.background = "#ffffffc9";
+            //Task Container box-shadow
+            target.style.boxShadow = "1px 2px 10px rgb(190, 184, 184)";
+            //Task Title
+            target.firstElementChild.firstElementChild.style.color = "#000";
+            //Task Description
+            target.firstElementChild.nextElementSibling.style.color = "#000";
+            //Task Date_container > Icon
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.style.color = "#ada1a1";
+            //Task Date_container > date
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.style.color = "#000";
+            // Task dateline
+            target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#000";
+        });
+        //*Menu
+        menu.style.background = "#ffffffc9";
+        menu.style.boxShadow = "1px 2px 10px rgb(190, 184, 184)";
+        menuBtn.style.color = "#000"
+        closeMenu.style.color = "#000"
+        nav.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#000";
+        menuList.forEach(li=>{
+            li.firstElementChild.style.color = "#000";
+            li.firstElementChild.nextElementSibling.style.color = "#000";
+        });
+        //*Settings
+        if(profileContainer){
+            profileContainer.style.background = "rgba(237, 240, 240, 0.76)";
+            profileContainer.firstElementChild.style.color = "#000";
+            profileBtn.style.color = "#000";
+            taskBtn.style.color = "#000";
+            changepinBtn.style.color = "#000";
+            changepassBtn.style.color = "#000";
+            changesecretqtsBtn.style.color = "#000";
+            accountBtn.style.color = "#000";
+            profileForm.style.color = "#000";
+            profileLinks.style.color = "#d81515";
+
+        }
+    }
+}
 
 //DASHBOARd SECTION
 //Creaking character numbers 
@@ -59,13 +225,8 @@ function creatingTask() {
 }
 creatingTask();
 
-//Dashboard creating new task: New category
-//Container
-const categoryContainer = document.getElementById("categoryContainer");
-const selectElement = document.getElementById("select");
-const addNewCategoryBtn = document.getElementById("addnewCategoryBtn");
 
-//Btn ACtions
+//Adding new categoy Btn ACtions
 addNewCategoryBtn.addEventListener("click", (e)=>{
     selectElement.style.display = "none";
     addNewCategoryBtn.style.display = "none";
@@ -92,18 +253,8 @@ addNewCategoryBtn.addEventListener("click", (e)=>{
 });
 
 
-//Searching or filtering
-//Get Select options
-const selectCategory = document.getElementById("selectCategory");
-const selectLevels = document.getElementById("selectLevels");
+//* Show categories 
 
-//Get container to show
-const categoriesContainer = document.querySelectorAll("#categoriesContainer");
-const tasksContainer = document.querySelectorAll("#tasksContainer");
-//Div filtered
-const tasksFilter = document.querySelectorAll(".tasksFilter");
-
-//Show Categories
 selectCategory.addEventListener("change", (e)=>{
     let categoryNameSelected = e.target.value.toLowerCase().trim();  
     categoriesContainer.forEach(category => {
@@ -182,12 +333,10 @@ function showDescriptions() {
         const viewBtn = tasks.querySelectorAll(".view");    
         let task_to_compare = tasks.firstElementChild.textContent;
             
-        viewBtn.forEach(btn => {
-            //Getting all btns
-            btn.addEventListener("click",(e)=>{
-            
-           
-            tasksTitle.forEach(item => {
+            viewBtn.forEach(btn => {
+                //Getting all btns
+                btn.addEventListener("click",(e)=>{
+                tasksTitle.forEach(item => {
                 
                 //Comparing if the tittle of the taks is the same what we are clicking 
                 if(item.firstElementChild.textContent !== task_to_compare){
@@ -212,20 +361,22 @@ function showDescriptions() {
                 btn.parentElement.parentElement.parentElement.parentElement.style.height = "150px";
                 btn.parentElement.parentElement.parentElement.nextElementSibling.style.display = "block";
                 
-            });
+                });
             
-            const closeViewBtn = document.querySelector(".closeView");
+                const closeViewBtn = document.querySelector(".closeView");
 
-            closeViewBtn.addEventListener("click", (e)=>{
+                closeViewBtn.addEventListener("click", (e)=>{
                 e.target.classList.remove("closeView");
                 e.target.classList.add("view");
                 e.target.parentElement.parentElement.parentElement.parentElement.style.height = "80px";
                 e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "none";
+                showDescriptions();
+                });
+                
+                });
             });
-        
-            });
-        });
     });
+    
 };
 //*Show description first Option
 
@@ -298,6 +449,15 @@ checkIcon.forEach(element => {
     })
 })
 
+//Loading Page 
+function loadingPage() {
+    const darkMode = JSON.parse(localStorage.getItem("darkMode"));
+    // if(darkMode == null) return;
+    if(darkMode){
+        return localStorage_darkMode(darkMode);
+    }
+    return;
+}
 
 //Refresh page
 setTimeout(()=> {

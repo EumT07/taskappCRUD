@@ -1,5 +1,6 @@
 "user strict"
 import {runArrays} from "./export.js";
+
 //Btns
 const profileBtn = document.getElementById("profileBtn");
 const taskBtn = document.getElementById("taskBtn");
@@ -15,7 +16,6 @@ const changePincode_Req = document.querySelector(".changePincode_container");
 const changepassForm = document.querySelector(".changepass_form");
 const scrtqtForm = document.querySelector(".changesquestions_form");
 const accountDiv = document.querySelector(".accountContainer_form");
-
 
 //Get links 
 const params = window.location.search;
@@ -134,3 +134,4 @@ const oneHour = 1000 * 3600;
 setTimeout(()=> {
     window.location.reload();
 }, oneHour)
+

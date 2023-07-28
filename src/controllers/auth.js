@@ -5,7 +5,11 @@ import SecretQt from "../models/secretqt.js";
 import PIN from "../models/pincode.js";
 import {welcomeEmail} from "../mail/Template/emailTemplate.js"
 import jwt from "jsonwebtoken";
-import { sendMail, sendErrorMail,notificationAppMail } from "../mail/mail.js";
+import { 
+    sendMail,
+    sendErrorMail,
+    notificationAppMail
+} from "../mail/mail.js";
 import {
     taskAppError
 } from "../error/handlerError.js"
@@ -24,18 +28,17 @@ export const singup = async (req,res) => {
         name,
         lastName,
         email,
-        password,
-        confirmPassword
+        password
     } = req.body;
     try {
         //Getting password to encrypt password
         const encryptPassword = await User.encryptPassword(password);
         //Save info in mongoDB
         const newUser = new User({
-            username,
-            name,
-            lastName,
-            email,
+            username: username.toLowerCase(),
+            name: name.toLowerCase(),
+            lastName: lastName.toLowerCase(),
+            email: email.toLowerCase(),
             password: encryptPassword
         });
 
@@ -73,7 +76,7 @@ export const singup = async (req,res) => {
         console.log("There is an error: Auth: Signup ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Auth - Signup ",500);
         // await sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 };
 /**
@@ -83,7 +86,7 @@ export const singin = async (req,res) => {
     const {email} = req.body;
     try {
         // Getting user by Email
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({email: email.toLowerCase()})
         //Creating a token
         const token = jwt.sign({id: user._id}, SECRET,{
             expiresIn: "1h"
@@ -102,34 +105,33 @@ export const singin = async (req,res) => {
         console.log("There is an error: Auth: Signin".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Auth - Signin ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 };
-
 // Creating SecurityQuestions
 export const setSecretQuestions = async (req,res)=>{
+    //Getting data: Questions and Answers from form
+    const userID = req.body.userid;
+    const {
+        question1,
+        answer1,
+        question2,
+        answer2,
+        question3,
+        answer3,
+    } = req.body;
     try {
-        //Getting data: Questions and Answers from form
-        const userID = req.body.userid;
-        const {
-            question1,
-            answer1,
-            question2,
-            answer2,
-            question3,
-            answer3,
-        } = req.body;
         //Encrypting answers
         const answer1Encrypted = await SecretQt.encryptsecretqts(answer1);
         const answer2Encrypted = await SecretQt.encryptsecretqts(answer2);
         const answer3Encrypted = await SecretQt.encryptsecretqts(answer3);
         //Saving info
         const setSecretqt = new SecretQt({
-            question1: question1,
+            question1: question1.toLowerCase(),
             answer1: answer1Encrypted,
-            question2: question2,
+            question2: question2.toLowerCase(),
             answer2: answer2Encrypted,
-            question3: question3,
+            question3: question3.toLowerCase(),
             answer3: answer3Encrypted,
         });
         //Saving user ID to identify each scretesqts
@@ -140,10 +142,9 @@ export const setSecretQuestions = async (req,res)=>{
         console.log("There is an Error: Settings: Secret Questions".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings - Secret Questions ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
-
 //Creating: Pin code
 export const setPinCode = async (req,res) => {
     try {
@@ -178,10 +179,9 @@ export const setPinCode = async (req,res) => {
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings - Pin code ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
-
 //Logout
 export const closeSession = async (req,res) => {
     try {
@@ -192,7 +192,7 @@ export const closeSession = async (req,res) => {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 };
 

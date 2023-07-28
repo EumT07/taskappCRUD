@@ -300,7 +300,7 @@ export const emailResetPassword = (username, url)=>{
     return htmlTemplate(section);
 }
 //Notifications
-
+//*Is not ready
 export const notificacionHtml = () => {
     const section = `
     

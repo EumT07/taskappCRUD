@@ -154,7 +154,6 @@
 .task__card-container .titleContainer .btnsContainer > a{
     align-self: center;
 }
-
 .task__card-container p{
     text-align: justify;
 }
@@ -198,14 +197,18 @@
     background-color: #1597BB;
 }
 /*Iconos*/
+.view{
+    color: #e2860ef1;
+}
 .view::before{
     content: "\f06e";
-    color: #252524;
     cursor: pointer;
+}
+.closeView{
+    color: #e2860ef1;
 }
 .closeView::before{
     content: "\f070";
-    color: #252524;
     cursor: pointer;
 }
 .completeIcon::before{
@@ -220,9 +223,11 @@
     content: "\f1f8";
     color: #d32324;
 }
+.calendar{
+    color: #ada1a1;
+}
 .calendar::before {
     content: "\f133";
-    color: #ada1a1;
     margin-right: 5px;
 }
 /*Modal Sections*/

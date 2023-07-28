@@ -10,7 +10,6 @@ export const checkUsername = async (req,res,next) => {
     try {
         //New username 
         const newusername = req.body.username;
-        console.log(req.body.userID);
     
         //Searching user 
         const userID = req.body.userID;
@@ -33,14 +32,14 @@ export const checkUsername = async (req,res,next) => {
             //Css style
             req.flash("usernameFound", "inputUserName");
             //error message
-            req.flash("usernameErr", `${newusername} is already exist   `);
+            req.flash("usernameErr", `${newusername} is already exist`);
             //Return
             return res.status(202).redirect("/api/settings/profile");
         }
     } catch (error) {
-        const messge = taskAppError(res,"taskAppError: Setting-Profile: check username", 404);
+        const messge = taskAppError(res,"taskAppError: Setting-Profile: check username", 500);
         // sendErrorMail(messge)
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
@@ -58,35 +57,35 @@ export const checkNewPassword = async (req, res, next) => {
 
     try {
         if(newPassword != confirmNewPassword ){
-            req.flash("errnewpass", "Password are different")
+            req.flash("errnewpass", "Password are different");
             return res.redirect("/api/settings/changepassword");
         }else if(!characteresLng){
             //pass length > 8
-            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]")
+            req.flash("errnewpass", "Password must have at least 8 characteres [letters-Numbers]");
             return res.redirect("/api/settings/changepassword");
         }else if(!lowerLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least a letter")
+            req.flash("errnewpass", "Password must have at least a letter");
             return res.redirect("/api/settings/changepassword");
         }else if(!anyNumber){
             //pass must have numbers
-            req.flash("errnewpass", "Password must have at least a number")
+            req.flash("errnewpass", "Password must have at least a number");
             return res.redirect("/api/settings/changepassword");
         }else if(!anyUppserLetter){
             //pass must have an Upper letter
-            req.flash("errnewpass", "Password must have at least an Upper letter")
+            req.flash("errnewpass", "Password must have at least an Upper letter");
             return res.redirect("/api/settings/changepassword");
         }else if(!notSpace){
             //pass must not have any space
-            req.flash("errnewpass", "Password must not have any blank space")
+            req.flash("errnewpass", "Password must not have any blank space");
             return res.redirect("/api/settings/changepassword");
         }
 
         return next();
     } catch (error) {
         console.log("There is an error: Middlewate-Signup: Verifying new password".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: Middlewate-Signup: Verifying new password",401);
+        const message = taskAppError(res,"taskAppError: Middlewate-Signup: Verifying new password",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }

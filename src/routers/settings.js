@@ -16,9 +16,6 @@ import {
     emptyField_changesecretqts
  }  from "../middlewares/verifytoken.js";
 import {
-    checkEmptyFieldPincode
-} from "../middlewares/verifysignup.js";
-import {
     checkUsername,
     checkNewPassword
 } from "../middlewares/updates.js";
@@ -68,7 +65,7 @@ router
 
         //Doing tasks
         let doingTaskCount = tasks.length - completeTaskCount;
-
+        //It allow to display chart-js
         res.set("Content-Security-Policy", "default-src *; style-src 'self' http://\* 'unsafe-inline'; script-src 'self' http://\* 'unsafe-inline' 'unsafe-eval'");
         res.render("./settings/profile.ejs", {
             title: "Profile",
@@ -196,7 +193,6 @@ router
             december: 0,
         }
 
-
         //Get how many task by priority user have.
         for (let i = 0; i < tasks.length; i++) {
             if(tasks[i].priority.toLowerCase() === "high"){
@@ -314,11 +310,11 @@ router
         }
         //Doing tasks
         let doingTaskCount = tasks.length - completeTaskCount;
-
+        //Creatting JSON
         let monthValues = JSON.stringify(months);
         let tasksCompleted = JSON.stringify(tasksMonthCompleted);
         let tasksDoing = JSON.stringify(tasksMonthDoing);
-
+        //Display Chart-js
         res.set("Content-Security-Policy", "default-src *; style-src 'self' http://\* 'unsafe-inline'; script-src 'self' http://\* 'unsafe-inline' 'unsafe-eval'");
         res.render("./settings/graphics.ejs", {
             title: "Taks Graphics",

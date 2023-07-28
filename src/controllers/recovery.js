@@ -27,7 +27,7 @@ export const searchUser = async (req,res) => {
         //Requing: user info
         const {data} = req.body;
         //Checking if data is: An Email (@ .com/.ve/.org) or simple text
-        //Regular expression
+        //Regular expression by Google bard
         const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         const isAnEmail = regex.test(data);
         //Creating new variables
@@ -37,7 +37,7 @@ export const searchUser = async (req,res) => {
         
         //Checking if data is Empty
         if(data === ""){
-            return console.log("Empty".yellow.bold);
+            return res.status(404).redirect("/api/recovery/search")
         }
 
         //Checking if data is an Email
@@ -75,16 +75,18 @@ export const searchUser = async (req,res) => {
         console.log("There is an Error: Recovery: Searching user".red.bold);
         const message = taskAppError(res,"taskAppError: controller Settings Searching user",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 //Reset Password *email
 export const resetPassword = async (req,res)=>{
     try {
         const {userid, newPassword, confirmNewPassword} = req.body;
+        //Salt
         const salt = await bcrypt.genSalt(12);
         //Encrypting Password
         const hashPassword = await bcrypt.hash(newPassword, salt);
+        //Assigning password to user
         await User.findOneAndUpdate({_id: userid},{password: hashPassword});
         //Deleting Cookies
         res.clearCookie(cookieAccessToken);
@@ -109,6 +111,6 @@ export const resetPassword = async (req,res)=>{
         console.log("There is an Error: Recovery: Reset Password".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Reset Password",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }

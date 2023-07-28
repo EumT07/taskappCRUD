@@ -23,7 +23,7 @@ export const taskApp_Token = async (req, res, next) => {
     try {
         //Check is token exists or not
         if(!token){
-            return res.status(404).redirect("/api/token")
+            return res.status(404).redirect("/api/token");
         }
         //Decoded-Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -41,9 +41,9 @@ export const taskApp_Token = async (req, res, next) => {
         return next();
 
     } catch (error) {
-        const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",401)
+        const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",500)
         // sendErrorMail(message)
-        return res.status(404).redirect("/api/token")
+        return res.status(503).redirect("/api/token")
     }
 }
 
@@ -96,51 +96,51 @@ export const verifyPinCode = async (req, res,next) => {
 
 //Verify Pincode Fild *Errohandling
 export const emptyField_changePinCode = async (req,res,next) => {
-    const {pin1,pin2,pin3,pin4,pin5,pin6,token} = req.body;
-
-    //Figuring out if field are empty
-    const regExpPin1 = (/^$/).test(pin1)
-    const regExpPin2 = (/^$/).test(pin2)
-    const regExpPin3 = (/^$/).test(pin3)
-    const regExpPin4 = (/^$/).test(pin4)
-    const regExpPin5 = (/^$/).test(pin5)
-    const regExpPin6 = (/^$/).test(pin6)
-
     try {
+        const {pin1,pin2,pin3,pin4,pin5,pin6,token} = req.body;
+
+        //Figuring out if field are empty
+        const regExpPin1 = (/^$/).test(pin1);
+        const regExpPin2 = (/^$/).test(pin2);
+        const regExpPin3 = (/^$/).test(pin3);
+        const regExpPin4 = (/^$/).test(pin4);
+        const regExpPin5 = (/^$/).test(pin5);
+        const regExpPin6 = (/^$/).test(pin6);
+        
         if(regExpPin1 || regExpPin2 || regExpPin3 || regExpPin4 || regExpPin5 || regExpPin6){
-            req.flash("emptyField", "It must not have Empty field")
+            req.flash("emptyField", "It must not have Empty field");
             res.status(303).redirect(`/api/settings/changepincode/${token}`);
             return;
         }
     
         return next();
     } catch (error) {
-        const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",404);
+        const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",500);
         // sendErrorMail(message);
-        return res.status(404).redirect("/api/failrequest");
+        return res.status(503).redirect("/api/failrequest");
     }
 }
 
 //Verify Secret QTS Fild  *Errohandling
 export const emptyField_changesecretqts = async (req,res,next) => {
-    const {answer1,answer2,answer3} = req.body;
-
-    const regExAnswer1 = (/^$/).test(answer1);
-    const regExAnswer2 = (/^$/).test(answer2);
-    const regExAnswer3 = (/^$/).test(answer3);
-    
    try {
+        const {answer1,answer2,answer3} = req.body;
+
+        const regExAnswer1 = (/^$/).test(answer1);
+        const regExAnswer2 = (/^$/).test(answer2);
+        const regExAnswer3 = (/^$/).test(answer3);
+
         if(regExAnswer1 || regExAnswer2 || regExAnswer3){
-            req.flash("emptyField", "It must not have Empty field")
-            res.status(404).redirect("/api/settings/changesecretquestions")
+            req.flash("emptyField", "It must not have Empty field");
+            res.status(404).redirect("/api/settings/changesecretquestions");
             return;
         }
 
         return next();
    } catch (error) {
-    const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",404);
+    const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",500);
     // sendErrorMail(message);
-    return res.status(404).redirect("/api/failrequest");
+    return res.status(503).redirect("/api/failrequest");
    }
 }
 
@@ -163,12 +163,12 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
         });
 
         //Creating link to send to email
-        const subjectText = `Hello, ${user.username}, Change PinCode`
+        const subjectText = `Hello, ${user.username}, Change PinCode`;
         const url = `${token}`;
         const htmlContent = linkpinEmail(user.username,url);
         console.log(htmlContent);
         // await sendMail(user.email,subjectText,htmlContent);
-        req.flash("emailSent", "emailSent")
+        req.flash("emailSent", "emailSent");
         return res.status(200).redirect("/api/settings/profile?data=changepinreq");
         
     } catch (error) {
@@ -178,11 +178,10 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
 }
 //Creating token-pass : It allow to update users' passwords.
 export const creatingPassToken = async (req, res, next) => {
-    req.verify;
-    req.ID;
-    const cookieName = process.env.COOKPINPASS;
-    
     try {
+        req.verify;
+        req.ID;
+        const cookieName = process.env.COOKPINPASS;
         if(!req.verify){
             req.flash("errorPIN","Sorry Incorrect PIN, try again..!!");
             req.flash("errorStyle", "errorStyle");
@@ -272,11 +271,11 @@ export const verifyToken_from_UserEmail = async ( req,res,next)=>{
 
 //Verify token Pass --> Will change password
 export const verifyPassToken = async (req,res,next) => {
-    const cookieName = process.env.COOKPINPASS;
-    const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
+        const cookieName = process.env.COOKPINPASS;
+        const token = req.cookies[cookieName] || req.headers[cookieName];
         if(!token){
-            return res.status(404).redirect("/api/token")
+            return res.status(404).redirect("/api/token");
         }
         //decode-Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -294,11 +293,11 @@ export const verifyPassToken = async (req,res,next) => {
 
 //verify token secre qts --> will change Secret Questions
 export const verifySecretqtsToken = async (req,res,next) => {
-    const cookieName = process.env.COOKPINSECRETQTS;
-    const token = req.cookies[cookieName] || req.headers[cookieName];
     try {
+        const cookieName = process.env.COOKPINSECRETQTS;
+        const token = req.cookies[cookieName] || req.headers[cookieName];
         if(!token){
-            return res.status(404).redirect("/api/token")
+            return res.status(404).redirect("/api/token");
         }
         //decode Token
         const tokenDecoded = jwt.verify(token, SECRET);
@@ -308,10 +307,9 @@ export const verifySecretqtsToken = async (req,res,next) => {
         return next();
     } catch (error) {
         console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
-        const message = taskAppError(res,"There is an error: Verify Token secretqts ",401 )
+        const message = taskAppError(res,"There is an error: Verify Token secretqts ",401);
         // sendErrorMail(message)
         return res.status(404).redirect("/api/token");
-        
     }
 }
 
