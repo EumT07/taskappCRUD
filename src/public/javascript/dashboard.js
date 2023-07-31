@@ -34,6 +34,7 @@ let menuBtn = document.getElementById("menuBtn");
 let closeMenu = document.getElementById("closeMenu");
 let inputCheck = document.getElementById("chk");
 let ball = document.querySelector(".ball");
+let iconUser = document.querySelectorAll(".img_UserIcon");
 
 
 //Settings
@@ -48,10 +49,21 @@ const accountBtn = document.getElementById("accountBtn");
 //Profile form
 const profileForm = document.getElementById("profile");
 const profileLinks = document.querySelector(".links");
+//Tasks
+const taskstitle = document.querySelector(".taskvalue_name");
+//Values
+const highValue = document.getElementById("highValue");
+const middleValue = document.getElementById("middleValue");
+const lowValue = document.getElementById("lowValue");
+//Pincode - change pass / change security questions title
+const pincodeTitle = document.querySelector(".changePincode_req");
+const passchangeTitle = document.querySelector("#changepass");
+const secretechangeTitle = document.querySelector("#changescretqts");
+//about
+const aboutPage = document.querySelector(".about");
 
 
-
-// Load Page
+// Loading Page
 window.addEventListener("load", loadingPage());
 
 //Menu
@@ -65,7 +77,6 @@ menuAction(menuBtn,closeMenu);
 
 //Dark mode
 const btnDark = document.getElementById("chk");
-
 //Funcion dark mode
 btnDark.addEventListener("click", () =>{
     let value = document.body.classList.toggle('dark');
@@ -83,10 +94,10 @@ btnDark.addEventListener("click", () =>{
     //*Darkmode Function
     localStorage_darkMode(value);
 });
-
 function localStorage_darkMode(value) {
     
     if(value === true){
+        document.body.classList.add('dark');
         document.body.style.background = "#313131"
         //Darnode ball
         inputCheck.checked= true;
@@ -110,6 +121,8 @@ function localStorage_darkMode(value) {
             target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.style.color = "#fff";
             // Task dateline
             target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#fff";
+            //Task colorleves
+            target.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.style.color = "#fff";
         });
         //*Menu
         nav.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#fff";
@@ -117,6 +130,9 @@ function localStorage_darkMode(value) {
         closeMenu.style.color = "#fff"
         menu.style.background = "#525252";
         menu.style.boxShadow = "none";
+        iconUser.forEach(icon => {
+            icon.style.color = "#fff";
+        });
         menuList.forEach(li=>{
             li.firstElementChild.style.color = "#fff";
             li.firstElementChild.nextElementSibling.style.color = "#fff";
@@ -133,9 +149,23 @@ function localStorage_darkMode(value) {
             accountBtn.style.color = "#fff";
             profileForm.style.color = "#FFD93D";
             profileLinks.style.color = "#FFD93D";
+            //tasks
+            taskstitle.firstElementChild.style.color = "#FFD93D";
+            highValue.style.color = "#fff"; 
+            middleValue.style.color = "#fff"; 
+            lowValue.style.color = "#fff";  
+            //pass - pin - secret
+            pincodeTitle.firstElementChild.style.color = "#FFD93D";
+            passchangeTitle.firstElementChild.style.color = "#FFD93D";
+            secretechangeTitle.firstElementChild.style.color = "#FFD93D";
+            
         }
-
+        //*About page
+        if(aboutPage){
+            aboutPage.style.color ="#fff";
+        }
     }else{
+        document.body.classList.remove('dark');
         document.body.style.background = "#fff"
         //darkmode ball
         inputCheck.checked = false;
@@ -159,6 +189,8 @@ function localStorage_darkMode(value) {
             target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.style.color = "#000";
             // Task dateline
             target.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#000";
+            //Task colorleves
+            target.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.style.color = "#fff";
         });
         //*Menu
         menu.style.background = "#ffffffc9";
@@ -166,6 +198,9 @@ function localStorage_darkMode(value) {
         menuBtn.style.color = "#000"
         closeMenu.style.color = "#000"
         nav.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.style.color = "#000";
+        iconUser.forEach(icon => {
+            icon.style.color = "#000";
+        });
         menuList.forEach(li=>{
             li.firstElementChild.style.color = "#000";
             li.firstElementChild.nextElementSibling.style.color = "#000";
@@ -182,13 +217,27 @@ function localStorage_darkMode(value) {
             accountBtn.style.color = "#000";
             profileForm.style.color = "#000";
             profileLinks.style.color = "#d81515";
-
+            //tasks
+            taskstitle.firstElementChild.style.color = "#000";
+            highValue.style.color = "#000"; 
+            middleValue.style.color = "#000"; 
+            lowValue.style.color = "#000";  
+            //pass - pin - secret
+            pincodeTitle.firstElementChild.style.color = "#d81515";
+            passchangeTitle.firstElementChild.style.color = "#d81515";
+            secretechangeTitle.firstElementChild.style.color = "#d81515";
+            
+        }
+        //About
+        if(aboutPage){
+           aboutPage.style.color = "#000";
         }
     }
 }
 
 //DASHBOARd SECTION
-//Creaking character numbers 
+
+//Creaking numbers of caracter
 function number_of_characters() {
     //Get value from input element
     const titleText = document.getElementById("titleText");
@@ -216,42 +265,40 @@ function creatingTask() {
         e.preventDefault();
         modalTaskCard.style.display = "none";
     });
+    //Adding new categoy Btn ACtions
+    addNewCategoryBtn.addEventListener("click", (e)=>{
+        selectElement.style.display = "none";
+        addNewCategoryBtn.style.display = "none";
+        //Creating a new Element
+        const newInput = document.createElement("input");
+        newInput.setAttribute("type", "text");
+        newInput.setAttribute("name", "category");
+        newInput.setAttribute("placeholder","Insert new Category");
+        //Creat Close btn
+        const closeInputCategory = document.createElement("i");
+        closeInputCategory.className = "closeInputCategory";
+        closeInputCategory.className += " fa";
+        //Add new children into category div
+        categoryContainer.append(newInput,closeInputCategory);
+
+        closeInputCategory.addEventListener("click", (e)=>{
+            //Append
+            selectElement.style.display = "block";
+            addNewCategoryBtn.style.display = "block";
+            //Close
+            newInput.style.display = "none";
+            closeInputCategory.style.display = "none";
+        });
+    });
     //Close esc
     document.addEventListener("keydown", (e)=>{
         if(e.code === "Escape" || e.keyCode === 27){
             modalTaskCard.style.display = "none"
         }
     });
+
 }
 creatingTask();
-
-
-//Adding new categoy Btn ACtions
-addNewCategoryBtn.addEventListener("click", (e)=>{
-    selectElement.style.display = "none";
-    addNewCategoryBtn.style.display = "none";
-    //Creating a new Element
-    const newInput = document.createElement("input");
-    newInput.setAttribute("type", "text");
-    newInput.setAttribute("name", "category");
-    newInput.setAttribute("placeholder","Insert new Category");
-    //Creat Close btn
-    const closeInputCategory = document.createElement("i");
-    closeInputCategory.className = "closeInputCategory";
-    closeInputCategory.className += " fa";
-    //Add new children into category div
-    categoryContainer.append(newInput,closeInputCategory);
-
-    closeInputCategory.addEventListener("click", (e)=>{
-        //Append
-        selectElement.style.display = "block";
-        addNewCategoryBtn.style.display = "block";
-        //Close
-        newInput.style.display = "none";
-        closeInputCategory.style.display = "none";
-    });
-});
-
 
 //* Show categories 
 
@@ -422,6 +469,7 @@ function getDateTask() {
     }
 }
 getDateTask();
+
 //date Done or lost
 function lostDateLine() {
     //icon
@@ -437,6 +485,7 @@ function lostDateLine() {
     });
 }
 lostDateLine();
+
 //Changing check icon by close
 const checkIcon = document.querySelectorAll("#checkIcon");
 

@@ -1,35 +1,10 @@
-Profile: accounts
-        Insert Pin until to Delete Account
-        Insert Pin until to Reset Account
 
-Footer: 
-Home: 
-    Change NAvitagion menu
-    add new colors
-    edit buttons
-    edit header section
-    edit task section
-    
-*Dashboard:
-    Create a simple page, to show all tasks, and put some options to add new task.
-
-    Create a task: Tittle, description, level(high,middle,down)
-    add bottom: edit, delete, complete
-    add date: Date to finish this task
-
-    Create A group Task: 5 task per group
-
-
+* Create a new project where You can be able to fetch all users, and block or delete them 
+ 
 *About:
     Explain about this project, and give a short resume about, how users can use this app, and different pages of this side.
 
 Pages:
-        *politics
-        *privacy
-        *cookies
-
-        Error
-        About
         calendar
 
 *AI:

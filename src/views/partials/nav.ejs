@@ -9,12 +9,11 @@
                     <% if(img) {%>
                         <img src="<%= img.path %>" alt="<%= img.filename %>">
                     <% } else {%>
-                        <img src="/img/user.png" alt="user">
+                        <!-- <img src="/img/user.png" alt="user"> -->
+                        <i class="img_UserIcon fa"></i>
                     <% } %>
                 </div>
                 <h2><%= user.username %></h2>
-                <!-- <img id="downBtn" class="down" src="/img/down.png" alt="down">
-                <img id="upBtn" class="up" src="/img/up.png" alt="down"> -->
                 <div class="iconContainer">
                     <i id="menuBtn" class="menuBar fb fa-bars fa"></i>
                     <i id="closeMenu" class="close_menu fb fa-xmark fa"></i>
@@ -36,7 +35,7 @@
                 <ul class="menu_options">
                     <li class="menu_li"><span class="dashIco fa"></span><a href="/dashboard">Dashboard</a></li>
                     <li class="menu_li"><span class="graphicsIco fa"></span><a href="/api/settings/graphics">Tasks Graphics</a></li>
-                    <li class="menu_li"><span class="user fa"></span><a href="#">About us</a></li>
+                    <li class="menu_li"><span class="user fa"></span><a href="/api/settings/about">About us</a></li>
                     <li class="menu_li"><span class="settings fa"></span><a href="/api/settings/profile">Settigns</a></li>
                     <li class="menu_li"><span class="logout fa"></span><a href="/api/auth/logout">Logout</a></li>
                 </ul>

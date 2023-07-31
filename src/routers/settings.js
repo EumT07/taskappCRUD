@@ -142,7 +142,7 @@ router
 router
     .get("/graphics",taskApp_Token, async (req,res)=>{
         const user = await User.findById(req.userID);
-        const img = await Image.findOne({user: user.id})
+        const img = await Image.findOne({user: user.id});
         const tasks = await Task.find({user: user.id});
 
         //Create Variables
@@ -329,6 +329,11 @@ router
             tasksCompleted,
             tasksDoing
         })
+    })
+    .get("/about", taskApp_Token, async (req,res)=>{
+        const user = await User.findById(req.userID);
+        const img = await Image.findOne({user: user.id});
+        res.render("./settings/about.ejs",{title: "About",user,img})
     })
 
 export default router;

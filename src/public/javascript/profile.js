@@ -118,12 +118,13 @@ document.addEventListener("keydown", (e)=>{
 });
 
 //Change pin code
+
 //* Pin code Profile
 const changepass_PIN = document.querySelectorAll("#pinPass");
 changepass_PIN[0].focus();
 runArrays(changepass_PIN);
 
-//PIN- Change Password
+//*PIN- Change Password
 const changesecretQts_PIN = document.querySelectorAll("#pinSecreteQts");
 changesecretQts_PIN[0].focus();
 runArrays(changesecretQts_PIN);
@@ -131,6 +132,7 @@ runArrays(changesecretQts_PIN);
 
 //Refresh page
 const oneHour = 1000 * 3600;
+
 setTimeout(()=> {
     window.location.reload();
 }, oneHour)

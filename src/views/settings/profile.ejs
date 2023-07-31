@@ -8,7 +8,7 @@
                 <% if(img) {%>
                 <img src="<%= img.path %>" alt="<%= img.filename %>">
                 <% } else {%>
-                <img src="/img/user.png" alt="user">
+                <i class="img_UserIcon fa"></i>
                 <% } %>
             </div>
             <h3><%= user.username %></h3>
@@ -21,8 +21,8 @@
                 <a id ="taskBtn" href="?data=taskdiv">Tasks</a>
                 <h3>Security</h3>
                 <hr>
-                <a id ="changepinBtn" href="?data=changepinreq">Change Pin-Code</a>
-                <a id ="changepassBtn" href="?data=changepass">Change Password</a>
+                <a id ="changepinBtn" href="?data=changepinreq">Pin-Code</a>
+                <a id ="changepassBtn" href="?data=changepass">Change Pass</a>
                 <a id ="changesecretqtsBtn" href="?data=changesecretqts">Change Secret Questions</a>
                 <a id ="accountBtn" href="?data=accountdiv">Account</a>
             </div>
@@ -35,7 +35,7 @@
                             <% if(img) {%>
                                 <img src="<%= img.path %>" alt="<%= img.filename %>">
                             <% } else {%>
-                                <img src="/img/user.png" alt="user">
+                                <i class="img_UserIcon fa"></i>
                             <% } %>
                         </div>
                         <div class="upload">
@@ -79,9 +79,9 @@
                 <div class="tasksResult_Container" >
                     <div class="taskvalue_name">
                         <h3>All Taks: <%= tasks.length %></h3>
-                        <h3> <span id="highTag">High</span>: <span id="highValue"><%= highCount %></span>  </h3>
-                        <h3><span id="middleTag">Middle</span>: <span id="middleValue"><%= middleCount %></span></h3>
-                        <h3><span id="lowTag">Low</span>: <span id="lowValue"><%= lowCount %></span></h3>
+                        <h3> <span id="highTag">High:</span> <span id="highValue"><%= highCount %></span>  </h3>
+                        <h3><span id="middleTag">Middle:</span> <span id="middleValue"><%= middleCount %></span></h3>
+                        <h3><span id="lowTag">Low:</span> <span id="lowValue"><%= lowCount %></span></h3>
                     </div>
                     <div class="canvasContainer">
                         <canvas id="myChart" class="taskvalue_graphic">
