@@ -17,8 +17,13 @@ import authRoute from "./routers/auth.js";
 import search from "./routers/recovery.js";
 import errors from "./routers/errors.js";
 
+//Import Roles and Admin
+import { createRoles, adminRole } from "./controllers/admin.js";
+
 /** Create APP */
 const app = express();
+createRoles();
+adminRole();
 
 /** __Filename:  root-file */
 const __filename = fileURLToPath(import.meta.url);

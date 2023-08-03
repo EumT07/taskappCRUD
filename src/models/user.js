@@ -11,7 +11,13 @@ const userSchema = new Mongoose.Schema(
     lastname: String,
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    country: String
+    country: String,
+    roles: [
+      {
+        type: Mongoose.Schema.Types.ObjectId,
+        ref: "Role"
+      }
+    ]
   },
   {
     timestamps: true,

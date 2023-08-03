@@ -6,12 +6,14 @@ import {
     singin,
     closeSession,
     setSecretQuestions,
-    setPinCode
+    setPinCode,
+    adminSignin
 } from "../controllers/auth.js";
 import {
     checkUserSignup,
     checkUserPassword,
-    checkUserSignin,checkEmptyFieldPincode,checkEmptyFieldSecreteqts
+    checkUserSignin,checkEmptyFieldPincode,checkEmptyFieldSecreteqts,
+    checkAdminSignin
 } from "../middlewares/verifysignup.js";
 import {
     taskApp_Token
@@ -55,7 +57,16 @@ router
             user
         })
     }) 
-    .post("/pincode", checkEmptyFieldPincode ,setPinCode)   
+    .post("/pincode", checkEmptyFieldPincode ,setPinCode) 
+    
+// Sign in Admin
+router
+    .get("/admin", (req,res)=>{
+        res.render("./register/admin.ejs",{
+            title: "Admin Control"
+        });
+    })
+    .post("/admin", checkAdminSignin, adminSignin)
 
 //Log out: Closing all session
 router

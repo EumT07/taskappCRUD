@@ -1,0 +1,24 @@
+<%- include("../partials/head.ejs") %>
+
+<main  class="register_admin">
+    <section class="container_admin">
+        <h2>Admin  <span>Sign In</span></h2>
+        <% if(errSignin) { %>
+            <p class="flash_messages"><%= errSignin %></p>
+        <% } %>
+        <form class="form__container_admin" action="/api/auth/admin" method="POST">
+            <label  for="email" >
+                <input type="email" name="email" id="email" placeholder="Email">
+                <span class="emailIcon fa"></span>
+            </label>
+            <label  for="password">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <span class="passIco fa"></span>
+            </label>
+            <button class="button" type="submit" value="Sign Up">Sign In</button>
+        </form>
+            <h3 class="">Forgot the password? <a href="/api/recovery/search">Reset here</a></h3>
+    </section>
+</main>
+
+<%- include("../partials/body.ejs") %>

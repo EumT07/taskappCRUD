@@ -1,7 +1,7 @@
 "use strict"
 import * as dotenv from "dotenv";
 import User from "../models/user.js";
-import Secretqt from "../models/secretqt.js";
+import Role from "../models/roles.js";
 import PIN from "../models/pincode.js";
 import jwt from "jsonwebtoken";
 import {
@@ -42,6 +42,71 @@ export const taskApp_Token = async (req, res, next) => {
 
     } catch (error) {
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",500)
+        // sendErrorMail(message)
+        return res.status(503).redirect("/api/token")
+    }
+}
+
+//Verify Admin token
+export const verify_adminToken = async (req,res,next)=>{
+    try {
+        //Get cookie value name
+        const cookieAdmin = process.env.COOKIEADMIN;
+        //get token
+        const token = req.cookies[cookieAdmin] || req.headers[cookieAdmin];
+
+        //Ckeck if token exit or not
+        if(!token) return res.status(404).redirect("/api/token");
+
+        //Decoded-token
+        const tokenDecoded = jwt.verify(token, SECRET);
+        req.adminID = tokenDecoded.id;
+
+        //Identify admin user
+        const admin = await User.findById(req.adminID);
+        
+        if(!admin){
+            return res.status(404).redirect("/api/auth/admin")
+        }
+
+        //If admin exists
+        next();
+    } catch (error) {
+        const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",500)
+        // sendErrorMail(message)
+        return res.status(503).redirect("/api/token")
+    }
+
+}
+
+//very role ADmin
+export const isAdmin = async (req,res,next) => {
+    try {
+        //get admin id
+        const id = req.adminID;
+        //get admin user
+        const admin = await User.findById(id);
+        //get roles
+        const roles = await Role.find({_id: {$in: admin.roles}});
+        //Checking roles *Error* ?¿
+        // roles.forEach(role => {
+        //     if(role.name === "admin"){
+        //         next();
+        //         return 
+        //     }
+        // });
+        //Loop
+        let i;
+        for(i = 0; i <roles.length; i++){
+            if(roles[i].name === "admin"){
+                next();
+                return
+            }
+        }
+        //if this user is not admin
+        return res.status(404).redirect("/api/token");
+    } catch (error) {
+        const message = taskAppError(res,"taskApp-Error: Middlewate-token : Is not admin ",500)
         // sendErrorMail(message)
         return res.status(503).redirect("/api/token")
     }

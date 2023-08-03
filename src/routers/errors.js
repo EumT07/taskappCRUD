@@ -10,6 +10,9 @@ router
     .get("/token", (req,res)=>{
         res.render("./error/token.ejs")
     })
+    .get("/session", (req,res)=>{
+        res.render("./error/session.ejs")
+    })
     .get("/failrequest", (req,res)=>{
         res.render("./error/failrequest.ejs")
     })

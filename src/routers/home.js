@@ -4,7 +4,7 @@ import Task from "../models/tasks.js";
 import Image from "../models/profileImg.js";
 import Category from "../models/category.js";
 import { Router } from "express";
-import {taskApp_Token}  from "../middlewares/verifytoken.js";
+import {taskApp_Token,verify_adminToken,isAdmin}  from "../middlewares/verifytoken.js";
 import {
     createNewTask,
     updateTask,
@@ -67,6 +67,15 @@ router
     .get("/cancelCompleteTask/:id",taskApp_Token, cancelCompleteTask)
     .get("/deleteTask/:id",taskApp_Token, deleteTask)
     .get("/deleteCategory/:id",taskApp_Token, deleteCategory)
+
+router
+    .get("/controladmin", [verify_adminToken, isAdmin], async (req,res)=>{
+        //Get users
+        const users = await User.find();
+        //Render
+        res.render("./dashboard/controladmin.ejs",{users});
+        
+    })
 
 router
     .get("/privacy-policy", async (req,res)=>{

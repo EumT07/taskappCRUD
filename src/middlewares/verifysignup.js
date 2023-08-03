@@ -140,6 +140,35 @@ export const checkUserSignin = async (req,res,next) => {
     }
 }
 
+//Admin user
+export const checkAdminSignin = async (req,res,next) => {
+    try {
+        const {email, password} = req.body;
+        //Getting user Info from DB
+        const user = await User.findOne({email: email});
+        //Checking is user Exist or not
+        if(!user){
+            req.flash("errSignin", "User not found");
+            req.flash("email", email);
+            return res.redirect("/api/auth/admin");
+        }
+        //Comparing password 
+        const comparePassword = await User.comparePassword(password, user.password);
+        //Is the same password or not?
+        if(!comparePassword){
+            req.flash("errSignin", "Wrong password");
+            req.flash("email", email)
+            return res.redirect("/api/auth/admin");
+        }
+        //Return
+        return next();
+    } catch (error) {
+        const message = taskAppError(res,"taskAppError: Signin --> Check User Signin", 500);
+        // sendErrorMail(message);
+        return res.status(503).redirect("/api/failrequest");
+    }
+}
+
 //Verify Pincode Fild
 export const checkEmptyFieldPincode = async (req,res,next) => {
     try {

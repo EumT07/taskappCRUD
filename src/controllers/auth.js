@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import User from "../models/user.js";
 import SecretQt from "../models/secretqt.js";
 import PIN from "../models/pincode.js";
+import Roles from "../models/roles.js";
 import {welcomeEmail} from "../mail/Template/emailTemplate.js"
 import jwt from "jsonwebtoken";
 import { 
@@ -17,7 +18,8 @@ import {
 dotenv.config();
 
 const SECRET = process.env.SECRET_KEY_JWT;//Jeson Web token Key
-const cookieName = process.env.COOKIENAME;//taskApp Token
+const cookieUserName = process.env.COOKIENAME;//taskApp Token Users
+const cookieAdmin = process.env.COOKIEADMIN;//taskApp Token Users
 /**
  * Creatting user 
  * Getting: all data in order to create a new user Account
@@ -33,6 +35,7 @@ export const singup = async (req,res) => {
     try {
         //Getting password to encrypt password
         const encryptPassword = await User.encryptPassword(password);
+        
         //Save info in mongoDB
         const newUser = new User({
             username: username.toLowerCase(),
@@ -41,6 +44,9 @@ export const singup = async (req,res) => {
             email: email.toLowerCase(),
             password: encryptPassword
         });
+        //get Role
+        const role = await Roles.find({name:"user"});
+        newUser.roles = [role._id];
 
         //Saving data
         const savedUser = await newUser.save();
@@ -65,7 +71,7 @@ export const singup = async (req,res) => {
        
         //Create our cookies (Cookiename, Token)
         //It helps us to create a middlaware to allow the user to be in our app
-        res.cookie(cookieName,token,{
+        res.cookie(cookieUserName,token,{
             maxAge: 3600 * 1000, //1 hour
             secure: true,
             httpOnly: true,
@@ -86,14 +92,15 @@ export const singin = async (req,res) => {
     const {email} = req.body;
     try {
         // Getting user by Email
-        const user = await User.findOne({email: email.toLowerCase()})
+        const user = await User.findOne({email: email}).populate("roles");
+        
         //Creating a token
         const token = jwt.sign({id: user._id}, SECRET,{
             expiresIn: "1h"
         });
         
         //Create our cookies
-        res.cookie(cookieName,token,{
+        res.cookie(cookieUserName,token,{
             maxAge: 3600 * 1000, //1 hour
             secure: true,
             httpOnly: true,
@@ -108,6 +115,35 @@ export const singin = async (req,res) => {
         return res.status(503).redirect("/api/failrequest");
     }
 };
+/** Admin */
+export const adminSignin = async (req,res) => {
+    try {
+        const {email} = req.body;
+        // Getting user by Email
+        const admin = await User.findOne({email: email}).populate("roles");
+        
+        //Creating a token
+        const token = jwt.sign({id: admin._id}, SECRET,{
+            expiresIn: "1h"
+        });
+        
+        //Create our cookies
+        res.cookie(cookieAdmin,token,{
+            maxAge: 3600 * 1000, //1 hour
+            secure: true,
+            httpOnly: true,
+            sameSite: "lax"
+        });
+
+        return res.status(202).redirect("/controladmin");
+    } catch (error) {
+        console.log("There is an error: Auth: admin Sign in".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Auth - Signin ",500);
+        // sendErrorMail(message);
+        return res.status(503).redirect("/api/failrequest");
+    }
+}
+
 // Creating SecurityQuestions
 export const setSecretQuestions = async (req,res)=>{
     //Getting data: Questions and Answers from form
@@ -185,7 +221,7 @@ export const setPinCode = async (req,res) => {
 //Logout
 export const closeSession = async (req,res) => {
     try {
-        res.clearCookie(cookieName);
+        res.clearCookie(cookieUserName);
         req.session.destroy();
         return res.status(200).redirect("/");
     } catch (error) {
