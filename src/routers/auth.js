@@ -7,7 +7,8 @@ import {
     closeSession,
     setSecretQuestions,
     setPinCode,
-    adminSignin
+    adminSignin,
+    closeAdminSession
 } from "../controllers/auth.js";
 import {
     checkUserSignup,
@@ -70,6 +71,7 @@ router
 
 //Log out: Closing all session
 router
-    .get("/logout", closeSession);
+    .get("/logout", closeSession)
+    .get("/exit", closeAdminSession)
     
 export default router;

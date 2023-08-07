@@ -67,6 +67,15 @@
                     <label for="email">Email
                         <input type="email" name="email" id="email" value="<%= user.email %>" readonly >
                     </label>
+                    <label class="gender" for="gender">Gender:
+                        <div>
+                                <i class="maleIcon fa"></i>
+                                <input  type="radio" name="gender" value="male">
+                                <i class="femaleIcon fa"></i>
+                                <input type="radio" name="gender" value="female">
+                            
+                        </div>
+                    </label>
                     <label for="country">Country
                         <input type="text" name="country" id="country" value="<%= user.country %>" >
                     </label>

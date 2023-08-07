@@ -37,6 +37,7 @@ const emailForm = document.getElementById("email");
 const usernameForm = document.getElementById("username");
 
 
+//Google Bard
 function compareValues(param) {
     //Finding out if a email or username
     const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

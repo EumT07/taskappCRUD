@@ -27,8 +27,6 @@ const cookieAdmin = process.env.COOKIEADMIN;//taskApp Token Users
 export const singup = async (req,res) => {
     const {
         username,
-        name,
-        lastName,
         email,
         password
     } = req.body;
@@ -39,8 +37,6 @@ export const singup = async (req,res) => {
         //Save info in mongoDB
         const newUser = new User({
             username: username.toLowerCase(),
-            name: name.toLowerCase(),
-            lastName: lastName.toLowerCase(),
             email: email.toLowerCase(),
             password: encryptPassword
         });
@@ -224,6 +220,20 @@ export const closeSession = async (req,res) => {
         res.clearCookie(cookieUserName);
         req.session.destroy();
         return res.status(200).redirect("/");
+    } catch (error) {
+        console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);
+        // sendErrorMail(message);
+        return res.status(503).redirect("/api/failrequest");
+    }
+};
+
+//Logout Admin
+export const closeAdminSession = async (req,res) => {
+    try {
+        res.clearCookie(cookieAdmin);
+        req.session.destroy();
+        return res.status(200).redirect("/api/auth/admin");
     } catch (error) {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);

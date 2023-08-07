@@ -5,7 +5,6 @@ import {maxLetter, menuDisplay } from "./export.js";
 //todo: All variables
 
 //* Searching or filtering
-
 //Get Select options
 const selectCategory = document.getElementById("selectCategory");
 const selectLevels = document.getElementById("selectLevels");
@@ -13,7 +12,6 @@ const selectLevels = document.getElementById("selectLevels");
 //*Dashboard creating new task: New category
 
 //* Category Container variables
-
 // Creating a new task
 const categoryContainer = document.getElementById("categoryContainer");
 const selectElement = document.getElementById("select");
@@ -35,7 +33,6 @@ let closeMenu = document.getElementById("closeMenu");
 let inputCheck = document.getElementById("chk");
 let ball = document.querySelector(".ball");
 let iconUser = document.querySelectorAll(".img_UserIcon");
-
 
 //Settings
 let profileContainer = document.querySelector(".data__container");
@@ -62,7 +59,6 @@ const secretechangeTitle = document.querySelector("#changescretqts");
 //about
 const aboutPage = document.querySelector(".about");
 
-
 // Loading Page
 window.addEventListener("load", loadingPage());
 
@@ -77,6 +73,7 @@ menuAction(menuBtn,closeMenu);
 
 //Dark mode
 const btnDark = document.getElementById("chk");
+
 //Funcion dark mode
 btnDark.addEventListener("click", () =>{
     let value = document.body.classList.toggle('dark');
@@ -335,7 +332,7 @@ selectLevels.addEventListener("change", (e)=>{
     })
 })
 
-//Change Css card task
+//Change Css tasks' card
 categoriesContainer.forEach( container => {
     if(container.childElementCount >= 5 ){
        for (let i = 0; i < container.childElementCount; i++) {
@@ -425,34 +422,8 @@ function showDescriptions() {
     });
     
 };
-//*Show description first Option
-
-// function showDescriptions() {
-//     //Btns view 
-//     const viewBtn = document.querySelectorAll(".view");
-
-//     viewBtn.forEach(btn => {
-//         btn.addEventListener("click",(e)=>{
-//             e.target.classList.remove("view");
-//             e.target.classList.add("closeView");
-//             e.target.parentElement.parentElement.parentElement.parentElement.style.height = "150px";
-//             e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "block";
-
-//             const closeViewBtn = document.querySelector(".closeView");
-
-//             closeViewBtn.addEventListener("click", (e)=>{
-//             e.target.classList.remove("closeView");
-//             e.target.classList.add("view");
-//             e.target.parentElement.parentElement.parentElement.parentElement.style.height = "80px";
-//             e.target.parentElement.parentElement.parentElement.nextElementSibling.style.display = "none";
-//             showDescriptions()
-//                 });
-//         });
-//     });  
-// };
 
 showDescriptions();
-
 
 //Date Task
 function getDateTask() {
@@ -501,7 +472,6 @@ checkIcon.forEach(element => {
 //Loading Page 
 function loadingPage() {
     const darkMode = JSON.parse(localStorage.getItem("darkMode"));
-    // if(darkMode == null) return;
     if(darkMode){
         return localStorage_darkMode(darkMode);
     }

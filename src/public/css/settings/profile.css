@@ -146,6 +146,30 @@
     content: "\f007";
     font-size: 2rem;
 }
+/*Gender*/
+.gender {
+    width: 250px;
+}
+.gender div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gender div i{
+    margin: 0px 8px;
+}
+.gender div .maleIcon::before{
+    content: "\f183";
+    font-size: 1.2rem;
+    color: #1077ec;
+}
+.gender div .femaleIcon::before{
+    content: "\f182";
+    font-size: 1.2rem;
+    color: rgb(216, 20, 85);
+}
+
 /* Profile Form > upload img  */
 .upload{
     width: 180px;

@@ -6,8 +6,7 @@ import "colors";
 const categorySchema = new Mongoose.Schema(
   {
     name: {
-      type: String,
-      unique: true,
+      type: String
     },
     user: {
         type: Mongoose.Schema.Types.ObjectId,

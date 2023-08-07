@@ -12,12 +12,18 @@ const userSchema = new Mongoose.Schema(
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     country: String,
+    gender: String,
     roles: [
       {
         type: Mongoose.Schema.Types.ObjectId,
         ref: "Role"
       }
-    ]
+    ],
+    taskHigh: Number,
+    taskmiddle: Number,
+    tasklow: Number,
+    totalTasks: Number,
+    imgPath: String
   },
   {
     timestamps: true,

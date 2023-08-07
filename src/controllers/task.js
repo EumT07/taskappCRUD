@@ -12,29 +12,66 @@ import {
     notificationAppMail
 } from "../mail/mail.js";
 
-dotenv.config();
 
+dotenv.config();
 
 /**
  * todo: TASK SECTION
  */
 //*Create a new task and new category at the same time
 export const createNewTask = async (req, res) => {
+    console.log(req.body);
     try {
         const {title, description, category, priority, userID, dateline} = req.body;
         const date = new Date();
+        
         //Is category an Array or not?
         //*Creating a new category and a new task
         if(Array.isArray(category)){
-            //Search if category exist
-             const categorySelected = await Category.findOne({name: category[1]});
 
-             if(categorySelected){
+            if(priority.toLowerCase() === "priority"){
+                //*Add new Features (Notification with messages)
+                res.status(404).redirect("/dashboard")
+                return;
+            }
+
+            if(category[1] === ""){
+                const getCategory = await Category.findOne({user: userID},{name:category[0]});
+
+                if(getCategory){
+                    const task = await new Tasks({
+                        title: title,
+                        description: description,
+                        category: getCategory._id,
+                        priority: priority,
+                        month: date.getMonth(),
+                        dateline: dateline,
+                        user: userID
+                    });
+                    await task.save();
+                    res.status(202).redirect("/dashboard")
+                    return;
+                }
+              
+                res.status(404).redirect("/dashboard")
+                return;
+            }
+            //GEt all user's categories
+            const allcategory = await Category.find({user: userID});
+            
+            if(allcategory.length === 0 || allcategory.length > 0){
+                // Creating a new Category
+                const newCategory = await new Category({
+                    name: category[1],
+                    user: userID
+                });
+                await newCategory.save();
+
                 //Creating new task
                 const task = await new Tasks({
                     title: title,
                     description: description,
-                    category: categorySelected._id,
+                    category: newCategory._id,
                     priority: priority,
                     month: date.getMonth(),
                     dateline: dateline,
@@ -42,52 +79,40 @@ export const createNewTask = async (req, res) => {
                 });
                 await task.save();
                 res.status(202).redirect("/dashboard")
-                return;
-             }
+                return
+            }
 
-            // Creating a new Category
-            const newCategory = await new Category({
-                name: category[1],
-                user: userID
-            });
-            await newCategory.save();
-            //Creating new task
-            const task = await new Tasks({
-                title: title,
-                description: description,
-                category: newCategory._id,
-                priority: priority,
-                month: date.getMonth(),
-                dateline: dateline,
-                user: userID
-            });
-            await task.save();
-            res.status(202).redirect("/dashboard")
+            res.status(202).redirect("/dashboard");
             return;
         }
 
         //*Category is not an array
         //Checking is category is one of thme (categories | leves)
-        if(category.toLowerCase() === "category" || priority.toLowerCase() === "priority"){
+        if(category.toLowerCase() === "category" || category.toLowerCase() === "categories"){
             //*Add new Features (Notification with messages)
             res.status(404).redirect("/dashboard")
             return;
         }
 
         //*Search category to use.
-        const categorySelected = await Category.findOne({name: category});
-
         //Creating new task with a category what was created
-        const task = await new Tasks({
-            title: title,
-            description: description,
-            category: categorySelected._id,
-            priority: priority, 
-            month: date.getMonth(),
-            dateline: dateline,
-            user: userID
-        });
-        task.save();
+        const categoryList = await Category.find({user: userID});
+
+        categoryList.forEach( async categories => {
+            if(categories.name === category){
+                const task = await new Tasks({
+                    title: title,
+                    description: description,
+                    category: categories._id,
+                    priority: priority, 
+                    month: date.getMonth(),
+                    dateline: dateline,
+                    user: userID
+                });
+                task.save(); 
+            }
+        })
+        
         res.status(202).redirect("/dashboard");
         return;
     } catch (error) {

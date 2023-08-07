@@ -125,14 +125,15 @@ export const updateProfile_UserInfo = async (req,res) => {
         //Getting user info
         const userID = req.body.userID;
 
-        const {username,name,lastname,country} = req.body;
-        
+        const {username,name,lastname,gender,country} = req.body;
+        console.log(gender);
         //Saving Data updated
         const data = {
             username: username.toLowerCase(),
             name: name.toLowerCase(),
             lastname: lastname.toLowerCase(),
-            country: country.toLowerCase()
+            country: country.toLowerCase(),
+            gender: gender.toLowerCase()
         }
         // Updating
         await User.findByIdAndUpdate({_id: userID}, data);
@@ -271,8 +272,8 @@ export const resetAcc = async (req,res) => {
         await Category.deleteMany({user: id});
 
         //Cleaning all cookies
-        res.clearCookie(cookieapp);
-        res.clearCookie(cookieAccessToken);
+        // res.clearCookie(cookieapp);
+        // res.clearCookie(cookieAccessToken);
 
         //Send message
         const user = await User.findById(id);
