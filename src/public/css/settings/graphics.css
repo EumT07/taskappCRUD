@@ -65,7 +65,7 @@ body{
 /*TaskMonths*/
 .graphics .tasksMonths{
     grid-column: 1/ span 3;
-    width: 952px;
+    width: 100%;
     height: 600px;
     border: 1px solid #ddd3d3;
     outline: none;
@@ -110,13 +110,14 @@ body{
         height: 260px;
     }
     .graphics .tasksMonths{
-        max-width: 708px;
+        max-width: 100%;
         height: 350px;
     }
     .graphics .tasksMonths > .tasksMonth_chart{
         height: 280px;
     }
 }
+
 @media screen and (max-width: 750px ){
     .graphics{
         grid-template-columns: 1fr;
@@ -130,9 +131,18 @@ body{
     }
     .graphics .tasksMonths{
         grid-column: 1/2;
-        max-width: 350px;
+        max-width: 100%;
     }
     .graphics .tasksMonths > .tasksMonth_chart{
         height: 260px;
     }
+}
+
+@media screen and (max-width: 600px ){
+   
+    .graphics .tasksMonths{
+        grid-column: 1/2;
+        max-width: 350px;
+    }
+    
 }

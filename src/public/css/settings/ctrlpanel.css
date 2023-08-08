@@ -64,7 +64,7 @@ header .info .exit::before{
 .control-panel{
     max-width: 100vw;
     height: 100%;
-    padding: 20px 80px;
+    padding: 20px 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
@@ -75,6 +75,10 @@ header .info .exit::before{
     outline: none;
     border-radius: 10px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .users_graphics{
     grid-column: 1/3;
@@ -85,26 +89,15 @@ header .info .exit::before{
 .tasks_graphics{
     grid-column: 3/4;
     height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    
 }
 .status_graphics{
     grid-column: 3/4;
     height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 .Months-tasks_graphics{
     grid-column: 1/4;
     height: 560px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 .Months-tasks_graphics canvas{
     width: 100%;
@@ -113,10 +106,6 @@ header .info .exit::before{
 .Months-status_graphics{
     grid-column: 1/4;
     height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .tasksMonthStatus_chart canvas{
@@ -131,11 +120,13 @@ header .info .exit::before{
 .tableScroll{
     width: 100%;
     height: 98%;
+    padding: 0 5px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 table{
     width: 100%;
+    padding: 0px 5px;
 }
 table, th,td {
     border-collapse: collapse;
@@ -230,5 +221,26 @@ tr td:nth-child(1){
     color: #c51616;
 }
 
+@media screen and (max-width: 1411px) {
+    .users_graphics{
+        grid-column: 1/4;
+        grid-row: 1/3;
+        height: 100%;
+        padding: 10px 10px;
+    }
+    .tasks_graphics{
+        grid-column: 1/2;
+    }
+    .status_graphics{
+        grid-column: 3/4;
+    }
+    .Months-tasks_graphics{
+        grid-column: 1/4;
 
+    }
+    .Months-status_graphics{
+        grid-column: 1/4;
+    }
+
+}
 

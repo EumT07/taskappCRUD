@@ -98,6 +98,9 @@ app.use((req,res,next) => {
     
     //Sent emal To pinchange
     app.locals.emailSent = req.flash("emailSent");
+
+    //Image error
+    app.locals.imgErr = req.flash("imgErr")
     next();
 })
 

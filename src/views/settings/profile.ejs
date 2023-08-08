@@ -51,6 +51,7 @@
                             </div>
                             <% } %>
                         </div>
+                        <p class="imgExtension <%= imgErr%>">* jpeg|jpg|png * 2mgb * </p>
                     </div>
                     <% if(usernameFound){ %>
                     <label for="username">Username
@@ -70,9 +71,18 @@
                     <label class="gender" for="gender">Gender:
                         <div>
                                 <i class="maleIcon fa"></i>
+                                <%if(user.gender === "male") { %>
+                                    <input checked type="radio" name="gender" value="male">
+                                <% } else {%>
                                 <input  type="radio" name="gender" value="male">
+                                <% } %>
                                 <i class="femaleIcon fa"></i>
+                                <% if(user.gender === "female"){%>
+                                    <input checked type="radio" name="gender" value="female">
+                                <% } else { %>
                                 <input type="radio" name="gender" value="female">
+                                <% } %>
+
                             
                         </div>
                     </label>

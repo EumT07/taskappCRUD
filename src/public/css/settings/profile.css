@@ -122,6 +122,7 @@
     padding: 15px 30px;
 }
 .data__container .show_options > .profile_form  form > .userSection{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -145,6 +146,15 @@
 .data__container .show_options > .profile_form  form > .userSection >.iconcontainer i::before {
     content: "\f007";
     font-size: 2rem;
+}
+.data__container .show_options > .profile_form  form > .userSection > .imgExtension{
+    position: absolute;
+    top: 60px;
+    left: 88px;
+    color: #999da0;
+}
+.data__container .show_options > .profile_form  form > .userSection > .imageError {
+    color: #f00808;
 }
 /*Gender*/
 .gender {
@@ -171,6 +181,7 @@
 }
 
 /* Profile Form > upload img  */
+
 .upload{
     width: 180px;
     display: flex;

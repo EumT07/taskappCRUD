@@ -45,11 +45,15 @@ export const profilePhotoUpdate = async(req,res,next) => {
     try {
         //Getting user info
         const userID = req.body.userID;
-        
         if(req.file === undefined){
             return next();
         }
-    
+        if(req.file.size >= 2500000){
+            req.flash("imgErr","imageError");
+            await res.status(404).redirect("/api/settings/profile");
+            return 
+
+        }
         //Getting data
         const {filename, originalname, mimetype,size} = req.file;
         
@@ -126,7 +130,7 @@ export const updateProfile_UserInfo = async (req,res) => {
         const userID = req.body.userID;
 
         const {username,name,lastname,gender,country} = req.body;
-        console.log(gender);
+        console.log(req.body);
         //Saving Data updated
         const data = {
             username: username.toLowerCase(),
@@ -140,7 +144,7 @@ export const updateProfile_UserInfo = async (req,res) => {
         // Return
         return await res.status(202).redirect("/api/settings/profile");
     } catch (error) {
-        console.log("There is an Erro: Setting-Profile: Updating user".red.bold, error.message);
+        console.log("There is an Error: Setting-Profile: Updating user".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Updating user",500);
         // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
