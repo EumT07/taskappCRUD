@@ -118,7 +118,7 @@ export const createNewTask = async (req, res) => {
     } catch (error) {
         console.log("There is an error: Creating new Task".red.bold, + error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Creating new Task",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -178,7 +178,7 @@ export const updateTask = async (req,res) =>{
     } catch (error) {
         console.log("There is an Error: Updating Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Updating Task",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -192,7 +192,7 @@ export const completeTask = async (req,res) =>{
     } catch (error) {
         console.log("There is an Error: Completing Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Completing Task",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -206,7 +206,7 @@ export const cancelCompleteTask = async (req,res) =>{
     } catch (error) {
         console.log("There is an Error: Canceling Complete Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Reseting Completed Task",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -221,7 +221,7 @@ export const deleteTask = async (req,res)=>{
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Deleting Task",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -236,7 +236,7 @@ export const deleteCategory = async(req,res) =>{
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Deleting category",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }

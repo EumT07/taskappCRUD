@@ -101,8 +101,8 @@ router
 //Change Pincode: Not ready
 
 router
-    .get("/changepincode/:token", verifyToken_from_UserEmail,(req,res)=>{
-        const {id} = req.userID;
+    .get("/changepincode/:token", verifyToken_from_UserEmail, async (req,res) =>{
+        const id = req.userID;
         const {token} = req.params;
         res.render("./settings/changepincode.ejs",{
             title: "Change pin-code",

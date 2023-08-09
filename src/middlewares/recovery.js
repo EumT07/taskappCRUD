@@ -36,7 +36,7 @@ export const verifyRecoveryToken = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Middleware-Token: Verify recovery Token ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middleware-Token: Verify recovery Token ",500);
-        // sendErrorMail(message)
+        sendErrorMail(message)
         return res.status(503).redirect("/api/token")
     }
 
@@ -61,14 +61,14 @@ export const sendEmail_resetPassword = async (req, res, next) => {
         const subjectText = `Hello, ${user.username}, reset Password`
         const url = `${token}`;
         const htmlContent = emailResetPassword(user.username,url);
-        // await sendMail(user.email,subjectText,htmlContent);
+        await sendMail(user.email,subjectText,htmlContent);
 
         console.log(url);
         return;
     } catch (error) {
         console.log("There is an error: Middlewate-token:Sending an email to user".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middlewate-token:Sending an email to user",500);
-        // sendErrorMail(message)
+        sendErrorMail(message)
         return res.status(503).redirect("/api/failrequest");
     }
     
@@ -107,7 +107,7 @@ export const verifyPinAccess = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Middlewate-token:Verify Pin access/creating new token".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middlewate-token:Verify Pin access/creating new token",500);
-        // sendErrorMail(message)
+        sendErrorMail(message)
         return res.status(503).redirect("/api/failrequest");
     }
 
@@ -167,7 +167,7 @@ export const verifySecretAnswers = async(req,res,next) => {
     } catch (error) {
         console.log("There is an error: Verifying Answers Encrypted ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verifying Answers Encrypted ",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 
@@ -205,7 +205,7 @@ export const verifySecretqtsAccess = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Verify secreteqts access ".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verify secreteqts access ",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -231,7 +231,7 @@ export const getAccssEmail_resetPassword = async (req,res,next)=>{
     } catch (error) {
         console.log("Error verifying Email pin",error);
         const message = taskAppError(res,"taskAppError: Error verifying Email pin ",500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/token")
     }
 }
@@ -253,7 +253,7 @@ export const verifyAccessToken = async (req,res,next) => {
     } catch (error) {
         console.log("There is an error: Verify recovery Token ".red.bold, error.message);
         const message = taskAppError(res,"taskAppEror: Verify recovery Token ",401);
-        // sendErrorMail(message)
+        sendErrorMail(message)
         return res.status(404).redirect("/api/token")
     }
 }
@@ -299,7 +299,7 @@ export const checkCookie_ResetPassword = async (req,res,next) => {
         return next();
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 500);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -345,7 +345,7 @@ export const checkToken_ResetPassword = async (req,res,next) => {
     } catch (error) {
         const message = taskAppError(res,"taskAppError: Middleware-Signup- Path: Recovery-Reset Password", 500);
         console.log(message);
-        // sendErrorMail(message);
+        sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
