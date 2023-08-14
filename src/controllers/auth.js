@@ -47,10 +47,10 @@ export const singup = async (req,res) => {
         //Saving data
         const savedUser = await newUser.save();
 
-        //Send message
+        //todo: Send message with mailtrap
         const subjectText = `Hello, ${username} Welcome to TaskApp.!!`;
         const htmlContent = welcomeEmail(username);
-        await sendMail(email,subjectText,htmlContent);
+        // await sendMail(email,subjectText,htmlContent);
 
         //Send notification to taskAppEmail
         const htmlNotification = `
@@ -58,7 +58,7 @@ export const singup = async (req,res) => {
             <hr>
             <p> User: <b> ${email} </b> has registered in the APP</p>
         `
-        await notificationAppMail(htmlNotification);
+        // await notificationAppMail(htmlNotification);
         
         //Creating a token
         const token = jwt.sign({id:savedUser._id},SECRET,{
@@ -75,9 +75,10 @@ export const singup = async (req,res) => {
         });
         return res.redirect("/api/auth/secretquestions");
     } catch (error) {
-        console.log("There is an error: Auth: Signup ".red.bold, error.message);
+        console.log("There is an error: Controllers/Auth -> Signup ".red.bold, error.message);
+        //todo: mailtrap
         const message = taskAppError(res,"taskAppError: controller Auth - Signup ",500);
-        await sendErrorMail(message);
+        // await sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 };
@@ -105,9 +106,10 @@ export const singin = async (req,res) => {
 
         return res.status(202).redirect("/dashboard");
     } catch (error) {
-        console.log("There is an error: Auth: Signin".red.bold, error.message);
+        console.log("There is an error: Controllers/Auth -> Signin".red.bold, error.message);
+        //Mailtrap
         const message = taskAppError(res,"taskAppError: controller Auth - Signin ",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 };
@@ -133,9 +135,11 @@ export const adminSignin = async (req,res) => {
 
         return res.status(202).redirect("/controladmin");
     } catch (error) {
-        console.log("There is an error: Auth: admin Sign in".red.bold, error.message);
+        console.log("There is an error: Controllers/Auth -> admin Sign in".red.bold, error.message);
+        
+        //Mailtrap
         const message = taskAppError(res,"taskAppError: controller Auth - Signin ",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -172,8 +176,9 @@ export const setSecretQuestions = async (req,res)=>{
         return res.status(202).redirect("/api/auth/pincode");
     } catch (error) {
         console.log("There is an Error: Settings: Secret Questions".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller Settings - Secret Questions ",500);
-        sendErrorMail(message);
+        //Sending error message
+        const message = taskAppError(res,"taskAppError: Controllers/Auth -> Secret Questions ",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -209,8 +214,8 @@ export const setPinCode = async (req,res) => {
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Settings: Pin code".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller Settings - Pin code ",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: Controllers/Auth -> Pin code ",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -222,8 +227,8 @@ export const closeSession = async (req,res) => {
         return res.status(200).redirect("/");
     } catch (error) {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: Controllers/Auth -> CloseSession ",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 };
@@ -236,8 +241,8 @@ export const closeAdminSession = async (req,res) => {
         return res.status(200).redirect("/api/auth/admin");
     } catch (error) {
         console.log("There is an Error: Auth: CloseSession ".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller Auth - CloseSession ",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: Controllers/Auth -> CloseSession ",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 };

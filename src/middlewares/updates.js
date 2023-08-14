@@ -37,8 +37,9 @@ export const checkUsername = async (req,res,next) => {
             return res.status(202).redirect("/api/settings/profile");
         }
     } catch (error) {
-        const messge = taskAppError(res,"taskAppError: Setting-Profile: check username", 500);
-        sendErrorMail(messge)
+        console.log("There is an error: middlewares/updates -> checkUsername".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Setting-Profile: check username", 500);
+        // sendErrorMail(message)
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -83,9 +84,9 @@ export const checkNewPassword = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Middlewate-Signup: Verifying new password".red.bold, error.message);
+        console.log("There is an error: middlewares/updates -> checkNewPassword".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middlewate-Signup: Verifying new password",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }

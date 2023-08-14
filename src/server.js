@@ -14,6 +14,6 @@ app.listen(app.get("PORT"),()=>{
     }catch(err){
         console.log(`There is an Error started app: ${err}`.bgRed);
         const message = taskAppError(res = null,`There is an Error started app: ${err}`,500);
-        sendErrorMail(message);  
+        // sendErrorMail(message);  
     }
 })

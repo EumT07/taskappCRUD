@@ -35,8 +35,9 @@ export const checkUserSignup = async (req, res, next)=>{
         //Success
        return next();
     } catch (error) {
+        console.log("There is an error: middlewares/verifysingup -> checkUserSignup".red.bold, error.message);
         const message = taskAppError(res, "taskAppError: Signup --> check User Signup", 500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -106,8 +107,9 @@ export const checkUserPassword = async (req, res, next) => {
 
         return next();
     } catch (error) {
+        console.log("There is an error: middlewares/verifysignup -> checkUserPassword".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Signup --> Check Password ", 500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -134,8 +136,9 @@ export const checkUserSignin = async (req,res,next) => {
         //Return
         return next();
     } catch (error) {
+        console.log("There is an error: middlewares/verifysignup -> checkUserSignin".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Signin --> Check User Signin", 500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -163,8 +166,9 @@ export const checkAdminSignin = async (req,res,next) => {
         //Return
         return next();
     } catch (error) {
+        console.log("There is an error: middlewares/verifysignup -> checkAdminSignin".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Signin --> Check User Signin", 500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -190,8 +194,9 @@ export const checkEmptyFieldPincode = async (req,res,next) => {
     
         return next();
     } catch (error) {
+        console.log("There is an error: middlewares/verifysignup -> checkEmptyFieldPincode".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -214,8 +219,9 @@ export const checkEmptyFieldSecreteqts = async (req,res,next) => {
 
         return next();
    } catch (error) {
+    console.log("There is an error: middlewares/verifysignup -> checkEmptyFieldSecreteqts".red.bold, error.message);
     const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",500);
-    sendErrorMail(message);
+    // sendErrorMail(message);
     return res.status(500).redirect("/api/failrequest");
    }
 }

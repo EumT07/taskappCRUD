@@ -20,9 +20,9 @@ export const createRoles = async () => {
             new Role({name:"admin"}).save(),
             new Role({name:"user"}).save()
         ])
-        console.log(rolesByDefault);
+        console.log("All Roles were created",rolesByDefault);
     } catch (error) {
-        console.log("There is an error: Roles ", error);
+        console.log("There is an error: controllers/admin -> roles ", error);
     }
 };
 //Creating Admin user
@@ -50,8 +50,8 @@ export const adminRole = async (req,res)=>{
             password: await User.encryptPassword(password),
             roles: getRoles.map((role)=>role._id)
         });
-        console.log(newAdmin);
+        console.log("User: Admin  was created",newAdmin);
     } catch (error) {
-        console.log("There is an error: admin ", error);
+        console.log("There is an error: controllers/admin -> adminRole ", error);
     }
 };

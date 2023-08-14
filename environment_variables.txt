@@ -1,0 +1,46 @@
+* You must create a new file " .env " then copy and paste this.
+
+* Change all "insert" by your own data.
+
+example: 
+    PORT=3000 or PORT=4000
+    admin_default_Email="adminemail@mail.com" 
+
+Port
+PORT=insert
+
+Data Base Url
+MONGO_URL="insert"
+
+Jeson web token Key
+SECRET_KEY_JWT="insert"
+
+Admin Section
+admin_default_Email="insert"
+admin_default_username="insert"
+admin_default_pasword="insert"
+
+cookies admin
+COOKIEADMIN="insert"
+
+Cookies
+cookieSecret="insert"
+sessionSecret="insert"
+
+COOKIENAME="insert"
+
+
+COOKPINPASS="insert"
+COOKPINSECRETQTS="insert"
+COOKRECOVERY="insert"
+
+COOKIESACCESS="insert"
+
+
+//node mail connections//
+
+hostMailtrap="insert"
+portMailtrap=insert
+userMail="insert"
+userPass="insert"
+

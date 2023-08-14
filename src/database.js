@@ -11,7 +11,7 @@ const mongoURL = process.env.MONGO_URL;
 
 async function startDataBase() {
     try {
-        const dataBase = await Mongoose.connect(mongoURL,{
+        const dataBase = await Mongoose.connect(`mongodb://localhost/${mongoURL}`,{
             useNewUrlParser: true,
             useUnifiedTopology: true,
             family: 4

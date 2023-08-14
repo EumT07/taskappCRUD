@@ -20,7 +20,6 @@ dotenv.config();
  */
 //*Create a new task and new category at the same time
 export const createNewTask = async (req, res) => {
-    console.log(req.body);
     try {
         const {title, description, category, priority, userID, dateline} = req.body;
         const date = new Date();
@@ -30,12 +29,13 @@ export const createNewTask = async (req, res) => {
         if(Array.isArray(category)){
 
             if(priority.toLowerCase() === "priority"){
-                //*Add new Features (Notification with messages)
+                //*Add new Features (Notification with messages)*
                 res.status(404).redirect("/dashboard")
                 return;
             }
 
             if(category[1] === ""){
+                //Getting a specified value from DB -> category 
                 const getCategory = await Category.findOne({user: userID},{name:category[0]});
 
                 if(getCategory){
@@ -116,13 +116,13 @@ export const createNewTask = async (req, res) => {
         res.status(202).redirect("/dashboard");
         return;
     } catch (error) {
-        console.log("There is an error: Creating new Task".red.bold, + error.message);
+        console.log("There is an error: Controllers/tasks -> createNewTask".red.bold, + error.message);
         const message = taskAppError(res,"taskAppError: controller dashboard Creating new Task",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
-//*dateline
+//*dateline: to know when a task is going to end
 export const dateline = async (req,res,next) => {
     try {
         const user = await User.findById(req.userID);
@@ -138,11 +138,11 @@ export const dateline = async (req,res,next) => {
                  
                 if(days === 0 || days < 0){
                     //Send message
-                    console.log(`
-                        User ID: ${user.id}
-                        Task Title: ${task.title}
-                        Task Description: ${task.description}
-                    `);
+                    // console.log(`
+                    //     User ID: ${user.id}
+                    //     Task Title: ${task.title}
+                    //     Task Description: ${task.description}
+                    // `);
                     //*Add sendmessage here
                     //Change dateline -> done don't send email again
                     await Tasks.findByIdAndUpdate({_id: task.id},{dateline: "lost"});
@@ -177,8 +177,8 @@ export const updateTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Updating Task".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller dashboard Updating Task",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: controllers/tasks -> updateTask",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -191,8 +191,8 @@ export const completeTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Completing Task".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller dashboard Completing Task",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: controllers/tasks -> completeTask",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -205,8 +205,8 @@ export const cancelCompleteTask = async (req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Canceling Complete Task".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller dashboard Reseting Completed Task",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: completeTask -> cancelCompleteTask ",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -220,8 +220,8 @@ export const deleteTask = async (req,res)=>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller dashboard Deleting Task",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: controllers/tasks -> deleteTask",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -235,8 +235,8 @@ export const deleteCategory = async(req,res) =>{
         return res.status(202).redirect("/dashboard");
     } catch (error) {
         console.log("There is an Error: Deleting Task".red.bold, error.message);
-        const message = taskAppError(res,"taskAppError: controller dashboard Deleting category",500);
-        sendErrorMail(message);
+        const message = taskAppError(res,"taskAppError: controllers/tasks deleteCategory",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }

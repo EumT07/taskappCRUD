@@ -41,8 +41,9 @@ export const taskApp_Token = async (req, res, next) => {
         return next();
 
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> taskApp_Token".red.bold, error.message);
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",500)
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(503).redirect("/api/token")
     }
 }
@@ -72,8 +73,9 @@ export const verify_adminToken = async (req,res,next)=>{
         //If admin exists
         next();
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> verify_adminToken".red.bold, error.message);
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Verify Token ",500)
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(503).redirect("/api/token")
     }
 
@@ -106,8 +108,9 @@ export const isAdmin = async (req,res,next) => {
         //if this user is not admin
         return res.status(404).redirect("/api/token");
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> isAdmin".red.bold, error.message);
         const message = taskAppError(res,"taskApp-Error: Middlewate-token : Is not admin ",500)
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(503).redirect("/api/token")
     }
 }
@@ -151,8 +154,9 @@ export const verifyPinCode = async (req, res,next) => {
         //return
         return next();
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> verifyPinCode".red.bold, error.message);
         const message = taskAppError(res,"taskApp-Error: Verify Pin ",401);
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/failrequest");
     }
 }
@@ -180,8 +184,9 @@ export const emptyField_changePinCode = async (req,res,next) => {
     
         return next();
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> emptyField_changePinCode".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Check Empty Field: pincode",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -203,8 +208,9 @@ export const emptyField_changesecretqts = async (req,res,next) => {
 
         return next();
    } catch (error) {
+    console.log("There is an error: middleware/verifytoken -> emptyField_changesecretqts".red.bold, error.message);
     const message = taskAppError(res,"taskAppError: Check Empty Field: secretqts",500);
-    sendErrorMail(message);
+    // sendErrorMail(message);
     return res.status(503).redirect("/api/failrequest");
    }
 }
@@ -238,7 +244,9 @@ export const sendToken_to_userEmail = async (req, res, next)=>{
         return res.status(200).redirect("/api/settings/profile?data=changepinreq");
         
     } catch (error) {
-        console.log("Error Creating Email pin",error);
+        console.log("There is an error: middleware/verifytoken -> sendToken_to_userEmail".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Check middleware/verifytoken sendToken_to_userEmail",500);
+    // sendErrorMail(message);
         return res.status(404).redirect("/api/failrequest");
     }
 }
@@ -271,8 +279,9 @@ export const creatingPassToken = async (req, res, next) => {
 
         return next();
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> creatingPassToken".red.bold, error.message);
         const message = taskAppError(res,"There is an error: Middleware-token: Creating pass-token ",401);
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/failrequest");
     }
 
@@ -305,8 +314,9 @@ export const creatingSecretqtsToken = async (req, res, next) => {
 
         return next();
     } catch (error) {
+        console.log("There is an error: middleware/verifytoken -> creatingSecretqtsToken".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Middleware-Token:  Creating SecretQts Token" );
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/failrequest");
     }
 }
@@ -330,7 +340,9 @@ export const verifyToken_from_UserEmail = async ( req,res,next)=>{
         req.userID = id.id;
         next();
     } catch (error) {
-        console.log("Error verifying Email pin",error);
+        console.log("There is an error: middleware/verifytoken -> verifyToken_from_UserEmail".red.bold, error.message);
+        const message = taskAppError(res,"taskAppError: Middleware-Token:  verifyToken_from_UserEmail" );
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/failrequest");
     }
 }
@@ -350,9 +362,9 @@ export const verifyPassToken = async (req,res,next) => {
         // Return
         return next();
     } catch (error) {
-        console.log("There is an error: Verify Token pass ".red.bold, error.message);
+        console.log("There is an error: middleware/verifytoken -> verifyPassToken".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: Verify Token pass ",401 );
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/token");
     }
 }
@@ -372,9 +384,9 @@ export const verifySecretqtsToken = async (req,res,next) => {
 
         return next();
     } catch (error) {
-        console.log("There is an error: Verify Token secretqts ".red.bold, error.message);
+        console.log("There is an error: middleware/verifytoken -> verifySecretqtsToken".red.bold, error.message);
         const message = taskAppError(res,"There is an error: Verify Token secretqts ",401);
-        sendErrorMail(message)
+        // sendErrorMail(message)
         return res.status(404).redirect("/api/token");
     }
 }

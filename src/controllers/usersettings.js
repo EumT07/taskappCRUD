@@ -89,9 +89,9 @@ export const profilePhotoUpdate = async(req,res,next) => {
         
         next();
     } catch (error) {
-        console.log("There is an Error: Setting-ProfilePhoto: Updating user".red.bold, error.message);
+        console.log("There is an Error: controllers/usersettings -> profilePhotoUpdate".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Setting-ProfilePhoto - Updating user ",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -116,9 +116,9 @@ export const deleteProfilePhoto = async(req,res,next) => {
     // Return
      return await res.status(202).redirect("/api/settings/profile");
    } catch (error) {
-        console.log("There is an Error: Delting profilePhoto");
-        const message = taskAppError(res,"taskAppError: controller Settings Delting profilePhoto",500);
-        sendErrorMail(message);
+        console.log("There is an Error: controllers/usersettings deleteProfilePhoto");
+        const message = taskAppError(res,"taskAppError: controllers/usersettings deleteProfilePhoto",500);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
    }
 
@@ -144,9 +144,9 @@ export const updateProfile_UserInfo = async (req,res) => {
         // Return
         return await res.status(202).redirect("/api/settings/profile");
     } catch (error) {
-        console.log("There is an Error: Setting-Profile: Updating user".red.bold, error.message);
+        console.log("There is an Error: controllers/usersettings updateProfile_UserInfo".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Updating user",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -182,9 +182,9 @@ export const changePinCode = async (req,res)=>{
     //Return
     return res.status(202).redirect("/api/settings/profile?data=changepinreq");
     } catch (error) {
-        console.log("There is an Error: Settings: Pin code".red.bold, error.message);
+        console.log("There is an Error: controllers/usersettings -> changePinCode".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings - Pin code ",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -207,14 +207,14 @@ export const changePassword = async (req,res) => {
         const user = await User.findById(userid);
         const subjectText = `Your Password Has been changed`;
         const htmlContent = changePasswordEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Return
         return res.status(202).redirect("/api/auth/signin");
     } catch (error) {
-        console.log("There is an Error: Setting: Changing Password".red.bold, Error.message);
+        console.log("There is an Error: controllers/usersettings -> ChangePassword".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Changing Password",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -254,13 +254,14 @@ export const changeSecretquestions = async (req,res)=> {
         const user = await User.findById(userid);
         const subjectText = `Your Secret questions has been changed`;
         const htmlContent = changeSecretqtsEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Return
         return res.status(202).redirect("/api/settings/profile");
     } catch (error) {
+        console.log("There is an Error: controllers/usersettings -> changeSecretquestions".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Changing Secret Questions",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -283,7 +284,7 @@ export const resetAcc = async (req,res) => {
         const user = await User.findById(id);
         const subjectText = `Your Account has been reseted`;
         const htmlContent = resetAccEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Send notification to taskAppEmail
         const htmlNotification = `
@@ -291,14 +292,14 @@ export const resetAcc = async (req,res) => {
             <hr>
             <p> The account with this mail <b> ${user.email} </b> has been reseted</p>
         `
-        await notificationAppMail(htmlNotification);
+        // await notificationAppMail(htmlNotification);
 
         //Return
         return await res.status(202).redirect("/api/settings/profile/?data=accountdiv");
     } catch (error) {
-        console.log("There is an Error: Reset Acc".red.bold, error.message);
+        console.log("There is an Error: controllers/usersettings -> ResetAcc".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Reset Acc",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -335,7 +336,7 @@ export const removeAcc = async (req,res) => {
         const user = await User.findById(id);
         const subjectText = `Your Account has been deleted`;
         const htmlContent = removetAccEmail(user.username);
-        await sendMail(user.email, subjectText, htmlContent);
+        // await sendMail(user.email, subjectText, htmlContent);
 
         //Send notification to taskAppEmail
         const htmlNotification = `
@@ -343,7 +344,7 @@ export const removeAcc = async (req,res) => {
             <hr>
             <p> The account with this mail <b> ${user.email} </b> has been deleted</p>
         `
-        await notificationAppMail(htmlNotification);
+        // await notificationAppMail(htmlNotification);
         //Remove picture from database
         await Image.deleteOne({user: id});
         //Removing User from dataBase 
@@ -351,9 +352,9 @@ export const removeAcc = async (req,res) => {
         //Return
         return res.status(202).redirect("/");
     } catch (error) {
-        console.log("There is an Error: Remove Acc".red.bold, error.message);
+        console.log("There is an Error: controllers/usersettings -> removeAcc".red.bold, error.message);
         const message = taskAppError(res,"taskAppError: controller Settings Remove Acc",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }

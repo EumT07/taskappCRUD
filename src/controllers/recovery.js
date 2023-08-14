@@ -72,9 +72,9 @@ export const searchUser = async (req,res) => {
         //Return
         return res.status(200).redirect("/api/recovery/options");
     } catch (error) {
-        console.log("There is an Error: Recovery: Searching user".red.bold);
+        console.log("There is an Error: controllers/recovery -> Searching user".red.bold);
         const message = taskAppError(res,"taskAppError: controller Settings Searching user",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
@@ -91,7 +91,7 @@ export const resetPassword = async (req,res)=>{
         //Deleting Cookies
         res.clearCookie(cookieAccessToken);
 
-        //Send Email
+        //Send Email with mailtrap
         const user = await User.findById(userid);
         const subjectText = `Your Password has been reseted`;
         const htmlContent = resetPasswordEmail(user.username);
@@ -108,9 +108,10 @@ export const resetPassword = async (req,res)=>{
         //Return
         return res.status(202).redirect("/api/auth/signin");
     } catch (error) {
-        console.log("There is an Error: Recovery: Reset Password".red.bold, error.message);
+        console.log("There is an Error: controllers/recovery -> Reset Password".red.bold, error.message);
+        //Mailtrap
         const message = taskAppError(res,"taskAppError: controller Settings Reset Password",500);
-        sendErrorMail(message);
+        // sendErrorMail(message);
         return res.status(503).redirect("/api/failrequest");
     }
 }
