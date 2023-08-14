@@ -6,7 +6,7 @@
         <p>Insert your associated email or user, you will receive different options to reset your account</p>
         <form action="/api/recovery/searchuser" method="POST">
             <label for="search_email">
-                <input type="text" name="data" required>
+                <input type="text" name="data" required autocomplete="off">
             </label>
             <button type="submit">Search</button>
         </form>

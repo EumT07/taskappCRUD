@@ -16,11 +16,11 @@
             <% } %>
             <form class="form__container form__measure_SignUp" action="/api/auth/signup" method="POST">
                 <label for="username">
-                    <input type="text" name="username" id="username" placeholder="User" value="<%= username %>" required>
+                    <input type="text" name="username" id="username" placeholder="User" value="<%= username %>" required autocomplete="off">
                     <span class="userIcon fa"></span>
                 </label>
                 <label  for="email" >
-                    <input type="email" name="email" id="email" placeholder="Email" value="<%= email %>" required>
+                    <input type="email" name="email" id="email" placeholder="Email" value="<%= email %>" required autocomplete="off">
                     <span class="emailIcon fa"></span>
                 </label>
                 <label  for="password">
