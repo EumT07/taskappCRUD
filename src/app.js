@@ -18,7 +18,7 @@ import search from "./routers/recovery.js";
 import errors from "./routers/errors.js";
 
 //Import Roles and Admin
-import { createRoles, adminRole } from "./controllers/admin.js";
+import { createRoles, adminRole} from "./controllers/admin.js";
 
 /** Create APP */
 const app = express();

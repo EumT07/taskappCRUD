@@ -155,7 +155,8 @@
     align-self: center;
 }
 .task__card-container p{
-    text-align: justify;
+    width: 100%;
+    flex-direction: row;
 }
 
 /**/

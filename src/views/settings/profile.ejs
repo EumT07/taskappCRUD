@@ -71,13 +71,13 @@
                     <label class="gender" for="gender">Gender:
                         <div>
                                 <i class="maleIcon fa"></i>
-                                <%if(user.gender === "male") { %>
+                                <%if(user.gender === "male" || user.gender === "Male") { %>
                                     <input checked type="radio" name="gender" value="male">
                                 <% } else {%>
                                 <input  type="radio" name="gender" value="male">
                                 <% } %>
                                 <i class="femaleIcon fa"></i>
-                                <% if(user.gender === "female"){%>
+                                <% if(user.gender === "female" || user.gender === "Female"){%>
                                     <input checked type="radio" name="gender" value="female">
                                 <% } else { %>
                                 <input type="radio" name="gender" value="female">

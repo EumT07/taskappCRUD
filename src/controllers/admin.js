@@ -2,6 +2,10 @@ import * as dotenv from "dotenv";
 import User from "../models/user.js";
 import Role from "../models/roles.js";
 import util from "util";
+import fs from "fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 
 //Timesleep
 const sleep = util.promisify(setTimeout);
@@ -50,8 +54,50 @@ export const adminRole = async (req,res)=>{
             password: await User.encryptPassword(password),
             roles: getRoles.map((role)=>role._id)
         });
+        // await insertRandomUser();
         console.log("User: Admin  was created",newAdmin);
     } catch (error) {
         console.log("There is an error: controllers/admin -> adminRole ", error);
     }
 };
+
+
+//Inserting data to have more details on admin panel control
+const insertRandomUser = async (req, res) => {
+    /** __Filename:  root-file */
+    const __filename = fileURLToPath(import.meta.url);
+    /** __Dirname: root:folder  */
+    const __dirname = path.dirname(__filename);
+    const jsonPath = path.join(__dirname, "../public/json/user.json");
+
+
+    //Getting files
+    let users =  fs.readFileSync(jsonPath, "utf-8");
+    const userJson = JSON.parse(users);
+
+    //roles
+    const role = await Role.find({name:"user"});
+   
+    userJson.forEach( async (user) => {
+        let newPAssword = "123456.user"
+
+        let hashingPasswords = await User.encryptPassword(newPAssword);
+
+        let randomTask = Math.floor(Math.random() * 20) + 1;
+
+        const userObjet = {
+            username: user.username,
+            name: user.name,
+            lastname: user.lastname,
+            email: user.email,
+            password: hashingPasswords,
+            country: user.country,
+            gender: user.gender,
+            totalTasks: randomTask,
+            role: [role._id]
+        }
+
+        await User.create(userObjet);
+    });
+
+}

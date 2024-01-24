@@ -95,7 +95,7 @@ export const resetPassword = async (req,res)=>{
         const user = await User.findById(userid);
         const subjectText = `Your Password has been reseted`;
         const htmlContent = resetPasswordEmail(user.username);
-        await sendMail(user.email,subjectText,htmlContent);
+        // await sendMail(user.email,subjectText,htmlContent);
 
         //Send notification to taskAppEmail
         const htmlNotification = `
