@@ -1,6 +1,9 @@
 # TaskApp
 This project is a learning process about node js and express, I created this rest API while I was learning different methods about backend and frontend technology, this was my first project to connect both paths as backend and frontend.
 
+I used technology such as: node js, Express, jsonwebtoken, cookies, session, MongoDB, Multer and Nodemailer to build backend and I used as well EJS to connect backend with the frontend (html-css-javascript)
+
+
 <h2>Dependecies:</h2>
 <ul>
   <li>Express</li>
@@ -19,7 +22,7 @@ This project is a learning process about node js and express, I created this res
 
 <h3> How to run It..!! </h1>
 Clone this repo to your desktop and run npm install it allows you to install all the dependencies.
-
+<br>
 #First you must create a new .env file and set all environment variables.!!
 
 ```
